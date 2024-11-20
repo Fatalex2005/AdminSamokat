@@ -28,6 +28,12 @@
            HorizontalOptions="Center" 
            VerticalOptions="Center" />
 
+        <!-- Кнопка перехода в профиль -->
+        <ImageButton Grid.Row="0" Grid.Column="1" Source="profile.png" 
+         Clicked="OnProfileButtonClicked" 
+         VerticalOptions="Center" 
+         HorizontalOptions="End" />
+        
         <!-- Кнопка выхода -->
         <ImageButton Grid.Row="0" Grid.Column="1" Source="logout.png" 
                  Clicked="OnLogoutButtonClicked" 

@@ -62,12 +62,13 @@
 	  <None Remove="Resources\Images\logout.png" />
 	  <None Remove="Resources\Images\orders.png" />
 	  <None Remove="Resources\Images\penalties.png" />
+	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\register.png" />
 	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appicon.svg" Color="#FFFFFF" TintColor="#000000"/>
+	  <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appicon.svg" Color="#FFFFFF" TintColor="#000000" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -87,7 +88,13 @@
 	  <MauiXaml Update="Views\Auth\Register.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\EditProfile.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Home.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Profile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

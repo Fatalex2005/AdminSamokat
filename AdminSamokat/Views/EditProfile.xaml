@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.EditProfile"
+             Title="EditProfile">
+    <StackLayout Padding="20">
+        <Label Text="Ваш профиль" VerticalOptions="Center" HorizontalOptions="Center" />
+        <Label Text="Фамилия"></Label>
+        <Entry x:Name="surnameLabel"></Entry>
+        <Label Text="Имя"></Label>
+        <Entry x:Name="nameLabel"></Entry>
+        <Label Text="Отчество"></Label>
+        <Entry x:Name="patronymicLabel"></Entry>
+        <Label Text="Пароль"></Label>
+        <Entry x:Name="loginLabel"></Entry>
+        <Button Text="Сохранить" Clicked="OnSaveButtonClicked"></Button>
+    </StackLayout>
+</ContentPage>

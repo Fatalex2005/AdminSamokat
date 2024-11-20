@@ -1,4 +1,6 @@
 using AdminSamokat.Models;
+using AdminSamokat.Views.Auth;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace AdminSamokat.Views;
 
@@ -8,8 +10,6 @@ public partial class Home : ContentPage
     private string _token;
     public Home(User user, string token)
 	{
-
-        Console.WriteLine(user);
 		InitializeComponent();
         _user = user;
         _token = token;
@@ -39,8 +39,10 @@ public partial class Home : ContentPage
         Preferences.Remove("UserName");
         Preferences.Remove("UserLogin");
 
+        
         // Возвращаемся на страницу входа
         await Navigation.PushAsync(new Views.Auth.Login());
+        Navigation.RemovePage(this); // Убираем текущую страницу из стека
     }
 
     private void OnOrdersClicked(object sender, EventArgs e)
@@ -66,5 +68,10 @@ public partial class Home : ContentPage
     private void OnPenaltiesClicked(object sender, EventArgs e)
     {
 
+    }
+
+    private void OnProfileButtonClicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new Profile());
     }
 }

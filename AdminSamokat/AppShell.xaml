@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AdminSamokat.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AdminSamokat"
+    Shell.FlyoutBehavior="Disabled"
+    Title="AdminSamokat">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:Views.Auth.Login}"
+        Route="Home" />
+
+</Shell>

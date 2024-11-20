@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.Auth.Register"
+             Title="Регистрация курьера в системе">
+    <StackLayout Padding="20" VerticalOptions="Center">
+        <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"></Image>
+        <Label Text="На этой странице вы можете добавить курьера в систему!" FontSize="24" HorizontalTextAlignment="Center"></Label>
+        <Entry x:Name="SurnameEntry" Placeholder="Введите фамилию" Margin="10"></Entry>
+        <Entry x:Name="NameEntry" Placeholder="Введите имя" Margin="10"></Entry>
+        <Entry x:Name="PatronymicEntry" Placeholder="Введите отчество" Margin="10"></Entry>
+        <Entry x:Name="LoginEntry" Placeholder="Введите логин" Margin="10"></Entry>
+        <Entry x:Name="PasswordEntry" Placeholder="Введите пароль" IsPassword="True" Margin="10"></Entry>
+        <Entry x:Name="ConfirmPasswordEntry" Placeholder="Подтвердите пароль" IsPassword="True" Margin="10"></Entry>
+        <Button Text="Зарегистрировать" Clicked="OnRegisterButtonClicked"></Button>
+    </StackLayout>
+</ContentPage>

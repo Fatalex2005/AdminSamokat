@@ -30,8 +30,11 @@ public partial class Login : ContentPage
         {
             // Сохраняем данные пользователя и токен
             Preferences.Set("UserToken", loginResponse.Token);
+            Preferences.Set("UserSurname", loginResponse.User.Surname);
             Preferences.Set("UserName", loginResponse.User.Name);
+            Preferences.Set("UserPatronymic", loginResponse.User.Patronymic);
             Preferences.Set("UserLogin", loginResponse.User.Login);
+            Preferences.Set("UserPassword", loginResponse.User.Password);
             // Передаём данные пользователя и его токен на страницу Home
             await Navigation.PushAsync(new Home(loginResponse.User, loginResponse.Token));
         }

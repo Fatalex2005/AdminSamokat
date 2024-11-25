@@ -2,13 +2,63 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Auth.Login"
-             Title="Аутентификация">
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"></Image>
-        <Label Text="Приветствуем в скромненьком приложении Самокат Про для администраторов!" FontSize="24" HorizontalTextAlignment="Center"></Label>
-        <Label Text="Введите свой логин и пароль чтобы продолжить!" FontSize="24" HorizontalTextAlignment="Center"></Label>
-        <Entry x:Name="LoginEntry" Placeholder="Введите логин" Margin="10"></Entry>
-        <Entry x:Name="PasswordEntry" Placeholder="Введите пароль" IsPassword="True" Margin="10"></Entry>
-        <Button Text="Войти" Margin="10" Clicked="OnLoginButtonClicked"></Button>
-    </StackLayout>
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9F9F9">
+    <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+
+        <!-- Логотип -->
+        <Image Source="logo.png" 
+               WidthRequest="150" 
+               HeightRequest="150" 
+               HorizontalOptions="Center" />
+
+        <!-- Приветствие -->
+        <Label Text="Добро пожаловать в приложение Самокат Про!" 
+               FontSize="20" 
+               FontAttributes="Bold"
+               TextColor="#333333"
+               HorizontalTextAlignment="Center" />
+
+        <!-- Подзаголовок -->
+        <Label Text="Введите свой логин и пароль, чтобы продолжить"
+               FontSize="16" 
+               TextColor="#666666" 
+               HorizontalTextAlignment="Center" />
+
+        <!-- Поля ввода -->
+        <Frame Padding="10" 
+               CornerRadius="8" 
+               BorderColor="#E0E0E0" 
+               BackgroundColor="White" 
+               HasShadow="False">
+            <Entry x:Name="LoginEntry" 
+                   Placeholder="Введите логин" 
+                   FontSize="14" 
+                   TextColor="#333333" 
+                   PlaceholderColor="#B0B0B0" />
+        </Frame>
+
+        <Frame Padding="10" 
+               CornerRadius="8" 
+               BorderColor="#E0E0E0" 
+               BackgroundColor="White" 
+               HasShadow="False">
+            <Entry x:Name="PasswordEntry" 
+                   Placeholder="Введите пароль" 
+                   IsPassword="True" 
+                   FontSize="14" 
+                   TextColor="#333333" 
+                   PlaceholderColor="#B0B0B0" />
+        </Frame>
+
+        <!-- Кнопка -->
+        <Button Text="Войти" 
+                FontAttributes="Bold" 
+                TextColor="White" 
+                BackgroundColor="#6200EE"
+                CornerRadius="25" 
+                Padding="15" 
+                Clicked="OnLoginButtonClicked" />
+
+    </VerticalStackLayout>
 </ContentPage>

@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Home"
-             Title="Home">
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9F9F9">
+
     <Grid Padding="20">
         <!-- Определение строк -->
         <Grid.RowDefinitions>
@@ -14,65 +16,117 @@
             <!-- Разделы -->
         </Grid.RowDefinitions>
 
-        <!-- Первая строка: Приветствие и кнопка выхода -->
+        <!-- Определение столбцов -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <!-- Для выравнивания приветствия по центру -->
+            <!-- Приветствие -->
             <ColumnDefinition Width="Auto" />
-            <!-- Для кнопки выхода -->
+            <!-- Кнопка профиля -->
+            <ColumnDefinition Width="Auto" />
+            <!-- Кнопка выхода -->
         </Grid.ColumnDefinitions>
 
-        <!-- Текст приветствия -->
-        <Label Grid.Row="0" Grid.Column="0" x:Name="nameLabel"
-           FontSize="24" 
-           HorizontalOptions="Center" 
-           VerticalOptions="Center" />
+        <!-- Верхняя часть: Приветствие -->
+        <Label Grid.Row="0" Grid.Column="0" 
+               x:Name="nameLabel"
+               FontSize="24" 
+               FontAttributes="Bold" 
+               TextColor="#333333" 
+               VerticalOptions="Center" />
 
-        <!-- Кнопка перехода в профиль -->
-        <ImageButton Grid.Row="0" Grid.Column="1" Source="profile.png" 
-         Clicked="OnProfileButtonClicked" 
-         VerticalOptions="Center" 
-         HorizontalOptions="End" />
-        
+        <!-- Кнопка профиля -->
+        <ImageButton Grid.Row="0" Grid.Column="1" 
+                     Source="profile.png" 
+                     Clicked="OnProfileButtonClicked" 
+                     WidthRequest="40" 
+                     HeightRequest="40" 
+                     BackgroundColor="Transparent" 
+                     HorizontalOptions="End" 
+                     VerticalOptions="Center" />
+
         <!-- Кнопка выхода -->
-        <ImageButton Grid.Row="0" Grid.Column="1" Source="logout.png" 
-                 Clicked="OnLogoutButtonClicked" 
-                 VerticalOptions="Center" 
-                 HorizontalOptions="End" />
+        <ImageButton Grid.Row="0" Grid.Column="2" 
+                     Source="logout.png" 
+                     Clicked="OnLogoutButtonClicked" 
+                     WidthRequest="40" 
+                     HeightRequest="40" 
+                     BackgroundColor="Transparent" 
+                     HorizontalOptions="End" 
+                     VerticalOptions="Center" />
 
-        <!-- Второй ряд: Основной текст -->
-        <Label Grid.Row="1"
-           Text="Внизу представлены разные разделы, с которыми вы можете взаимодействовать." 
-           HorizontalOptions="Center" 
-           VerticalOptions="Center"
-           FontSize="18" />
+        <!-- Основной текст -->
+        <Label Grid.Row="1" Grid.ColumnSpan="3"
+               Text="Внизу представлены разделы, с которыми вы можете взаимодействовать." 
+               HorizontalOptions="Center" 
+               VerticalOptions="Center" 
+               FontSize="18" 
+               TextColor="#666666" />
 
-        <!-- Третий ряд: Разделы -->
-        <HorizontalStackLayout Grid.Row="2" HorizontalOptions="Center" VerticalOptions="End" Spacing="20">
-            <!-- Разделы -->
-            <VerticalStackLayout>
-                <ImageButton Source="orders.png" Clicked="OnOrdersClicked" WidthRequest="60" HeightRequest="60" />
-                <Label HorizontalOptions="Center" Text="Заказы" />
+        <!-- Разделы -->
+        <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="End" Spacing="20">
+            <!-- Раздел: Заказы -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                <ImageButton Source="orders.png" 
+                             Clicked="OnOrdersClicked" 
+                             WidthRequest="60" 
+                             HeightRequest="60" 
+                             BackgroundColor="Transparent" />
+                <Label Text="Заказы" 
+                       FontSize="14" 
+                       TextColor="#333333" 
+                       HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Background="#000000" Opacity="0.1" WidthRequest="1"></VerticalStackLayout>
-            <VerticalStackLayout>
-                <ImageButton Source="couriers.png" Clicked="OnCouriersClicked" WidthRequest="60" HeightRequest="60" />
-                <Label HorizontalOptions="Center" Text="Курьеры" />
+
+            <!-- Раздел: Курьеры -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                <ImageButton Source="couriers.png" 
+                             Clicked="OnCouriersClicked" 
+                             WidthRequest="60" 
+                             HeightRequest="60" 
+                             BackgroundColor="Transparent" />
+                <Label Text="Курьеры" 
+                       FontSize="14" 
+                       TextColor="#333333" 
+                       HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Background="#000000" Opacity="0.1" WidthRequest="1"></VerticalStackLayout>
-            <VerticalStackLayout>
-                <ImageButton Source="register.png" Clicked="OnRegisterCourierClicked" WidthRequest="60" HeightRequest="60" />
-                <Label HorizontalOptions="Center" Text="Зарегистрировать курьера" />
+
+            <!-- Раздел: Зарегистрировать курьера -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                <ImageButton Source="register.png" 
+                             Clicked="OnRegisterCourierClicked" 
+                             WidthRequest="60" 
+                             HeightRequest="60" 
+                             BackgroundColor="Transparent" />
+                <Label Text="Зарегистрировать" 
+                       FontSize="14" 
+                       TextColor="#333333" 
+                       HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Background="#000000" Opacity="0.1" WidthRequest="1"></VerticalStackLayout>
-            <VerticalStackLayout>
-                <ImageButton Source="bonuses.png" Clicked="OnBonusesClicked" WidthRequest="60" HeightRequest="60" />
-                <Label HorizontalOptions="Center" Text="Бонусы" />
+
+            <!-- Раздел: Бонусы -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                <ImageButton Source="bonuses.png" 
+                             Clicked="OnBonusesClicked" 
+                             WidthRequest="60" 
+                             HeightRequest="60" 
+                             BackgroundColor="Transparent" />
+                <Label Text="Бонусы" 
+                       FontSize="14" 
+                       TextColor="#333333" 
+                       HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
-            <VerticalStackLayout Background="#000000" Opacity="0.1" WidthRequest="1"></VerticalStackLayout>
-            <VerticalStackLayout>
-                <ImageButton Source="penalties.png" Clicked="OnPenaltiesClicked" WidthRequest="60" HeightRequest="60" />
-                <Label HorizontalOptions="Center" Text="Штрафы" />
+
+            <!-- Раздел: Штрафы -->
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                <ImageButton Source="penalties.png" 
+                             Clicked="OnPenaltiesClicked" 
+                             WidthRequest="60" 
+                             HeightRequest="60" 
+                             BackgroundColor="Transparent" />
+                <Label Text="Штрафы" 
+                       FontSize="14" 
+                       TextColor="#333333" 
+                       HorizontalTextAlignment="Center" />
             </VerticalStackLayout>
         </HorizontalStackLayout>
     </Grid>

@@ -2,16 +2,68 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Auth.Register"
-             Title="Регистрация курьера в системе">
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"></Image>
-        <Label Text="На этой странице вы можете добавить курьера в систему!" FontSize="24" HorizontalTextAlignment="Center"></Label>
-        <Entry x:Name="SurnameEntry" Placeholder="Введите фамилию" Margin="10"></Entry>
-        <Entry x:Name="NameEntry" Placeholder="Введите имя" Margin="10"></Entry>
-        <Entry x:Name="PatronymicEntry" Placeholder="Введите отчество" Margin="10"></Entry>
-        <Entry x:Name="LoginEntry" Placeholder="Введите логин" Margin="10"></Entry>
-        <Entry x:Name="PasswordEntry" Placeholder="Введите пароль" IsPassword="True" Margin="10"></Entry>
-        <Entry x:Name="ConfirmPasswordEntry" Placeholder="Подтвердите пароль" IsPassword="True" Margin="10"></Entry>
-        <Button Text="Зарегистрировать" Clicked="OnRegisterButtonClicked"></Button>
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9F9F9">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="20">
+        <!-- Логотип -->
+        <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
+
+        <!-- Текстовое описание -->
+        <Label Text="На этой странице вы можете добавить курьера в нашу команду!" 
+               FontSize="24" 
+               HorizontalTextAlignment="Center" 
+               VerticalOptions="Center" 
+               Margin="0,20,0,20"/>
+
+        <!-- Форма регистрации -->
+        <Frame Padding="15" CornerRadius="15" BackgroundColor="White" Margin="0,20">
+            <StackLayout Spacing="15">
+                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                    <Entry x:Name="SurnameEntry" 
+                           Placeholder="Введите фамилию" 
+                           Margin="5"/>
+                </Frame>
+                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                    <Entry x:Name="NameEntry" 
+                           Placeholder="Введите имя" 
+                           Margin="5"/>
+                </Frame>
+                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                    <Entry x:Name="PatronymicEntry" 
+                           Placeholder="Введите отчество" 
+                           Margin="5"/>
+                </Frame>
+                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                    <Entry x:Name="LoginEntry" 
+                           Placeholder="Введите логин" 
+                           Margin="5"/>
+                </Frame>
+                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                    <Entry x:Name="PasswordEntry" 
+                           Placeholder="Введите пароль" 
+                           IsPassword="True" 
+                           Margin="5"/>
+                </Frame>
+                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                    <Entry x:Name="ConfirmPasswordEntry" 
+                           Placeholder="Подтвердите пароль" 
+                           IsPassword="True" 
+                           Margin="5"/>
+                </Frame>
+            </StackLayout>
+        </Frame>
+
+        <!-- Кнопка регистрации -->
+        <Button Text="Зарегистрировать" 
+                Clicked="OnRegisterButtonClicked" 
+                FontAttributes="Bold" 
+                TextColor="White" 
+                BackgroundColor="#6200EE"
+                CornerRadius="25" 
+                Padding="15"/>
     </StackLayout>
+    </ScrollView>
+    
 </ContentPage>

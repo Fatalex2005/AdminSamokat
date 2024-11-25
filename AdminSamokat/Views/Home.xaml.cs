@@ -36,10 +36,13 @@ public partial class Home : ContentPage
     {
         // Очищаем сохранённые данные
         Preferences.Remove("UserToken");
+        Preferences.Remove("UserSurname");
         Preferences.Remove("UserName");
+        Preferences.Remove("UserPatronymic");
         Preferences.Remove("UserLogin");
+        Preferences.Remove("UserPassword");
 
-        
+
         // Возвращаемся на страницу входа
         await Navigation.PushAsync(new Views.Auth.Login());
         Navigation.RemovePage(this); // Убираем текущую страницу из стека
@@ -70,8 +73,8 @@ public partial class Home : ContentPage
 
     }
 
-    private void OnProfileButtonClicked(object sender, EventArgs e)
+    private async void OnProfileButtonClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Profile());
+        await Navigation.PushAsync(new Profile(_user, _token));
     }
 }

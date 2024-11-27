@@ -16,12 +16,6 @@ public partial class Register : ContentPage
     // Регистрация
     private async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
-        if (PasswordEntry.Text != ConfirmPasswordEntry.Text)
-        {
-            await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
-            return;
-        }
-
         // Проверка на пустые поля
         if (string.IsNullOrWhiteSpace(SurnameEntry.Text) ||
             string.IsNullOrWhiteSpace(NameEntry.Text) ||
@@ -29,6 +23,12 @@ public partial class Register : ContentPage
             string.IsNullOrWhiteSpace(PasswordEntry.Text))
         {
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
+            return;
+        }
+
+        if (PasswordEntry.Text != ConfirmPasswordEntry.Text)
+        {
+            await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
             return;
         }
 

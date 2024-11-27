@@ -36,6 +36,7 @@ public partial class Home : ContentPage
     {
         // Очищаем сохранённые данные
         Preferences.Remove("UserToken");
+        Preferences.Remove("UserId");
         Preferences.Remove("UserSurname");
         Preferences.Remove("UserName");
         Preferences.Remove("UserPatronymic");

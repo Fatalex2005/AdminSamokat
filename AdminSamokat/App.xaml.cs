@@ -14,17 +14,20 @@ namespace AdminSamokat
         protected override void OnStart()
         {
             string userToken = Preferences.Get("UserToken", null);
+            string userId = Preferences.Get("UserId", null);
             string userSurname = Preferences.Get("UserSurname", null);
             string userName = Preferences.Get("UserName", null);
             string userPatronymic = Preferences.Get("UserPatronymic", null);
             string userLogin = Preferences.Get("UserLogin", null);
             string userPassword = Preferences.Get("UserPassword", null);
 
-            if (!string.IsNullOrEmpty(userToken) && !string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(userLogin))
+            // Проверяем и преобразуем userId в ulong
+            if (ulong.TryParse(userId, out ulong parsedUserId))
             {
-                // Если токен и данные пользователя есть, создаём объект User
+                // Создаём объект User, если id успешно преобразован
                 var user = new Models.User
                 {
+                    Id = parsedUserId, // Преобразованный ID
                     Surname = userSurname,
                     Name = userName,
                     Patronymic = userPatronymic,
@@ -37,7 +40,7 @@ namespace AdminSamokat
             }
             else
             {
-                // Если данных нет, показываем страницу авторизации
+                // Если userId некорректный, отправляем пользователя на страницу авторизации
                 MainPage = new NavigationPage(new Views.Auth.Login());
             }
         }

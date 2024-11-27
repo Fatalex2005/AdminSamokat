@@ -40,21 +40,21 @@
             <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                 <StackLayout>
                     <Label Text="Логин" FontAttributes="Bold" />
-                    <Entry x:Name="loginLabel" Placeholder="Введите логин" IsPassword="True" BackgroundColor="#F5F5F5"/>
+                    <Entry x:Name="loginLabel" Placeholder="Введите логин" BackgroundColor="#F5F5F5"/>
                 </StackLayout>
             </Frame>
 
             <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                 <StackLayout>
                     <Label Text="Пароль" FontAttributes="Bold" />
-                    <Entry x:Name="loginLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
+                    <Entry x:Name="passwordLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
                 </StackLayout>
             </Frame>
 
             <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                 <StackLayout>
                     <Label Text="Подтвердите пароль" FontAttributes="Bold" />
-                    <Entry x:Name="loginLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
+                    <Entry x:Name="confirmPasswordLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
                 </StackLayout>
             </Frame>
 

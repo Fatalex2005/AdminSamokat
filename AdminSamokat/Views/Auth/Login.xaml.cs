@@ -30,6 +30,7 @@ public partial class Login : ContentPage
         {
             // Сохраняем данные пользователя и токен
             Preferences.Set("UserToken", loginResponse.Token);
+            Preferences.Set("UserId", loginResponse.User.Id.ToString());
             Preferences.Set("UserSurname", loginResponse.User.Surname);
             Preferences.Set("UserName", loginResponse.User.Name);
             Preferences.Set("UserPatronymic", loginResponse.User.Patronymic);

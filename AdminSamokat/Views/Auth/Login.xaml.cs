@@ -28,6 +28,13 @@ public partial class Login : ContentPage
         var loginResponse = await AuthenticateUserAsync(login, password);
         if (loginResponse != null)
         {
+            // Проверяем роль пользователя
+            if (loginResponse.User.RoleId != 1) // Предположим, что RoleId 1 — это администратор
+            {
+                await DisplayAlert("Ошибка", "Доступ разрешён только администраторам", "ОК");
+                return;
+            }
+
             // Сохраняем данные пользователя и токен
             Preferences.Set("UserToken", loginResponse.Token);
             Preferences.Set("UserId", loginResponse.User.Id.ToString());

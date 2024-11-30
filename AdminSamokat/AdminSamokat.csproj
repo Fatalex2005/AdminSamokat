@@ -58,6 +58,7 @@
 	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\Images\bonuses.png" />
 	  <None Remove="Resources\Images\couriers.png" />
+	  <None Remove="Resources\Images\courier_icon.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\logout.png" />
 	  <None Remove="Resources\Images\orders.png" />

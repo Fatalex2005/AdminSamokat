@@ -90,7 +90,7 @@ public partial class Home : ContentPage
 
     private void OnCouriersClicked(object sender, EventArgs e)
     {
-
+        Navigation.PushAsync(new Couries.AllCouriers());
     }
 
     private void OnRegisterCourierClicked(object sender, EventArgs e)

@@ -95,7 +95,7 @@ public partial class Home : ContentPage
 
     private void OnRegisterCourierClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Auth.Register());
+        Navigation.PushAsync(new Auth.Register(_user, _token));
     }
 
     private void OnBonusesClicked(object sender, EventArgs e)

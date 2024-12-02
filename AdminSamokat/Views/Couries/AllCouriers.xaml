@@ -23,7 +23,7 @@
                                    WidthRequest="50" 
                                    Aspect="AspectFill" 
                                    Grid.RowSpan="3"
-                                   Margin="0 10 0 0"/>
+                                   Margin="0,0,15,0"/>
                             <Label Text="{Binding Name}" 
                                    FontAttributes="Bold" 
                                    FontSize="16" 

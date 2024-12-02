@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using AdminSamokat.Models;
@@ -8,9 +9,13 @@ public partial class Register : ContentPage
 {
     // Инициализация HTTP клиента
     private readonly HttpClient _httpClient = new HttpClient();
-    public Register()
+    private User _user;
+    private string _token;
+    public Register(User user, string token)
     {
         InitializeComponent();
+        _user = user;
+        _token = token;
     }
 
     // Регистрация
@@ -51,26 +56,34 @@ public partial class Register : ContentPage
 
         try
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+
             // Отправляем запрос и записываем ответ в response
             HttpResponseMessage response = await _httpClient.PostAsync("http://courseproject4/api/register", registerData);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var result = JsonSerializer.Deserialize<AuthResponse>(content);
 
                 if (result?.Token != null)
                 {
-                    await DisplayAlert("Успешная регистрация нового пользователя", "В систему добавлен новый пользователь", "ОК");
+                    await DisplayAlert("Успешная регистрация", "Пользователь успешно добавлен", "ОК");
+                }
+                else
+                {
+                    await DisplayAlert("Ошибка", "Не удалось получить данные пользователя из ответа сервера", "ОК");
                 }
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableContent)
+            else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
-                await DisplayAlert("Ошибка валидации данных", "Вы что-то ввели неверно", "ОК");
+                var errorContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Ошибка валидации", errorContent, "ОК");
             }
             else
             {
-                await DisplayAlert("Ошибка", "Произошла ошибка на сервере", "ОК");
+                var errorContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Ошибка", $"Код ошибки: {(int)response.StatusCode}\n{errorContent}", "ОК");
             }
         }
         catch (Exception ex)

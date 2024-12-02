@@ -2,22 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Couries.AllCouriers">
-    <VerticalStackLayout Padding="10">
+    <VerticalStackLayout Spacing="10" Padding="10">
         <CollectionView x:Name="UsersCollectionView" 
                         SelectionMode="Single" 
                         SelectionChanged="OnCourierSelected">
+            <!-- Добавлен Padding для CollectionView -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Padding="15" Margin="5" CornerRadius="10" HasShadow="True" BackgroundColor="White">
-                        <Frame.Triggers>
-                            <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="BackgroundColor" Value="LightBlue" />
-                            </DataTrigger>
-                            <DataTrigger TargetType="Frame" Binding="{Binding IsSelected}" Value="False">
-                                <Setter Property="BackgroundColor" Value="White" />
-                            </DataTrigger>
-                        </Frame.Triggers>
-                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                    <Frame Padding="15" Margin="10,5" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" Padding="10">
+                            <!-- Padding для Grid -->
                             <Image Source="courier_icon.png" 
                                    HeightRequest="50" 
                                    WidthRequest="50" 

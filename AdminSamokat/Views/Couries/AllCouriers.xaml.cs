@@ -50,8 +50,13 @@ public partial class AllCouriers : ContentPage
         }
     }
 
-    private void OnCourierSelected(object sender, SelectionChangedEventArgs e)
+    private async void OnCourierSelected(object sender, SelectionChangedEventArgs e)
     {
-
+        // Получаем выбранного пользователя
+        if (e.CurrentSelection.FirstOrDefault() is User selectedCourier)
+        {
+            // Переход на страницу информации о курьере
+            await Navigation.PushAsync(new Courier(selectedCourier));
+        }
     }
 }

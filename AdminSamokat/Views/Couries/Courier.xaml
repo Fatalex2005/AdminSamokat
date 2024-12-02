@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.Couries.Courier">
+    <Grid RowDefinitions="*,Auto" Padding="20">
+        <!-- Основная информация о курьере -->
+        <VerticalStackLayout Grid.Row="0" Spacing="10">
+            <Label x:Name="CourierFullNameLabel"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+            <Label x:Name="CourierLoginLabel"
+                   FontSize="16"
+                   TextColor="Gray"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Кнопки внизу -->
+        <VerticalStackLayout Grid.Row="1" Spacing="10">
+            <Button Text="Просмотреть штрафы" 
+                    FontAttributes="Bold" 
+                    TextColor="White" 
+                    BackgroundColor="#6200EE"
+                    CornerRadius="25" 
+                    Padding="15" 
+                    Clicked="OnPenaltiesButtonClicked" />
+            <Button Text="Изменить профиль" 
+                    FontAttributes="Bold" 
+                    TextColor="White" 
+                    BackgroundColor="#6200EE"
+                    CornerRadius="25" 
+                    Padding="15" 
+                    Clicked="OnEditButtonClicked" />
+            <Button Text="Удалить курьера" 
+                    FontAttributes="Bold" 
+                    TextColor="White" 
+                    BackgroundColor="#6200EE"
+                    CornerRadius="25" 
+                    Padding="15" 
+                    Clicked="OnDeleteButtonClicked" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

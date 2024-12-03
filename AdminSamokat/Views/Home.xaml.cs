@@ -100,7 +100,7 @@ public partial class Home : ContentPage
 
     private void OnBonusesClicked(object sender, EventArgs e)
     {
-
+        Navigation.PushAsync(new Bonuses.AllBonuses());
     }
 
     private void OnPenaltiesClicked(object sender, EventArgs e)

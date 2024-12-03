@@ -57,6 +57,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\AppIcon\appicon.svg" />
 	  <None Remove="Resources\Images\bonuses.png" />
+	  <None Remove="Resources\Images\bonus_icon.png" />
 	  <None Remove="Resources\Images\couriers.png" />
 	  <None Remove="Resources\Images\courier_icon.png" />
 	  <None Remove="Resources\Images\logo.png" />
@@ -90,6 +91,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Bonuses\AllBonuses.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Bonuses\BonusPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Couries\AllCouriers.xaml">

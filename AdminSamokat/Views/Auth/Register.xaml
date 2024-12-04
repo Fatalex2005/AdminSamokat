@@ -5,65 +5,77 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
 
-    <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
-        <!-- Логотип -->
-        <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
+    <!-- Основной контейнер -->
+    <Grid>
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsRunning="False" 
+                           IsVisible="False" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" 
+                           Color="Gray" />
 
-        <!-- Текстовое описание -->
-        <Label Text="На этой странице вы можете добавить курьера в нашу команду!" 
-               FontSize="24" 
-               HorizontalTextAlignment="Center" 
-               VerticalOptions="Center" 
-               Margin="0,20,0,20"/>
+        <!-- Основная форма -->
+        <ScrollView x:Name="RegistrationForm" IsVisible="True">
+            <StackLayout Padding="20" Spacing="20">
+                <!-- Логотип -->
+                <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
 
-        <!-- Форма регистрации -->
-        <Frame Padding="15" CornerRadius="15" BackgroundColor="White" Margin="0,20">
-            <StackLayout Spacing="15">
-                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
-                    <Entry x:Name="SurnameEntry" 
-                           Placeholder="Введите фамилию" 
-                           Margin="5"/>
+                <!-- Текстовое описание -->
+                <Label Text="На этой странице вы можете добавить курьера в нашу команду!" 
+                       FontSize="24" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalOptions="Center" 
+                       Margin="0,20,0,20"/>
+
+                <!-- Форма регистрации -->
+                <Frame Padding="15" CornerRadius="15" BackgroundColor="White" Margin="0,20">
+                    <StackLayout Spacing="15">
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="SurnameEntry" 
+                                   Placeholder="Введите фамилию" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="NameEntry" 
+                                   Placeholder="Введите имя" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="PatronymicEntry" 
+                                   Placeholder="Введите отчество" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="LoginEntry" 
+                                   Placeholder="Введите логин" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="PasswordEntry" 
+                                   Placeholder="Введите пароль" 
+                                   IsPassword="True" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="ConfirmPasswordEntry" 
+                                   Placeholder="Подтвердите пароль" 
+                                   IsPassword="True" 
+                                   Margin="5"/>
+                        </Frame>
+                    </StackLayout>
                 </Frame>
-                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
-                    <Entry x:Name="NameEntry" 
-                           Placeholder="Введите имя" 
-                           Margin="5"/>
-                </Frame>
-                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
-                    <Entry x:Name="PatronymicEntry" 
-                           Placeholder="Введите отчество" 
-                           Margin="5"/>
-                </Frame>
-                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
-                    <Entry x:Name="LoginEntry" 
-                           Placeholder="Введите логин" 
-                           Margin="5"/>
-                </Frame>
-                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
-                    <Entry x:Name="PasswordEntry" 
-                           Placeholder="Введите пароль" 
-                           IsPassword="True" 
-                           Margin="5"/>
-                </Frame>
-                <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
-                    <Entry x:Name="ConfirmPasswordEntry" 
-                           Placeholder="Подтвердите пароль" 
-                           IsPassword="True" 
-                           Margin="5"/>
-                </Frame>
+
+                <!-- Кнопка регистрации -->
+                <Button Text="Зарегистрировать" 
+                        Clicked="OnRegisterButtonClicked" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15"/>
             </StackLayout>
-        </Frame>
+        </ScrollView>
+    </Grid>
 
-        <!-- Кнопка регистрации -->
-        <Button Text="Зарегистрировать" 
-                Clicked="OnRegisterButtonClicked" 
-                FontAttributes="Bold" 
-                TextColor="White" 
-                BackgroundColor="#6200EE"
-                CornerRadius="25" 
-                Padding="15"/>
-    </StackLayout>
-    </ScrollView>
-    
 </ContentPage>

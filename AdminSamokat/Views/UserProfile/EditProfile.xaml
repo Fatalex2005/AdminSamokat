@@ -4,69 +4,79 @@
              x:Class="AdminSamokat.Views.EditProfile"
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
-    <!-- Основной контент с прокруткой -->
-    <ScrollView>
-        <StackLayout Padding="20" Spacing="20">
-            <!-- Заголовок -->
-            <Label Text="Редактировать профиль" 
-                   FontSize="28" 
-                   FontAttributes="Bold" 
-                   HorizontalOptions="Center" 
-                   VerticalOptions="Center" 
-                   Margin="0,20,0,20"/>
+    <Grid>
+        <!-- Основной контент с прокруткой -->
+        <ScrollView x:Name="MainContent" IsVisible="True">
+            <StackLayout Padding="20" Spacing="20">
+                <!-- Заголовок -->
+                <Label Text="Редактировать профиль" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       Margin="0,20,0,20"/>
 
-            <!-- Поля для ввода -->
-            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                <StackLayout>
-                    <Label Text="Фамилия" FontAttributes="Bold" />
-                    <Entry x:Name="surnameLabel" Placeholder="Введите фамилию" BackgroundColor="#F5F5F5"/>
-                </StackLayout>
-            </Frame>
+                <!-- Поля для ввода -->
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Фамилия" FontAttributes="Bold" />
+                        <Entry x:Name="surnameLabel" Placeholder="Введите фамилию" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
 
-            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                <StackLayout>
-                    <Label Text="Имя" FontAttributes="Bold" />
-                    <Entry x:Name="nameLabel" Placeholder="Введите имя" BackgroundColor="#F5F5F5"/>
-                </StackLayout>
-            </Frame>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Имя" FontAttributes="Bold" />
+                        <Entry x:Name="nameLabel" Placeholder="Введите имя" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
 
-            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                <StackLayout>
-                    <Label Text="Отчество" FontAttributes="Bold" />
-                    <Entry x:Name="patronymicLabel" Placeholder="Введите отчество" BackgroundColor="#F5F5F5"/>
-                </StackLayout>
-            </Frame>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Отчество" FontAttributes="Bold" />
+                        <Entry x:Name="patronymicLabel" Placeholder="Введите отчество" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
 
-            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                <StackLayout>
-                    <Label Text="Логин" FontAttributes="Bold" />
-                    <Entry x:Name="loginLabel" Placeholder="Введите логин" BackgroundColor="#F5F5F5"/>
-                </StackLayout>
-            </Frame>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Логин" FontAttributes="Bold" />
+                        <Entry x:Name="loginLabel" Placeholder="Введите логин" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
 
-            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                <StackLayout>
-                    <Label Text="Пароль" FontAttributes="Bold" />
-                    <Entry x:Name="passwordLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
-                </StackLayout>
-            </Frame>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Пароль" FontAttributes="Bold" />
+                        <Entry x:Name="passwordLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
 
-            <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                <StackLayout>
-                    <Label Text="Подтвердите пароль" FontAttributes="Bold" />
-                    <Entry x:Name="confirmPasswordLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
-                </StackLayout>
-            </Frame>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Подтвердите пароль" FontAttributes="Bold" />
+                        <Entry x:Name="confirmPasswordLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
 
-            <!-- Кнопка сохранения -->
-            <Button Text="Сохранить" 
-                    Clicked="OnSaveButtonClicked" 
-                    FontAttributes="Bold" 
-                    TextColor="White" 
-                    BackgroundColor="#6200EE"
-                    CornerRadius="25" 
-                    Padding="15" 
-                    Margin="0,20,0,0"/>
-        </StackLayout>
-    </ScrollView>
+                <!-- Кнопка сохранения -->
+                <Button Text="Сохранить" 
+                        Clicked="OnSaveButtonClicked" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15" 
+                        Margin="0,20,0,0"/>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsVisible="False" 
+                           IsRunning="False" 
+                           Color="Gray" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+    </Grid>
 </ContentPage>

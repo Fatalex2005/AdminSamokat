@@ -7,10 +7,10 @@ namespace AdminSamokat.Views.Auth;
 
 public partial class Register : ContentPage
 {
-    // Инициализация HTTP клиента
     private readonly HttpClient _httpClient = new HttpClient();
     private User _user;
     private string _token;
+
     public Register(User user, string token)
     {
         InitializeComponent();
@@ -18,7 +18,6 @@ public partial class Register : ContentPage
         _token = token;
     }
 
-    // Регистрация
     private async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
         // Проверка на пустые поля
@@ -44,36 +43,29 @@ public partial class Register : ContentPage
         string login = LoginEntry.Text;
         string password = PasswordEntry.Text;
 
-        // Формирование тела запроса
         var registerData = new MultipartFormDataContent
         {
-            {new StringContent(surname), "surname" },
-            {new StringContent(name), "name" },
-            {new StringContent(patronymic ?? string.Empty), "patronymic" },
-            {new StringContent(login), "login" },
-            {new StringContent(password), "password" },
+            { new StringContent(surname), "surname" },
+            { new StringContent(name), "name" },
+            { new StringContent(patronymic ?? string.Empty), "patronymic" },
+            { new StringContent(login), "login" },
+            { new StringContent(password), "password" },
         };
 
         try
         {
+            // Отображаем индикатор загрузки и скрываем форму
+            RegistrationForm.IsVisible = false;
+            LoadingIndicator.IsRunning = true;
+            LoadingIndicator.IsVisible = true;
+
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
 
-            // Отправляем запрос и записываем ответ в response
             HttpResponseMessage response = await _httpClient.PostAsync("http://courseproject4/api/register", registerData);
 
             if (response.IsSuccessStatusCode)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<AuthResponse>(content);
-
-                if (result?.Token != null)
-                {
-                    await DisplayAlert("Успешная регистрация", "Пользователь успешно добавлен", "ОК");
-                }
-                else
-                {
-                    await DisplayAlert("Ошибка", "Не удалось получить данные пользователя из ответа сервера", "ОК");
-                }
+                await DisplayAlert("Успешная регистрация", "Пользователь успешно добавлен", "ОК");
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
@@ -90,9 +82,12 @@ public partial class Register : ContentPage
         {
             await DisplayAlert("Ошибка сети", ex.Message, "ОК");
         }
-
-
-
-
+        finally
+        {
+            // Восстанавливаем форму и скрываем индикатор загрузки
+            RegistrationForm.IsVisible = true;
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+        }
     }
 }

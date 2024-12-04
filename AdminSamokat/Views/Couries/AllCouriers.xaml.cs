@@ -20,6 +20,10 @@ public partial class AllCouriers : ContentPage
     {
         try
         {
+            // Показываем индикатор загрузки
+            LoadingIndicator.IsRunning = true;
+            LoadingIndicator.IsVisible = true;
+
             var token = Preferences.Get("UserToken", string.Empty);
 
             _httpClient.DefaultRequestHeaders.Authorization =
@@ -33,9 +37,13 @@ public partial class AllCouriers : ContentPage
                 var users = JsonSerializer.Deserialize<List<User>>(content);
 
                 Users.Clear();
-                foreach (var user in users)
+
+                // Фильтруем пользователей с ролью 2
+                var couriers = users.Where(user => user.RoleId == 2); // Предполагается, что RoleId указывает роль пользователя
+
+                foreach (var courier in couriers)
                 {
-                    Users.Add(user);
+                    Users.Add(courier);
                 }
             }
             else
@@ -48,11 +56,18 @@ public partial class AllCouriers : ContentPage
         {
             await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
         }
+        finally
+        {
+            // Скрываем индикатор загрузки
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+        }
     }
+
 
     private async void OnCourierSelected(object sender, SelectionChangedEventArgs e)
     {
-        // Получаем выбранного пользователя
+        // Получаем выбранного курьера
         if (e.CurrentSelection.FirstOrDefault() is User selectedCourier)
         {
             // Переход на страницу информации о курьере

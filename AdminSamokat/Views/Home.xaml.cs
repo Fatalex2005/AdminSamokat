@@ -82,6 +82,13 @@ public partial class Home : ContentPage
         await Navigation.PushAsync(new Views.Auth.Login());
         Navigation.RemovePage(this); // Убираем текущую страницу из стека
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Скрыть системную кнопку "Назад"
+        NavigationPage.SetHasBackButton(this, false);
+    }
 
     private void OnOrdersClicked(object sender, EventArgs e)
     {

@@ -19,6 +19,10 @@ public partial class AllBonuses : ContentPage
     {
         try
         {
+            // Показываем индикатор загрузки
+            LoadingIndicator.IsVisible = true;
+            LoadingIndicator.IsRunning = true;
+
             var token = Preferences.Get("UserToken", string.Empty);
 
             _httpClient.DefaultRequestHeaders.Authorization =
@@ -47,7 +51,14 @@ public partial class AllBonuses : ContentPage
         {
             await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
         }
+        finally
+        {
+            // Скрываем индикатор загрузки после завершения загрузки данных
+            LoadingIndicator.IsVisible = false;
+            LoadingIndicator.IsRunning = false;
+        }
     }
+
 
     private async void OnBonusSelected(object sender, SelectionChangedEventArgs e)
     {

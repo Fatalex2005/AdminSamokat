@@ -114,7 +114,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Views\Penalties\" />
+	  <Folder Include="Views\Fines\" />
 	  <Folder Include="Views\Orders\" />
 	</ItemGroup>
 

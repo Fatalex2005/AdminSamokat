@@ -68,6 +68,10 @@ public partial class EditProfile : ContentPage
         // Запрос серверу
         try
         {
+            // Скрываем форму и показываем индикатор загрузки
+            MainContent.IsVisible = false;
+            LoadingIndicator.IsRunning = true;
+            LoadingIndicator.IsVisible = true;
             // Отправляем запрос и записываем ответ в response
             _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
@@ -94,8 +98,10 @@ public partial class EditProfile : ContentPage
                 loginLabel.Text = updatedUser.Login;
                 passwordLabel.Text = updatedUser.Password;
 
-                await DisplayAlert("Успех", "Профиль успешно обновлён!", "OK");
-                await Navigation.PushAsync(new Profile(_user, _token));
+                await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
+
+                await Navigation.PushAsync(new Views.Home(_user,_token));
+                Navigation.RemovePage(this); // Убираем текущую страницу из стека
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -112,6 +118,12 @@ public partial class EditProfile : ContentPage
         {
             await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "OK");
         }
+        finally
+        {
+            // Восстанавливаем интерфейс, если авторизация не удалась
+            MainContent.IsVisible = true;
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+        }
     }
-
 }

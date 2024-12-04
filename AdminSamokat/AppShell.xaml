@@ -9,5 +9,6 @@
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:Views.Auth.Login}"
-        Route="Home" />
+        Route="Home" >
+    </ShellContent>
 </Shell>

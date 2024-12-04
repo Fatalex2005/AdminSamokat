@@ -1,34 +1,65 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Couries.Courier">
     <Grid RowDefinitions="*,Auto" Padding="20">
-        <!-- Основная информация о курьере -->
-        <VerticalStackLayout Grid.Row="0" Spacing="20">
-            <!-- Личная информация -->
-            <Label x:Name="CourierFullNameLabel"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
-            <Label x:Name="CourierLoginLabel"
-                   FontSize="16"
-                   TextColor="Gray"
-                   HorizontalOptions="Center" />
-            <!-- Сепаратор для личной информации -->
-            <BoxView HeightRequest="1" BackgroundColor="Gray" HorizontalOptions="FillAndExpand" />
+        <!-- Содержимое страницы -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20">
+                <!-- Карточка: Основная информация -->
+                <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Основная информация"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#6200EE" />
+                        <Label x:Name="CourierFullNameLabel"
+                               FontSize="16"
+                               TextColor="Black" />
+                        <Label x:Name="CourierLoginLabel"
+                               FontSize="14"
+                               TextColor="Gray" />
+                    </VerticalStackLayout>
+                </Frame>
 
-            <!-- Раздел о штрафах -->
-            <Label Text="Штрафы"
-                   TextColor="Gray"
-                   FontSize="18"
-                   HorizontalOptions="Center"/>
-            <Label x:Name="FineLabel"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"/>
-            <!-- Сепаратор после штрафов -->
-            <BoxView HeightRequest="1" BackgroundColor="Gray" HorizontalOptions="FillAndExpand" />
-        </VerticalStackLayout>
+                <!-- Карточка: Штрафы -->
+                <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Штраф"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#6200EE" />
+                        <ActivityIndicator x:Name="LoadingFineIndicator"
+                                           IsRunning="False"
+                                           IsVisible="False"
+                                           HorizontalOptions="Center" />
+                        <Label x:Name="FineLabel"
+                               FontSize="16"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Карточка: Статус -->
+                <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Статус"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#6200EE" />
+                        <ActivityIndicator x:Name="LoadingStatusIndicator"
+                                           IsRunning="False"
+                                           IsVisible="False"
+                                           HorizontalOptions="Center" />
+                        <Label x:Name="StatusLabel"
+                               FontSize="16"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <!-- Кнопки внизу -->
         <VerticalStackLayout Grid.Row="1" Spacing="10">

@@ -73,5 +73,8 @@ public partial class AllCouriers : ContentPage
             // ѕереход на страницу информации о курьере
             await Navigation.PushAsync(new Courier(selectedCourier));
         }
+
+        // —брасываем выбор
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

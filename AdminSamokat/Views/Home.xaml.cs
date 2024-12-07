@@ -19,19 +19,19 @@ public partial class Home : ContentPage
         int hour = DateTime.Now.Hour;
         if (hour >= 5 && hour < 12)
         {
-            nameLabel.Text = "Доброе утро, " + user.Name;
+            nameLabel.Text = "Доброе утро, " + user.Name + "!";
         }
         else if (hour >= 12 && hour < 18)
         {
-            nameLabel.Text = "Добрый день, " + user.Name;
+            nameLabel.Text = "Добрый день, " + user.Name + "!";
         }
         else if (hour >= 18 && hour < 22)
         {
-            nameLabel.Text = "Добрый вечер, " + user.Name;
+            nameLabel.Text = "Добрый вечер, " + user.Name + "!";
         }
         else
         {
-            nameLabel.Text = "Доброй ночи, " + user.Name + ", что вы здесь забыли в это время, ночью зрение портится, ай-ай-ай";
+            nameLabel.Text = "Доброй ночи, " + user.Name + "! Что вы здесь забыли в это время, ночью зрение портится, ай-ай-ай";
         }
     }
 

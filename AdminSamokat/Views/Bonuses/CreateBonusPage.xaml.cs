@@ -53,6 +53,7 @@ public partial class CreateBonusPage : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Успех", "Бонус успешно добавлен", "ОК");
+                await Navigation.PushAsync(new Views.Home(_user, _token));
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {

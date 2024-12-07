@@ -77,7 +77,6 @@ public partial class EditBonus : ContentPage
                 await DisplayAlert("Успех", "Бонус успешно обновлён!", "Вернуться на главную");
 
                 await Navigation.PushAsync(new Views.Home(_user, token));
-                Navigation.RemovePage(this); // Убираем текущую страницу из стека
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {

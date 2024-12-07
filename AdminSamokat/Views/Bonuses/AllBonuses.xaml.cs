@@ -44,6 +44,10 @@ public partial class AllBonuses : ContentPage
                 {
                     Bonuses.Add(bonus);
                 }
+
+                // Управляем видимостью элементов в зависимости от количества бонусов
+                BonusesCollectionView.IsVisible = Bonuses.Count > 0;
+                EmptyMessageLabel.IsVisible = Bonuses.Count == 0;
             }
             else
             {
@@ -64,6 +68,7 @@ public partial class AllBonuses : ContentPage
     }
 
 
+
     private async void OnBonusSelected(object sender, SelectionChangedEventArgs e)
     {
         // Получаем выбранного пользователя
@@ -75,5 +80,11 @@ public partial class AllBonuses : ContentPage
 
         // Сбрасываем выбор
         ((CollectionView)sender).SelectedItem = null;
+    }
+
+    private async void OnCreateBonusClicked(object sender, EventArgs e)
+    {
+        // Переход на страницу создания бонуса
+        await Navigation.PushAsync(new CreateBonusPage(_user, _token));
     }
 }

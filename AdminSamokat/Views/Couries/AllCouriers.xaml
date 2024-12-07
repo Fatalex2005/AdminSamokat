@@ -11,11 +11,21 @@
                            VerticalOptions="Center" 
                            Color="Gray" />
 
+        <!-- Сообщение об отсутствии курьеров -->
+        <Label x:Name="EmptyMessageLabel"
+               Text="Курьеры отсутствуют"
+               FontSize="18"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="False" />
+
         <!-- CollectionView для отображения курьеров -->
         <VerticalStackLayout Spacing="10" Padding="10">
             <CollectionView x:Name="UsersCollectionView" 
                             SelectionMode="Single" 
-                            SelectionChanged="OnCourierSelected">
+                            SelectionChanged="OnCourierSelected"
+                            IsVisible="False">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <!-- Оборачиваем в StackLayout с отступами -->

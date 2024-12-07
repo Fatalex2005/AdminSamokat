@@ -11,38 +11,63 @@
                            VerticalOptions="Center" 
                            Color="Gray" />
 
-        <!-- CollectionView для отображения бонусов -->
-        <VerticalStackLayout Spacing="10" Padding="10">
-            <CollectionView x:Name="BonusesCollectionView" 
-                            SelectionMode="Single" 
-                            SelectionChanged="OnBonusSelected">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <!-- Оборачиваем в StackLayout с отступами -->
-                        <StackLayout Padding="10" Spacing="10">
-                            <Frame Padding="15" CornerRadius="10" HasShadow="True" BackgroundColor="White">
-                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
-                                    <Image Source="bonus_icon.png" 
-                                           HeightRequest="50" 
-                                           WidthRequest="50" 
-                                           Aspect="AspectFill" 
-                                           Grid.RowSpan="3"
-                                           Margin="0,0,15,0"/>
-                                    <Label Text="{Binding Title}" 
-                                           FontAttributes="Bold" 
-                                           FontSize="16" 
-                                           Grid.Column="1" />
-                                    <Label Text="{Binding Price, StringFormat='{}{0} ₽'}" 
-                                           FontSize="12" 
-                                           TextColor="Gray" 
-                                           Grid.Row="2" 
-                                           Grid.Column="1" />
-                                </Grid>
-                            </Frame>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
+        <!-- Сообщение об отсутствии бонусов -->
+        <Label x:Name="EmptyMessageLabel"
+               Text="Бонусы отсутствуют"
+               FontSize="18"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="False" />
+
+        <!-- ScrollView для прокрутки содержимого -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="10" Padding="10">
+                <!-- CollectionView для отображения бонусов -->
+                <CollectionView x:Name="BonusesCollectionView" 
+                                SelectionMode="Single" 
+                                SelectionChanged="OnBonusSelected"
+                                IsVisible="False">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Оборачиваем в StackLayout с отступами -->
+                            <StackLayout Padding="10" Spacing="10">
+                                <Frame Padding="15" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                                    <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+                                        <Image Source="bonus_icon.png" 
+                                               HeightRequest="50" 
+                                               WidthRequest="50" 
+                                               Aspect="AspectFill" 
+                                               Grid.RowSpan="3"
+                                               Margin="0,0,15,0"/>
+                                        <Label Text="{Binding Title}" 
+                                               FontAttributes="Bold" 
+                                               FontSize="16" 
+                                               Grid.Column="1" />
+                                        <Label Text="{Binding Price, StringFormat='{}{0} ₽'}" 
+                                               FontSize="12" 
+                                               TextColor="Gray" 
+                                               Grid.Row="2" 
+                                               Grid.Column="1" />
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Кнопка для создания бонуса -->
+        <Button Text="Создать бонус"
+                FontAttributes="Bold"
+                BackgroundColor="#6200EE"
+                TextColor="White"
+                CornerRadius="25"
+                Padding="15"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="End"
+                Margin="10"
+                Clicked="OnCreateBonusClicked" />
     </Grid>
 </ContentPage>

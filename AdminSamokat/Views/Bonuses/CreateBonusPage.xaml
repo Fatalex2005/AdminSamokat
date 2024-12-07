@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.Bonuses.CreateBonusPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9F9F9">
+
+    <!-- Основной контейнер -->
+    <Grid>
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsRunning="False" 
+                           IsVisible="False" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" 
+                           Color="Gray" />
+
+        <!-- Основная форма -->
+        <ScrollView x:Name="CreateForm" IsVisible="True">
+            <StackLayout Padding="20" Spacing="20">
+                <!-- Логотип -->
+                <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
+
+                <!-- Текстовое описание -->
+                <Label Text="На этой странице вы можете создать бонус!" 
+                       FontSize="24" 
+                       HorizontalTextAlignment="Center" 
+                       VerticalOptions="Center" 
+                       Margin="0,20,0,20"/>
+
+                <!-- Форма создания -->
+                <Frame Padding="15" CornerRadius="15" BackgroundColor="White" Margin="0,20">
+                    <StackLayout Spacing="15">
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="titleEntry" 
+                                   Placeholder="Введите название" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="descriptionEntry" 
+                                   Placeholder="Введите описание" 
+                                   Margin="5"/>
+                        </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Entry x:Name="priceEntry" 
+                                   Placeholder="Введите награду" 
+                                   Margin="5"/>
+                        </Frame>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Кнопка создания -->
+                <Button Text="Создать" 
+                        Clicked="OnCreateButtonClicked" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

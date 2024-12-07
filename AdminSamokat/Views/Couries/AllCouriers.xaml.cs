@@ -43,13 +43,17 @@ public partial class AllCouriers : ContentPage
                 Users.Clear();
 
                 // Фильтруем пользователей с ролью 2
-                var couriers = 
+                var couriers =
                     users.Where(user => user.RoleId == 2); // Предполагается, что RoleId указывает роль пользователя
 
                 foreach (var courier in couriers)
                 {
                     Users.Add(courier);
                 }
+
+                // Управляем видимостью элементов
+                UsersCollectionView.IsVisible = Users.Count > 0;
+                EmptyMessageLabel.IsVisible = Users.Count == 0;
             }
             else
             {
@@ -68,6 +72,7 @@ public partial class AllCouriers : ContentPage
             LoadingIndicator.IsVisible = false;
         }
     }
+
 
 
     private async void OnCourierSelected(object sender, SelectionChangedEventArgs e)

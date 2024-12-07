@@ -4,51 +4,45 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
-namespace AdminSamokat.Views.Bonuses;
+namespace AdminSamokat.Views.Fines;
 
-public partial class EditBonus : ContentPage
+public partial class EditFine : ContentPage
 {
     // Инициализация HTTP клиента
     private readonly HttpClient _httpClient = new HttpClient();
-    private Bonus _bonus;
+    private Fine _fine;
     private User _user;
     private string _token;
-    public EditBonus(Bonus bonus, User user, string token)
-    {
-        InitializeComponent();
+    public EditFine(Fine fine, User user, string token)
+	{
+		InitializeComponent();
+        _fine = fine;
         _user = user;
         _token = token;
-        _bonus = bonus;
 
-        titleLabel.Text = bonus.Title;
-        descriptionLabel.Text = bonus.Description;
-        priceLabel.Text = bonus.Price;
+        descriptionLabel.Text = fine.Description;
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
         // Проверка на пустые поля
-        if (string.IsNullOrWhiteSpace(titleLabel.Text) ||
-            string.IsNullOrWhiteSpace(descriptionLabel.Text) ||
-            string.IsNullOrWhiteSpace(priceLabel.Text))
+        if (string.IsNullOrWhiteSpace(descriptionLabel.Text))
         {
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
         }
 
         // Формируем данные для обновления
-        var updatedBonus = new
+        var updatedFine = new
         {
-            Title = titleLabel.Text,
             Description = descriptionLabel.Text,
-            Price = priceLabel.Text
         };
         // Настраиваем сериализацию для преобразования ключей в нижний регистр
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
         };
-        var jsonContent = new StringContent(JsonSerializer.Serialize(updatedBonus, options), Encoding.UTF8, "application/json");
+        var jsonContent = new StringContent(JsonSerializer.Serialize(updatedFine, options), Encoding.UTF8, "application/json");
 
 
         // Запрос серверу
@@ -62,20 +56,16 @@ public partial class EditBonus : ContentPage
             var token = Preferences.Get("UserToken", string.Empty);
             _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/bonus/{_bonus.Id}", jsonContent);
+            HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/fine/{_fine.Id}", jsonContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                _bonus.Title = updatedBonus.Title;
-                _bonus.Description = updatedBonus.Description;
-                _bonus.Price = updatedBonus.Price;
+                _fine.Description = updatedFine.Description;
 
                 // Обновляем UI
-                titleLabel.Text = updatedBonus.Title;
-                descriptionLabel.Text = updatedBonus.Description;
-                priceLabel.Text = updatedBonus.Price;
+                descriptionLabel.Text = updatedFine.Description;
 
-                await DisplayAlert("Успех", "Бонус успешно обновлён!", "Вернуться на главную");
+                await DisplayAlert("Успех", "Штраф успешно обновлён!", "Вернуться на главную");
 
                 await Navigation.PushAsync(new Views.Home(_user, token));
             }
@@ -87,7 +77,7 @@ public partial class EditBonus : ContentPage
             else
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Ошибка", $"Не удалось обновить бонус: {responseContent}", "OK");
+                await DisplayAlert("Ошибка", $"Не удалось обновить штраф: {responseContent}", "OK");
             }
         }
         catch (Exception ex)

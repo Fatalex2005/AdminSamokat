@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AdminSamokat.Views.Bonuses.EditBonus"
+             x:Class="AdminSamokat.Views.Fines.EditFine"
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
     <Grid>
@@ -9,7 +9,7 @@
         <ScrollView x:Name="MainContent" IsVisible="True">
             <StackLayout Padding="20" Spacing="20">
                 <!-- Заголовок -->
-                <Label Text="Редактировать бонус" 
+                <Label Text="Редактировать штраф" 
                        FontSize="28" 
                        FontAttributes="Bold" 
                        HorizontalOptions="Center" 
@@ -19,22 +19,8 @@
                 <!-- Поля для ввода -->
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                     <StackLayout>
-                        <Label Text="Название" FontAttributes="Bold" />
-                        <Entry x:Name="titleLabel" Placeholder="Введите название" BackgroundColor="#F5F5F5"/>
-                    </StackLayout>
-                </Frame>
-
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                    <StackLayout>
                         <Label Text="Описание" FontAttributes="Bold" />
                         <Entry x:Name="descriptionLabel" Placeholder="Введите описание" BackgroundColor="#F5F5F5"/>
-                    </StackLayout>
-                </Frame>
-
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
-                    <StackLayout>
-                        <Label Text="Награда" FontAttributes="Bold" />
-                        <Entry x:Name="priceLabel" Keyboard="Numeric" Placeholder="Введите награду" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 

@@ -1,5 +1,6 @@
 using AdminSamokat.Models;
 using AdminSamokat.Views.Auth;
+using AdminSamokat.Views.Fines;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace AdminSamokat.Views;
@@ -90,29 +91,29 @@ public partial class Home : ContentPage
         NavigationPage.SetHasBackButton(this, false);
     }
 
-    private void OnOrdersClicked(object sender, EventArgs e)
+    private async void OnOrdersClicked(object sender, EventArgs e)
     {
 
     }
 
-    private void OnCouriersClicked(object sender, EventArgs e)
+    private async void OnCouriersClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Couries.AllCouriers(_user, _token));
+        await Navigation.PushAsync(new Couries.AllCouriers(_user, _token));
     }
 
-    private void OnRegisterCourierClicked(object sender, EventArgs e)
+    private async void OnRegisterCourierClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Auth.Register(_user, _token));
+        await Navigation.PushAsync(new Auth.Register(_user, _token));
     }
 
-    private void OnBonusesClicked(object sender, EventArgs e)
+    private async void OnBonusesClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Bonuses.AllBonuses(_user, _token));
+        await Navigation.PushAsync(new Bonuses.AllBonuses(_user, _token));
     }
 
-    private void OnPenaltiesClicked(object sender, EventArgs e)
+    private async void OnPenaltiesClicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new Fines.AllFines(_user, _token));
     }
 
     private async void OnProfileButtonClicked(object sender, EventArgs e)

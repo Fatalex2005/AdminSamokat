@@ -68,6 +68,7 @@
 	  <None Remove="Resources\Images\bonus_icon.png" />
 	  <None Remove="Resources\Images\couriers.png" />
 	  <None Remove="Resources\Images\courier_icon.png" />
+	  <None Remove="Resources\Images\fine_icon.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\logout.png" />
 	  <None Remove="Resources\Images\orders.png" />
@@ -119,6 +120,18 @@
 	  <MauiXaml Update="Views\Couries\EditProfileCourier.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Fines\AllFines.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Fines\CreateFinePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Fines\EditFine.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Fines\FinePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\UserProfile\EditProfile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -131,7 +144,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Views\Fines\" />
 	  <Folder Include="Views\Orders\" />
 	</ItemGroup>
 

@@ -2,40 +2,50 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Bonuses.BonusPage">
-    <Grid RowDefinitions="*,Auto" Padding="20">
-        
-        <!-- Основная информация о бонусе -->
-        <VerticalStackLayout Grid.Row="0" Spacing="10">
-            <Label x:Name="BonusNameLabel"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
-            <Label x:Name="BonusDescriptionLabel"
-                   FontSize="16"
-                   TextColor="Gray"
-                   HorizontalOptions="Center" />
-            <Label x:Name="BonusPriceLabel"
-                    FontSize="16"
-                    TextColor="Gray"
-                    HorizontalOptions="Center" />
-        </VerticalStackLayout>
+    <Grid>
+        <!-- Основное содержимое страницы -->
+        <Grid x:Name="MainContent" RowDefinitions="*,Auto" Padding="20">
 
-        <!-- Кнопки внизу -->
-        <VerticalStackLayout Grid.Row="1" Spacing="10">
-            <Button Text="Изменить" 
-                    FontAttributes="Bold" 
-                    TextColor="White" 
-                    BackgroundColor="#6200EE"
-                    CornerRadius="25" 
-                    Padding="15" 
-                    Clicked="OnEditButtonClicked" />
-            <Button Text="Удалить" 
-                    FontAttributes="Bold" 
-                    TextColor="White" 
-                    BackgroundColor="#6200EE"
-                    CornerRadius="25" 
-                    Padding="15" 
-                    Clicked="OnDeleteButtonClicked" />
-        </VerticalStackLayout>
+            <!-- Основная информация о бонусе -->
+            <VerticalStackLayout Grid.Row="0" Spacing="10">
+                <Label x:Name="BonusNameLabel"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label x:Name="BonusDescriptionLabel"
+                       FontSize="16"
+                       TextColor="Gray"
+                       HorizontalOptions="Center" />
+                <Label x:Name="BonusPriceLabel"
+                       FontSize="16"
+                       TextColor="Gray"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Кнопки внизу -->
+            <VerticalStackLayout Grid.Row="1" Spacing="10">
+                <Button Text="Изменить" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15" 
+                        Clicked="OnEditButtonClicked" />
+                <Button Text="Удалить" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15" 
+                        Clicked="OnDeleteButtonClicked" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator"
+                           IsRunning="False"
+                           IsVisible="False"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
     </Grid>
 </ContentPage>

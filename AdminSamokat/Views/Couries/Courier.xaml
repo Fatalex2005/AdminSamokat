@@ -1,82 +1,92 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Couries.Courier">
-    <Grid RowDefinitions="*,Auto" Padding="20">
-        <!-- Содержимое страницы -->
-        <ScrollView Grid.Row="0">
-            <VerticalStackLayout Spacing="20">
-                <!-- Карточка: Основная информация -->
-                <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="Основная информация"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="#6200EE" />
-                        <Label x:Name="CourierFullNameLabel"
-                               FontSize="16"
-                               TextColor="Black" />
-                        <Label x:Name="CourierLoginLabel"
-                               FontSize="14"
-                               TextColor="Gray" />
-                    </VerticalStackLayout>
-                </Frame>
+    <Grid>
+        <!-- Основное содержимое -->
+        <Grid x:Name="MainContent" RowDefinitions="*,Auto" Padding="20">
+            <!-- Содержимое страницы -->
+            <ScrollView Grid.Row="0">
+                <VerticalStackLayout Spacing="20">
+                    <!-- Карточка: Основная информация -->
+                    <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Основная информация"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#6200EE" />
+                            <Label x:Name="CourierFullNameLabel"
+                                   FontSize="16"
+                                   TextColor="Black" />
+                            <Label x:Name="CourierLoginLabel"
+                                   FontSize="14"
+                                   TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Frame>
 
-                <!-- Карточка: Штрафы -->
-                <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="Штраф"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="#6200EE" />
-                        <ActivityIndicator x:Name="LoadingFineIndicator"
-                                           IsRunning="False"
-                                           IsVisible="False"
-                                           HorizontalOptions="Center" />
-                        <Label x:Name="FineLabel"
-                               FontSize="16"
-                               TextColor="Black"
-                               HorizontalOptions="Center"
-                               HorizontalTextAlignment="Center" />
-                    </VerticalStackLayout>
-                </Frame>
+                    <!-- Карточка: Штрафы -->
+                    <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Штраф"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#6200EE" />
+                            <ActivityIndicator x:Name="LoadingFineIndicator"
+                                               IsRunning="False"
+                                               IsVisible="False"
+                                               HorizontalOptions="Center" />
+                            <Label x:Name="FineLabel"
+                                   FontSize="16"
+                                   TextColor="Black"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
 
-                <!-- Карточка: Статус -->
-                <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
-                    <VerticalStackLayout Spacing="10">
-                        <Label Text="Статус"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="#6200EE" />
-                        <ActivityIndicator x:Name="LoadingStatusIndicator"
-                                           IsRunning="False"
-                                           IsVisible="False"
-                                           HorizontalOptions="Center" />
-                        <Label x:Name="StatusLabel"
-                               FontSize="16"
-                               TextColor="Black"
-                               HorizontalOptions="Center"
-                               HorizontalTextAlignment="Center" />
-                    </VerticalStackLayout>
-                </Frame>
+                    <!-- Карточка: Статус -->
+                    <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="Статус"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#6200EE" />
+                            <ActivityIndicator x:Name="LoadingStatusIndicator"
+                                               IsRunning="False"
+                                               IsVisible="False"
+                                               HorizontalOptions="Center" />
+                            <Label x:Name="StatusLabel"
+                                   FontSize="16"
+                                   TextColor="Black"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <!-- Кнопки внизу -->
+            <VerticalStackLayout Grid.Row="1" Spacing="10">
+                <Button Text="Изменить профиль" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15" 
+                        Clicked="OnEditButtonClicked" />
+                <Button Text="Удалить курьера" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15" 
+                        Clicked="OnDeleteButtonClicked" />
             </VerticalStackLayout>
-        </ScrollView>
+        </Grid>
 
-        <!-- Кнопки внизу -->
-        <VerticalStackLayout Grid.Row="1" Spacing="10">
-            <Button Text="Изменить профиль" 
-                    FontAttributes="Bold" 
-                    TextColor="White" 
-                    BackgroundColor="#6200EE"
-                    CornerRadius="25" 
-                    Padding="15" 
-                    Clicked="OnEditButtonClicked" />
-            <Button Text="Удалить курьера" 
-                    FontAttributes="Bold" 
-                    TextColor="White" 
-                    BackgroundColor="#6200EE"
-                    CornerRadius="25" 
-                    Padding="15" 
-                    Clicked="OnDeleteButtonClicked" />
-        </VerticalStackLayout>
+        <!-- Индикатор загрузки удаления -->
+        <ActivityIndicator x:Name="DeleteLoadingIndicator"
+                           IsRunning="False"
+                           IsVisible="False"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
     </Grid>
 </ContentPage>

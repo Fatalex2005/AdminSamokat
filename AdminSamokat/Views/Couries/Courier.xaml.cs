@@ -111,8 +111,49 @@ public partial class Courier : ContentPage
         await Navigation.PushAsync(new EditProfileCourier(_courier, _user, _token));
     }
 
-    private void OnDeleteButtonClicked(object sender, EventArgs e)
+    private async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
+        var confirm = await DisplayAlert("Подтверждение", "Вы уверены, что хотите удалить курьера?", "Да", "Отмена");
 
+        if (!confirm)
+            return;
+
+        try
+        {
+            // Скрываем основное содержимое и показываем индикатор
+            MainContent.IsVisible = false;
+            DeleteLoadingIndicator.IsRunning = true;
+            DeleteLoadingIndicator.IsVisible = true;
+
+            // Настраиваем заголовки и токен
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+            // Отправляем DELETE-запрос на сервер
+            var response = await _httpClient.DeleteAsync($"http://courseproject4/api/profile/{_courier.Id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                await DisplayAlert("Успех", "Курьер успешно удалён.", "ОК");
+
+                await Navigation.PushAsync(new Home(_user, _token));
+            }
+            else
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Ошибка", $"Не удалось удалить курьера: {response.StatusCode} - {responseContent}", "ОК");
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
+        }
+        finally
+        {
+            // Возвращаем основное содержимое и скрываем индикатор
+            MainContent.IsVisible = true;
+            DeleteLoadingIndicator.IsRunning = false;
+            DeleteLoadingIndicator.IsVisible = false;
+        }
     }
 }

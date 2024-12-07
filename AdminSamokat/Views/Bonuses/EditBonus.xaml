@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.Bonuses.EditBonus"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F9F9F9">
+    <Grid>
+        <!-- Основной контент с прокруткой -->
+        <ScrollView x:Name="MainContent" IsVisible="True">
+            <StackLayout Padding="20" Spacing="20">
+                <!-- Заголовок -->
+                <Label Text="Редактировать профиль" 
+                       FontSize="28" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" 
+                       Margin="0,20,0,20"/>
+
+                <!-- Поля для ввода -->
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Название" FontAttributes="Bold" />
+                        <Entry x:Name="titleLabel" Placeholder="Введите название" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Описание" FontAttributes="Bold" />
+                        <Entry x:Name="descriptionLabel" Placeholder="Введите описание" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Награда" FontAttributes="Bold" />
+                        <Entry x:Name="priceLabel" Keyboard="Numeric" Placeholder="Введите награду" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Кнопка сохранения -->
+                <Button Text="Сохранить" 
+                        Clicked="OnSaveButtonClicked" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BackgroundColor="#6200EE"
+                        CornerRadius="25" 
+                        Padding="15" 
+                        Margin="0,20,0,0"/>
+            </StackLayout>
+        </ScrollView>
+
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsVisible="False" 
+                           IsRunning="False" 
+                           Color="Gray" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center"/>
+    </Grid>
+</ContentPage>

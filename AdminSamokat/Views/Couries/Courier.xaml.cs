@@ -6,11 +6,15 @@ namespace AdminSamokat.Views.Couries;
 public partial class Courier : ContentPage
 {
     private User _courier;
+    private User _user;
+    private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
 
-    public Courier(User courier)
+    public Courier(User courier, User user, string token)
     {
         InitializeComponent();
+        _user = user;
+        _token = token;
         _courier = courier;
 
         // Отобразить данные курьера
@@ -102,9 +106,9 @@ public partial class Courier : ContentPage
         }
     }
 
-    private void OnEditButtonClicked(object sender, EventArgs e)
+    private async void OnEditButtonClicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new EditProfileCourier(_courier, _user, _token));
     }
 
     private void OnDeleteButtonClicked(object sender, EventArgs e)

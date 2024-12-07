@@ -6,12 +6,16 @@ namespace AdminSamokat.Views.Couries;
 
 public partial class AllCouriers : ContentPage
 {
+    private User _user;
+    private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
     public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
 
-    public AllCouriers()
+    public AllCouriers(User user, string token)
     {
         InitializeComponent();
+        _user = user;
+        _token = token;
         UsersCollectionView.ItemsSource = Users;
         LoadUsers();
     }
@@ -39,7 +43,8 @@ public partial class AllCouriers : ContentPage
                 Users.Clear();
 
                 // Фильтруем пользователей с ролью 2
-                var couriers = users.Where(user => user.RoleId == 2); // Предполагается, что RoleId указывает роль пользователя
+                var couriers = 
+                    users.Where(user => user.RoleId == 2); // Предполагается, что RoleId указывает роль пользователя
 
                 foreach (var courier in couriers)
                 {
@@ -71,7 +76,7 @@ public partial class AllCouriers : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is User selectedCourier)
         {
             // Переход на страницу информации о курьере
-            await Navigation.PushAsync(new Courier(selectedCourier));
+            await Navigation.PushAsync(new Courier(selectedCourier, _user, _token));
         }
 
         // Сбрасываем выбор

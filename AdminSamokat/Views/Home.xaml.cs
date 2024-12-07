@@ -97,7 +97,7 @@ public partial class Home : ContentPage
 
     private void OnCouriersClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Couries.AllCouriers());
+        Navigation.PushAsync(new Couries.AllCouriers(_user, _token));
     }
 
     private void OnRegisterCourierClicked(object sender, EventArgs e)
@@ -107,7 +107,7 @@ public partial class Home : ContentPage
 
     private void OnBonusesClicked(object sender, EventArgs e)
     {
-        Navigation.PushAsync(new Bonuses.AllBonuses());
+        Navigation.PushAsync(new Bonuses.AllBonuses(_user, _token));
     }
 
     private void OnPenaltiesClicked(object sender, EventArgs e)

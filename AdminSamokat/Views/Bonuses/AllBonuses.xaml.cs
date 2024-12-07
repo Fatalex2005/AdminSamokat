@@ -6,11 +6,15 @@ namespace AdminSamokat.Views.Bonuses;
 
 public partial class AllBonuses : ContentPage
 {
+    private User _user;
+    private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
     public ObservableCollection<Bonus> Bonuses { get; set; } = new ObservableCollection<Bonus>();
-    public AllBonuses()
+    public AllBonuses(User user, string token)
 	{
 		InitializeComponent();
+        _user = user;
+        _token = token;
         BonusesCollectionView.ItemsSource = Bonuses;
         LoadBonuses();
     }
@@ -65,8 +69,11 @@ public partial class AllBonuses : ContentPage
         // Получаем выбранного пользователя
         if (e.CurrentSelection.FirstOrDefault() is Bonus selectedBonus)
         {
-            // Переход на страницу информации о курьере
-            await Navigation.PushAsync(new BonusPage(selectedBonus));
+            // Переход на страницу информации о бонусе
+            await Navigation.PushAsync(new BonusPage(selectedBonus, _user, _token));
         }
+
+        // Сбрасываем выбор
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

@@ -28,6 +28,8 @@ public partial class EditProfile : ContentPage
             patronymicLabel.Text = user.Patronymic;
         }
         loginLabel.Text = user.Login;
+        passwordLabel.Text = user.Password;
+        confirmPasswordLabel.Text = user.Password;
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)

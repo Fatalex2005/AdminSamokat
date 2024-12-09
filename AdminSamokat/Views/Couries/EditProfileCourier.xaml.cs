@@ -30,6 +30,9 @@ public partial class EditProfileCourier : ContentPage
             patronymicLabel.Text = courier.Patronymic;
         }
         loginLabel.Text = courier.Login;
+        passwordLabel.Text = user.Password;
+        confirmPasswordLabel.Text = user.Password;
+
         LoadStatuses();
     }
 

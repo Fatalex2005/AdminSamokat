@@ -33,8 +33,10 @@ namespace AdminSamokat.Models
         
         [JsonPropertyName("role_id")]
         public ulong RoleId { get; set; }
+
         [JsonPropertyName("fine_id")]
         public ulong FineId { get; set; }
+
         [JsonPropertyName("status_id")]
         public ulong StatusId { get; set; }
 

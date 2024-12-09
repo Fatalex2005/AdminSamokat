@@ -31,99 +31,110 @@ public partial class EditProfile : ContentPage
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
-    {
-        // Проверка на пустые поля
-        if (string.IsNullOrWhiteSpace(surnameLabel.Text) ||
+{
+    // Проверка на пустые поля
+    if (string.IsNullOrWhiteSpace(surnameLabel.Text) ||
         string.IsNullOrWhiteSpace(nameLabel.Text) ||
-            string.IsNullOrWhiteSpace(loginLabel.Text) ||
-            string.IsNullOrWhiteSpace(passwordLabel.Text))
-        {
-            await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
-            return;
-        }
+        string.IsNullOrWhiteSpace(passwordLabel.Text))
+    {
+        await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
+        return;
+    }
 
-        if (passwordLabel.Text != confirmPasswordLabel.Text)
-        {
-            await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
-            return;
-        }
+    if (passwordLabel.Text != confirmPasswordLabel.Text)
+    {
+        await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
+        return;
+    }
 
-        // Формируем данные для обновления
-        var updatedUser = new
-        {
-            Surname = surnameLabel.Text,
-            Name = nameLabel.Text,
-            Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text,
-            Login = loginLabel.Text,
-            Password = passwordLabel.Text
-        };
-        // Настраиваем сериализацию для преобразования ключей в нижний регистр
-        var options = new JsonSerializerOptions
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
-        };
-        var jsonContent = new StringContent(JsonSerializer.Serialize(updatedUser, options), Encoding.UTF8, "application/json");
+    // Формируем данные для обновления
+    var updatedUser = new Dictionary<string, object>
+    {
+        { "surname", surnameLabel.Text },
+        { "name", nameLabel.Text },
+        { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
+        { "password", passwordLabel.Text }
+    };
 
+    // Добавляем поле "login", только если оно изменилось
+    if (loginLabel.Text != _user.Login)
+    {
+        updatedUser.Add("login", loginLabel.Text);
+    }
 
-        // Запрос серверу
-        try
-        {
-            // Скрываем форму и показываем индикатор загрузки
-            MainContent.IsVisible = false;
-            LoadingIndicator.IsRunning = true;
-            LoadingIndicator.IsVisible = true;
-            // Отправляем запрос и записываем ответ в response
-            _httpClient.DefaultRequestHeaders.Authorization =
+    // Настраиваем сериализацию для преобразования ключей в нижний регистр
+    var options = new JsonSerializerOptions
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
+    };
+    var jsonContent = new StringContent(JsonSerializer.Serialize(updatedUser, options), Encoding.UTF8, "application/json");
+
+    // Запрос серверу
+    try
+    {
+        // Скрываем форму и показываем индикатор загрузки
+        MainContent.IsVisible = false;
+        LoadingIndicator.IsRunning = true;
+        LoadingIndicator.IsVisible = true;
+
+        // Отправляем запрос и записываем ответ в response
+        _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-            HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_user.Id}", jsonContent);
+        HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_user.Id}", jsonContent);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                _user.Surname = updatedUser.Surname;
-                _user.Name = updatedUser.Name;
-                _user.Patronymic = updatedUser.Patronymic;
-                _user.Login = updatedUser.Login;
-                _user.Password = updatedUser.Password;
-
-                Preferences.Set("UserSurname", updatedUser.Surname);
-                Preferences.Set("UserName", updatedUser.Name);
-                Preferences.Set("UserPatronymic", updatedUser.Patronymic ?? "");
-                Preferences.Set("UserLogin", updatedUser.Login);
-                Preferences.Set("UserPassword", updatedUser.Password);
-
-                // Обновляем UI
-                surnameLabel.Text = updatedUser.Surname;
-                nameLabel.Text = updatedUser.Name;
-                patronymicLabel.Text = updatedUser.Patronymic ?? "";
-                loginLabel.Text = updatedUser.Login;
-                passwordLabel.Text = updatedUser.Password;
-
-                await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
-
-                await Navigation.PushAsync(new Views.Home(_user,_token));
-                Navigation.RemovePage(this); // Убираем текущую страницу из стека
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-            {
-                await DisplayAlert("Ошибка", "Сессия истекла. Авторизуйтесь снова.", "OK");
-                await Navigation.PushAsync(new Views.Auth.Login());
-            }
-            else
-            {
-                var responseContent = await response.Content.ReadAsStringAsync();
-                await DisplayAlert("Ошибка", $"Не удалось обновить профиль: {responseContent}", "OK");
-            }
-        }
-        catch (Exception ex)
+        if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
-            await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "OK");
+            // Обновляем локальную копию данных пользователя
+            _user.Surname = surnameLabel.Text;
+            _user.Name = nameLabel.Text;
+            _user.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
+            _user.Password = passwordLabel.Text;
+
+            if (loginLabel.Text != _user.Login)
+            {
+                _user.Login = loginLabel.Text;
+            }
+
+            Preferences.Set("UserSurname", _user.Surname);
+            Preferences.Set("UserName", _user.Name);
+            Preferences.Set("UserPatronymic", _user.Patronymic ?? "");
+            Preferences.Set("UserLogin", _user.Login);
+            Preferences.Set("UserPassword", _user.Password);
+
+            // Обновляем UI
+            surnameLabel.Text = _user.Surname;
+            nameLabel.Text = _user.Name;
+            patronymicLabel.Text = _user.Patronymic ?? "";
+            loginLabel.Text = _user.Login;
+            passwordLabel.Text = _user.Password;
+
+            await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
+
+            await Navigation.PushAsync(new Views.Home(_user, _token));
+            Navigation.RemovePage(this); // Убираем текущую страницу из стека
         }
-        finally
+        else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
         {
-            // Восстанавливаем интерфейс, если авторизация не удалась
-            MainContent.IsVisible = true;
-            LoadingIndicator.IsRunning = false;
-            LoadingIndicator.IsVisible = false;
+            await DisplayAlert("Ошибка", "Сессия истекла. Авторизуйтесь снова.", "OK");
+            await Navigation.PushAsync(new Views.Auth.Login());
+        }
+        else
+        {
+            var responseContent = await response.Content.ReadAsStringAsync();
+            await DisplayAlert("Ошибка", $"Не удалось обновить профиль: {responseContent}", "OK");
         }
     }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "OK");
+    }
+    finally
+    {
+        // Восстанавливаем интерфейс, если авторизация не удалась
+        MainContent.IsVisible = true;
+        LoadingIndicator.IsRunning = false;
+        LoadingIndicator.IsVisible = false;
+    }
+}
+
 }

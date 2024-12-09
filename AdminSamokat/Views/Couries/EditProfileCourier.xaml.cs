@@ -51,14 +51,19 @@ public partial class EditProfileCourier : ContentPage
         }
 
         // Формируем данные для обновления
-        var updatedUser = new
+        var updatedUser = new Dictionary<string, object>
+    {
+        { "surname", surnameLabel.Text },
+        { "name", nameLabel.Text },
+        { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
+        { "password", passwordLabel.Text }
+    };
+
+        // Добавляем поле "login", только если оно изменилось
+        if (loginLabel.Text != _courier.Login)
         {
-            Surname = surnameLabel.Text,
-            Name = nameLabel.Text,
-            Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text,
-            Login = loginLabel.Text,
-            Password = passwordLabel.Text
-        };
+            updatedUser.Add("login", loginLabel.Text);
+        }
         // Настраиваем сериализацию для преобразования ключей в нижний регистр
         var options = new JsonSerializerOptions
         {
@@ -75,29 +80,33 @@ public partial class EditProfileCourier : ContentPage
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
             // Отправляем запрос и записываем ответ в response
-            var token = Preferences.Get("UserToken", string.Empty);
             _httpClient.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
             HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_courier.Id}", jsonContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                _courier.Surname = updatedUser.Surname;
-                _courier.Name = updatedUser.Name;
-                _courier.Patronymic = updatedUser.Patronymic;
-                _courier.Login = updatedUser.Login;
-                _courier.Password = updatedUser.Password;
+                // Обновляем локальную копию данных пользователя
+                _courier.Surname = surnameLabel.Text;
+                _courier.Name = nameLabel.Text;
+                _courier.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
+                _courier.Password = passwordLabel.Text;
+
+                if (loginLabel.Text != _courier.Login)
+                {
+                    _courier.Login = loginLabel.Text;
+                }
 
                 // Обновляем UI
-                surnameLabel.Text = updatedUser.Surname;
-                nameLabel.Text = updatedUser.Name;
-                patronymicLabel.Text = updatedUser.Patronymic ?? "";
-                loginLabel.Text = updatedUser.Login;
-                passwordLabel.Text = updatedUser.Password;
+                surnameLabel.Text = _courier.Surname;
+                nameLabel.Text = _courier.Name;
+                patronymicLabel.Text = _courier.Patronymic ?? "";
+                loginLabel.Text = _courier.Login;
+                passwordLabel.Text = _courier.Password;
 
                 await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
 
-                await Navigation.PushAsync(new Views.Home(_user, token));
+                await Navigation.PushAsync(new Views.Home(_user, _token));
                 Navigation.RemovePage(this); // Убираем текущую страницу из стека
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -117,7 +126,7 @@ public partial class EditProfileCourier : ContentPage
         }
         finally
         {
-            // Восстанавливаем интерфейс, если авторизация не удалась
+            // Восстанавливаем интерфейс, если изменить не удалось
             MainContent.IsVisible = true;
             LoadingIndicator.IsRunning = false;
             LoadingIndicator.IsVisible = false;

@@ -30,8 +30,6 @@ public partial class EditProfileCourier : ContentPage
             patronymicLabel.Text = courier.Patronymic;
         }
         loginLabel.Text = courier.Login;
-        passwordLabel.Text = user.Password;
-        confirmPasswordLabel.Text = user.Password;
 
         LoadStatuses();
     }
@@ -41,14 +39,13 @@ public partial class EditProfileCourier : ContentPage
         // Проверка на пустые поля
         if (string.IsNullOrWhiteSpace(surnameLabel.Text) ||
             string.IsNullOrWhiteSpace(nameLabel.Text) ||
-            string.IsNullOrWhiteSpace(loginLabel.Text) ||
-            string.IsNullOrWhiteSpace(passwordLabel.Text))
+            string.IsNullOrWhiteSpace(loginLabel.Text))
         {
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
         }
 
-        if (passwordLabel.Text != confirmPasswordLabel.Text)
+        if (!checkPassword.IsChecked && passwordLabel.Text != confirmPasswordLabel.Text)
         {
             await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
             return;
@@ -58,19 +55,24 @@ public partial class EditProfileCourier : ContentPage
 
         // Формируем данные для обновления
         var updatedUser = new Dictionary<string, object>
-    {
-        { "surname", surnameLabel.Text },
-        { "name", nameLabel.Text },
-        { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
-        { "password", passwordLabel.Text },
-        // Добавляем выбранные ID статуса
-        { "status_id", selectedStatus.Id }
-    };
+        {
+            { "surname", surnameLabel.Text },
+            { "name", nameLabel.Text },
+            { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
+            // Добавляем выбранные ID статуса
+            { "status_id", selectedStatus.Id }
+        };
 
         // Добавляем поле "login", только если оно изменилось
         if (loginLabel.Text != _courier.Login)
         {
             updatedUser.Add("login", loginLabel.Text);
+        }
+
+        // Добавляем поле "password", только если галочка снята
+        if (!checkPassword.IsChecked)
+        {
+            updatedUser.Add("password", passwordLabel.Text);
         }
 
         // Настраиваем сериализацию для преобразования ключей в нижний регистр
@@ -99,7 +101,6 @@ public partial class EditProfileCourier : ContentPage
                 _courier.Surname = surnameLabel.Text;
                 _courier.Name = nameLabel.Text;
                 _courier.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
-                _courier.Password = passwordLabel.Text;
                 _courier.StatusId = selectedStatus.Id; // Сохраняем выбранный статус
 
                 if (loginLabel.Text != _courier.Login)
@@ -112,7 +113,6 @@ public partial class EditProfileCourier : ContentPage
                 nameLabel.Text = _courier.Name;
                 patronymicLabel.Text = _courier.Patronymic ?? "";
                 loginLabel.Text = _courier.Login;
-                passwordLabel.Text = _courier.Password;
 
                 await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
 
@@ -176,5 +176,14 @@ public partial class EditProfileCourier : ContentPage
             LoadingIndicator.IsVisible = false;
             LoadingIndicator.IsRunning = false;
         }
+    }
+
+    private void OnCheckPasswordChanged(object sender, CheckedChangedEventArgs e)
+    {
+        bool isChecked = e.Value;
+
+        // Если галочка снята, показываем поля для ввода пароля
+        password.IsVisible = !isChecked;
+        confirmPassword.IsVisible = !isChecked;
     }
 }

@@ -7,7 +7,7 @@
     <Grid>
         <!-- Основной контент с прокруткой -->
         <ScrollView x:Name="MainContent" IsVisible="True">
-            <StackLayout Padding="20" Spacing="20">
+            <StackLayout Padding="20" Spacing="10">
                 <!-- Заголовок -->
                 <Label Text="Редактировать профиль" 
                        FontSize="28" 
@@ -17,7 +17,7 @@
                        Margin="0,20,0,20"/>
 
                 <!-- Раздел: Основные данные -->
-                <Label Text="Основные данные" FontSize="20" FontAttributes="Bold" TextColor="#6200EE" Margin="0,10"/>
+                <Label Text="Основные данные" FontSize="20" FontAttributes="Bold" TextColor="#6200EE"/>
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Фамилия" FontAttributes="Bold" />
@@ -45,26 +45,28 @@
                         <Entry x:Name="loginLabel" Placeholder="Введите логин" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <CheckBox x:Name="checkPassword" IsChecked="True" CheckedChanged="OnCheckPasswordChanged" VerticalOptions="Center" />
+                    <Label Text="Не изменять пароль" VerticalOptions="Center" />
+                </StackLayout>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
+                <Frame x:Name="password" IsVisible="False" Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Пароль" FontAttributes="Bold" />
                         <Entry x:Name="passwordLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
+                <Frame IsVisible="False" x:Name="confirmPassword" Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Подтвердите пароль" FontAttributes="Bold" />
                         <Entry x:Name="confirmPasswordLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
-
                 <!-- Раздел: Статус -->
-                <Label Text="Статус" FontSize="20" FontAttributes="Bold" TextColor="#6200EE" Margin="0,10"/>
+                <Label Text="Статус" FontSize="20" FontAttributes="Bold" TextColor="#6200EE"/>
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
-                        <Label Text="Выберите статус" FontAttributes="Bold" />
                         <Picker x:Name="StatusPicker" Title="Выберите статус" ItemsSource="{Binding Statuses}" ItemDisplayBinding="{Binding Name}" />
                     </StackLayout>
                 </Frame>

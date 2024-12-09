@@ -30,13 +30,14 @@ public partial class EditProfileCourier : ContentPage
             patronymicLabel.Text = courier.Patronymic;
         }
         loginLabel.Text = courier.Login;
+        LoadStatuses();
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
         // Проверка на пустые поля
         if (string.IsNullOrWhiteSpace(surnameLabel.Text) ||
-        string.IsNullOrWhiteSpace(nameLabel.Text) ||
+            string.IsNullOrWhiteSpace(nameLabel.Text) ||
             string.IsNullOrWhiteSpace(loginLabel.Text) ||
             string.IsNullOrWhiteSpace(passwordLabel.Text))
         {
@@ -50,13 +51,17 @@ public partial class EditProfileCourier : ContentPage
             return;
         }
 
+        var selectedStatus = StatusPicker.SelectedItem as Status;
+
         // Формируем данные для обновления
         var updatedUser = new Dictionary<string, object>
     {
         { "surname", surnameLabel.Text },
         { "name", nameLabel.Text },
         { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
-        { "password", passwordLabel.Text }
+        { "password", passwordLabel.Text },
+        // Добавляем выбранные ID статуса
+        { "status_id", selectedStatus.Id }
     };
 
         // Добавляем поле "login", только если оно изменилось
@@ -64,13 +69,13 @@ public partial class EditProfileCourier : ContentPage
         {
             updatedUser.Add("login", loginLabel.Text);
         }
+
         // Настраиваем сериализацию для преобразования ключей в нижний регистр
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
         };
         var jsonContent = new StringContent(JsonSerializer.Serialize(updatedUser, options), Encoding.UTF8, "application/json");
-
 
         // Запрос серверу
         try
@@ -79,6 +84,7 @@ public partial class EditProfileCourier : ContentPage
             MainContent.IsVisible = false;
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
+
             // Отправляем запрос и записываем ответ в response
             _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
@@ -91,6 +97,7 @@ public partial class EditProfileCourier : ContentPage
                 _courier.Name = nameLabel.Text;
                 _courier.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
                 _courier.Password = passwordLabel.Text;
+                _courier.StatusId = selectedStatus.Id; // Сохраняем выбранный статус
 
                 if (loginLabel.Text != _courier.Login)
                 {
@@ -130,6 +137,41 @@ public partial class EditProfileCourier : ContentPage
             MainContent.IsVisible = true;
             LoadingIndicator.IsRunning = false;
             LoadingIndicator.IsVisible = false;
+        }
+    }
+
+    private async void LoadStatuses()
+    {
+        try
+        {
+            LoadingIndicator.IsVisible = true;
+            LoadingIndicator.IsRunning = true;
+
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+            // Загружаем список статусов
+            var statusesResponse = await _httpClient.GetAsync("http://courseproject4/api/status");
+            if (statusesResponse.IsSuccessStatusCode)
+            {
+                var statusesContent = await statusesResponse.Content.ReadAsStringAsync();
+                var statuses = JsonSerializer.Deserialize<List<Status>>(statusesContent);
+
+                // Привязываем список статусов к Picker
+                StatusPicker.ItemsSource = statuses;
+
+                // Устанавливаем выбранное значение, соответствующее текущему статусу пользователя
+                StatusPicker.SelectedItem = statuses.FirstOrDefault(s => s.Id == _courier.StatusId);
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ошибка", $"Произошла ошибка при загрузке данных: {ex.Message}", "OK");
+        }
+        finally
+        {
+            LoadingIndicator.IsVisible = false;
+            LoadingIndicator.IsRunning = false;
         }
     }
 }

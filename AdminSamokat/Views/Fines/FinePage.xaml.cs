@@ -1,5 +1,6 @@
 using AdminSamokat.Models;
 using System.Collections.ObjectModel;
+using System.Text;
 using System.Text.Json;
 
 namespace AdminSamokat.Views.Fines;
@@ -141,13 +142,63 @@ public partial class FinePage : ContentPage
 
     private async void OnAssignButtonClicked(object sender, EventArgs e)
     {
-        // Логика для назначения курьера
+        // Получаем курьера, связанного с кнопкой
         var selectedCourier = ((Button)sender).BindingContext as User;
 
         if (selectedCourier != null)
         {
-            // Например, открытие страницы назначения
-            await DisplayAlert("Назначение", $"Курьер {selectedCourier.Name} назначен!", "ОК");
+            // Проверяем, назначен ли уже этот штраф
+            if (selectedCourier.FineId == _fine.Id)
+            {
+                await DisplayAlert("Внимание", "Пользователю уже назначен этот штраф.", "ОК");
+                return; // Прекращаем выполнение, если штраф уже назначен
+            }
+
+            try
+            {
+                // Настраиваем запрос
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+                // Формируем данные для обновления
+                var updateData = new Dictionary<string, object>
+            {
+                { "fine_id", _fine.Id } // Устанавливаем ID текущего штрафа
+            };
+
+                var jsonContent = new StringContent(
+                    JsonSerializer.Serialize(updateData),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+
+                // Отправляем запрос на сервер
+                var response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{selectedCourier.Id}", jsonContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Обновляем локально данные курьера
+                    selectedCourier.FineId = _fine.Id;
+
+                    await DisplayAlert("Успех", "Штраф \"" + _fine.Description + $"\" успешно назначен курьеру {selectedCourier.Name}!", "ОК");
+
+                    var courierToUpdate = Users.FirstOrDefault(u => u.Id == selectedCourier.Id);
+                    if (courierToUpdate != null)
+                    {
+                        courierToUpdate.FineId = _fine.Id;
+                    }
+                    await Navigation.PushAsync(new Views.Home(_user, _token));
+                }
+                else
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    await DisplayAlert("Ошибка", $"Не удалось назначить штраф: {response.StatusCode} - {errorContent}", "ОК");
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
+            }
         }
     }
 }

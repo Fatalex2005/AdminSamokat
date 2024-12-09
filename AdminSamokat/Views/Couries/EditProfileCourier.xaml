@@ -16,46 +16,56 @@
                        VerticalOptions="Center" 
                        Margin="0,20,0,20"/>
 
-                <!-- Поля для ввода -->
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <!-- Раздел: Основные данные -->
+                <Label Text="Основные данные" FontSize="20" FontAttributes="Bold" TextColor="#6200EE" Margin="0,10"/>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Фамилия" FontAttributes="Bold" />
                         <Entry x:Name="surnameLabel" Placeholder="Введите фамилию" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Имя" FontAttributes="Bold" />
                         <Entry x:Name="nameLabel" Placeholder="Введите имя" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Отчество" FontAttributes="Bold" />
                         <Entry x:Name="patronymicLabel" Placeholder="Введите отчество" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Логин" FontAttributes="Bold" />
                         <Entry x:Name="loginLabel" Placeholder="Введите логин" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Пароль" FontAttributes="Bold" />
                         <Entry x:Name="passwordLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Подтвердите пароль" FontAttributes="Bold" />
                         <Entry x:Name="confirmPasswordLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Раздел: Статус -->
+                <Label Text="Статус" FontSize="20" FontAttributes="Bold" TextColor="#6200EE" Margin="0,10"/>
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
+                    <StackLayout>
+                        <Label Text="Выберите статус" FontAttributes="Bold" />
+                        <Picker x:Name="StatusPicker" Title="Выберите статус" ItemsSource="{Binding Statuses}" ItemDisplayBinding="{Binding Name}" />
                     </StackLayout>
                 </Frame>
 

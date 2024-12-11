@@ -50,19 +50,18 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <!-- Кнопка для создания штрафа -->
+                <Button Text="Создать штраф"
+        FontAttributes="Bold"
+        BackgroundColor="#6200EE"
+        TextColor="White"
+        CornerRadius="25"
+        Padding="15"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="End"
+        Margin="10"
+        Clicked="OnCreateFineClicked" />
             </VerticalStackLayout>
         </ScrollView>
-
-        <!-- Кнопка для создания штрафа -->
-        <Button Text="Создать штраф"
-                FontAttributes="Bold"
-                BackgroundColor="#6200EE"
-                TextColor="White"
-                CornerRadius="25"
-                Padding="15"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="End"
-                Margin="10"
-                Clicked="OnCreateFineClicked" />
     </Grid>
 </ContentPage>

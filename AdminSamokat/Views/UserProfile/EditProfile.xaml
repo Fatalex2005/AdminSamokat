@@ -7,7 +7,7 @@
     <Grid>
         <!-- Основной контент с прокруткой -->
         <ScrollView x:Name="MainContent" IsVisible="True">
-            <StackLayout Padding="20" Spacing="20">
+            <StackLayout Padding="20" Spacing="10">
                 <!-- Заголовок -->
                 <Label Text="Редактировать профиль" 
                        FontSize="28" 
@@ -17,28 +17,28 @@
                        Margin="0,20,0,20"/>
 
                 <!-- Поля для ввода -->
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" >
                     <StackLayout>
                         <Label Text="Фамилия" FontAttributes="Bold" />
                         <Entry x:Name="surnameLabel" Placeholder="Введите фамилию" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Имя" FontAttributes="Bold" />
                         <Entry x:Name="nameLabel" Placeholder="Введите имя" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Отчество" FontAttributes="Bold" />
                         <Entry x:Name="patronymicLabel" Placeholder="Введите отчество" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Логин" FontAttributes="Bold" />
                         <Entry x:Name="loginLabel" Placeholder="Введите логин" BackgroundColor="#F5F5F5"/>
@@ -71,8 +71,7 @@
                         TextColor="White" 
                         BackgroundColor="#6200EE"
                         CornerRadius="25" 
-                        Padding="15" 
-                        Margin="0,20,0,0"/>
+                        Padding="15"/>
             </StackLayout>
         </ScrollView>
 

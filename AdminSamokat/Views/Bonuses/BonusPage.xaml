@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Bonuses.BonusPage">
-    <Grid>
+    <ScrollView>
+        <Grid>
         <!-- Основное содержимое страницы -->
         <Grid x:Name="MainContent" RowDefinitions="*,Auto" Padding="20">
 
@@ -20,24 +21,20 @@
                        FontSize="16"
                        TextColor="Gray"
                        HorizontalOptions="Center" />
-            </VerticalStackLayout>
-
-            <!-- Кнопки внизу -->
-            <VerticalStackLayout Grid.Row="1" Spacing="10">
-                <Button Text="Изменить" 
-                        FontAttributes="Bold" 
-                        TextColor="White" 
-                        BackgroundColor="#6200EE"
-                        CornerRadius="25" 
-                        Padding="15" 
-                        Clicked="OnEditButtonClicked" />
-                <Button Text="Удалить" 
-                        FontAttributes="Bold" 
-                        TextColor="White" 
-                        BackgroundColor="#6200EE"
-                        CornerRadius="25" 
-                        Padding="15" 
-                        Clicked="OnDeleteButtonClicked" />
+                <Button Text="Изменить" Margin="5"
+        FontAttributes="Bold" 
+        TextColor="White" 
+        BackgroundColor="#6200EE"
+        CornerRadius="25" 
+        Padding="15" 
+        Clicked="OnEditButtonClicked" />
+                <Button Margin="5" Text="Удалить" 
+        FontAttributes="Bold" 
+        TextColor="White" 
+        BackgroundColor="#6200EE"
+        CornerRadius="25" 
+        Padding="15" 
+        Clicked="OnDeleteButtonClicked" />
             </VerticalStackLayout>
         </Grid>
 
@@ -47,5 +44,7 @@
                            IsVisible="False"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
+            
     </Grid>
+    </ScrollView>
 </ContentPage>

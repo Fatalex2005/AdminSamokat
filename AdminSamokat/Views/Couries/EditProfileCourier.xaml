@@ -78,8 +78,7 @@
                         TextColor="White" 
                         BackgroundColor="#6200EE"
                         CornerRadius="25" 
-                        Padding="15" 
-                        Margin="0,20,0,0"/>
+                        Padding="15"/>
             </StackLayout>
         </ScrollView>
 

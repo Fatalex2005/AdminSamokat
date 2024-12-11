@@ -163,6 +163,19 @@ public partial class FinePage : ContentPage
                 return; // Прекращаем выполнение, если штраф уже назначен
             }
 
+            // Подтверждение перед назначением штрафа
+            bool isConfirmed = await DisplayAlert(
+                "Подтверждение",
+                $"Вы точно хотите назначить штраф \"{_fine.Description}\" курьеру {selectedCourier.Name}?",
+                "Да",
+                "Нет"
+            );
+
+            if (!isConfirmed)
+            {
+                return; // Прекращаем выполнение, если пользователь отменил действие
+            }
+
             try
             {
                 // Настраиваем запрос
@@ -196,7 +209,6 @@ public partial class FinePage : ContentPage
                     {
                         courierToUpdate.FineId = _fine.Id;
                     }
-                    await Navigation.PushAsync(new Views.Home(_user, _token));
                 }
                 else
                 {

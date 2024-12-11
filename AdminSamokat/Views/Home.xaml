@@ -5,129 +5,131 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
 
-    <Grid Padding="20">
-        <!-- Определение строк -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <!-- Верхняя строка -->
-            <RowDefinition Height="*" />
-            <!-- Основной текст -->
-            <RowDefinition Height="Auto" />
-            <!-- Разделы -->
-        </Grid.RowDefinitions>
-
-        <!-- Определение столбцов -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
             <!-- Приветствие -->
-            <ColumnDefinition Width="Auto" />
-            <!-- Кнопка профиля -->
-            <ColumnDefinition Width="Auto" />
-            <!-- Кнопка выхода -->
-        </Grid.ColumnDefinitions>
+            <Label x:Name="nameLabel"
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   Text="Добро пожаловать!"
+                   TextColor="#333333" 
+                   HorizontalOptions="Center" />
 
-        <!-- Верхняя часть: Приветствие -->
-        <Label Grid.Row="0" Grid.Column="0" 
-               x:Name="nameLabel"
-               FontSize="24" 
-               FontAttributes="Bold" 
-               TextColor="#333333" 
-               VerticalOptions="Center" />
+            <!-- Раздел: Пользователь -->
+            <Label Text="ПОЛЬЗОВАТЕЛЬ" 
+                   FontSize="14" 
+                   FontAttributes="Bold" 
+                   TextColor="#666666" 
+                   HorizontalOptions="Start" />
 
-        <!-- Кнопка профиля -->
-        <ImageButton Grid.Row="0" Grid.Column="1" 
-                     Source="profile.png" 
-                     Clicked="OnProfileButtonClicked" 
-                     WidthRequest="40" 
-                     HeightRequest="40" 
-                     BackgroundColor="Transparent" 
-                     HorizontalOptions="End" 
-                     VerticalOptions="Center" />
-
-        <!-- Кнопка выхода -->
-        <ImageButton Grid.Row="0" Grid.Column="2" 
-                     Source="logout.png" 
-                     Clicked="OnLogoutButtonClicked" 
-                     WidthRequest="40" 
-                     HeightRequest="40" 
-                     BackgroundColor="Transparent" 
-                     HorizontalOptions="End" 
-                     VerticalOptions="Center" />
-
-        <!-- Основной текст -->
-        <Label Grid.Row="1" Grid.ColumnSpan="3"
-               Text="Внизу представлены разделы, с которыми вы можете взаимодействовать." 
-               HorizontalOptions="Center" 
-               VerticalOptions="Center" 
-               FontSize="18" 
-               TextColor="#666666" />
-
-        <!-- Разделы -->
-        <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="End" Spacing="20">
-            <!-- Раздел: Заказы -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
-                <ImageButton Source="orders.png" 
-                             Clicked="OnOrdersClicked" 
-                             WidthRequest="60" 
-                             HeightRequest="60" 
-                             BackgroundColor="Transparent" />
-                <Label Text="Заказы" 
-                       FontSize="14" 
-                       TextColor="#333333" 
-                       HorizontalTextAlignment="Center" />
+            <VerticalStackLayout Spacing="10">
+                <!-- Профиль -->
+                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                    <HorizontalStackLayout>
+                        <Image Source="profile.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Профиль" 
+                               FontSize="16" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333" />
+                    </HorizontalStackLayout>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnProfileButtonClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
             </VerticalStackLayout>
 
-            <!-- Раздел: Курьеры -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
-                <ImageButton Source="couriers.png" 
-                             Clicked="OnCouriersClicked" 
-                             WidthRequest="60" 
-                             HeightRequest="60" 
-                             BackgroundColor="Transparent" />
-                <Label Text="Курьеры" 
-                       FontSize="14" 
-                       TextColor="#333333" 
-                       HorizontalTextAlignment="Center" />
+            <!-- Раздел: Функционал администратора -->
+            <Label Text="ФУНКЦИОНАЛ АДМИНИСТРАТОРА" 
+                   FontSize="14" 
+                   FontAttributes="Bold" 
+                   TextColor="#666666" 
+                   HorizontalOptions="Start" />
+
+            <VerticalStackLayout Spacing="10">
+                <!-- Заказы -->
+                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                    <HorizontalStackLayout>
+                        <Image Source="orders.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Заказы" 
+                               FontSize="16" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333" />
+                    </HorizontalStackLayout>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnOrdersClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <!-- Курьеры -->
+                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                    <HorizontalStackLayout>
+                        <Image Source="couriers.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Курьеры" 
+                               FontSize="16" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333" />
+                    </HorizontalStackLayout>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCouriersClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <!-- Зарегистрировать -->
+                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                    <HorizontalStackLayout>
+                        <Image Source="register.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Зарегистрировать" 
+                               FontSize="16" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333" />
+                    </HorizontalStackLayout>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRegisterCourierClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <!-- Бонусы -->
+                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                    <HorizontalStackLayout>
+                        <Image Source="bonuses.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Бонусы" 
+                               FontSize="16" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333" />
+                    </HorizontalStackLayout>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBonusesClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <!-- Штрафы -->
+                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                    <HorizontalStackLayout>
+                        <Image Source="penalties.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Штрафы" 
+                               FontSize="16" 
+                               VerticalOptions="Center" 
+                               TextColor="#333333" />
+                    </HorizontalStackLayout>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPenaltiesClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
             </VerticalStackLayout>
 
-            <!-- Раздел: Зарегистрировать курьера -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
-                <ImageButton Source="register.png" 
-                             Clicked="OnRegisterCourierClicked" 
-                             WidthRequest="60" 
-                             HeightRequest="60" 
-                             BackgroundColor="Transparent" />
-                <Label Text="Зарегистрировать" 
-                       FontSize="14" 
-                       TextColor="#333333" 
-                       HorizontalTextAlignment="Center" />
-            </VerticalStackLayout>
-
-            <!-- Раздел: Бонусы -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
-                <ImageButton Source="bonuses.png" 
-                             Clicked="OnBonusesClicked" 
-                             WidthRequest="60" 
-                             HeightRequest="60" 
-                             BackgroundColor="Transparent" />
-                <Label Text="Бонусы" 
-                       FontSize="14" 
-                       TextColor="#333333" 
-                       HorizontalTextAlignment="Center" />
-            </VerticalStackLayout>
-
-            <!-- Раздел: Штрафы -->
-            <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
-                <ImageButton Source="penalties.png" 
-                             Clicked="OnPenaltiesClicked" 
-                             WidthRequest="60" 
-                             HeightRequest="60" 
-                             BackgroundColor="Transparent" />
-                <Label Text="Штрафы" 
-                       FontSize="14" 
-                       TextColor="#333333" 
-                       HorizontalTextAlignment="Center" />
-            </VerticalStackLayout>
-        </HorizontalStackLayout>
-    </Grid>
+            <!-- Раздел: Выход -->
+            <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                <HorizontalStackLayout>
+                    <Image Source="logout.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                    <Label Text="Выйти" 
+                           FontSize="16" 
+                           VerticalOptions="Center" 
+                           TextColor="#FF0000" />
+                </HorizontalStackLayout>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnLogoutButtonClicked" />
+                </Frame.GestureRecognizers>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

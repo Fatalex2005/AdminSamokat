@@ -29,10 +29,19 @@ public partial class BonusPage : ContentPage
 
     private async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
-        var confirm = await DisplayAlert("Подтверждение", "Вы уверены, что хотите удалить бонус?", "Да", "Отмена");
+        // Подтверждение перед удалением
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите удалить этот бонус?",
+            "Да",
+            "Нет"
+        );
 
-        if (!confirm)
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", удаление отменяется
             return;
+        }
 
         try
         {

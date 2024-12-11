@@ -36,6 +36,20 @@ public partial class Register : ContentPage
             return;
         }
 
+        // Подтверждение перед регистрацией
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите добавить нового пользователя?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", регистрация отменяется
+            return;
+        }
+
         // Сбор данных из формы
         string surname = SurnameEntry.Text;
         string name = NameEntry.Text;

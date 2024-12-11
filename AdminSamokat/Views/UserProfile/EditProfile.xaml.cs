@@ -46,8 +46,22 @@ public partial class EditProfile : ContentPage
             return;
         }
 
-    // Формируем данные для обновления
-    var updatedUser = new Dictionary<string, object>
+        // Подтверждение перед сохранением изменений
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите сохранить изменения?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", сохранение отменяется
+            return;
+        }
+
+        // Формируем данные для обновления
+        var updatedUser = new Dictionary<string, object>
     {
         { "surname", surnameLabel.Text },
         { "name", nameLabel.Text },

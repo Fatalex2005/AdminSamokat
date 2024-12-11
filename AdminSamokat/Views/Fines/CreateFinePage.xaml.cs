@@ -24,6 +24,20 @@ public partial class CreateFinePage : ContentPage
             return;
         }
 
+        // Подтверждение перед созданием
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите добавить новый штраф?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", создание отменяется
+            return;
+        }
+
         // Сбор данных из формы
         string description = descriptionEntry.Text;
 

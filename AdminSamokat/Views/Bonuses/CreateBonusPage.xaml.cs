@@ -28,6 +28,20 @@ public partial class CreateBonusPage : ContentPage
             return;
         }
 
+        // Подтверждение перед созданием
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите добавить новый бонус?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", создание отменяется
+            return;
+        }
+
         // Сбор данных из формы
         string title = titleEntry.Text;
         string description = descriptionEntry.Text;

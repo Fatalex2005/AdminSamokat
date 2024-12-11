@@ -36,6 +36,20 @@ public partial class EditBonus : ContentPage
             return;
         }
 
+        // Подтверждение перед сохранением изменений
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите сохранить изменения?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", сохранение отменяется
+            return;
+        }
+
         // Формируем данные для обновления
         var updatedBonus = new
         {

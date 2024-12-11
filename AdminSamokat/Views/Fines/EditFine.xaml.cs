@@ -32,6 +32,20 @@ public partial class EditFine : ContentPage
             return;
         }
 
+        // Подтверждение перед сохранением изменений
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите сохранить изменения?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", сохранение отменяется
+            return;
+        }
+
         // Формируем данные для обновления
         var updatedFine = new
         {

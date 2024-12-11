@@ -28,26 +28,23 @@ public partial class EditProfile : ContentPage
             patronymicLabel.Text = user.Patronymic;
         }
         loginLabel.Text = user.Login;
-        passwordLabel.Text = user.Password;
-        confirmPasswordLabel.Text = user.Password;
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
 {
     // Проверка на пустые поля
     if (string.IsNullOrWhiteSpace(surnameLabel.Text) ||
-        string.IsNullOrWhiteSpace(nameLabel.Text) ||
-        string.IsNullOrWhiteSpace(passwordLabel.Text))
+        string.IsNullOrWhiteSpace(nameLabel.Text))
     {
         await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
         return;
     }
 
-    if (passwordLabel.Text != confirmPasswordLabel.Text)
-    {
-        await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
-        return;
-    }
+    if (!checkPassword.IsChecked && passwordLabel.Text != confirmPasswordLabel.Text)
+        {
+            await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
+            return;
+        }
 
     // Формируем данные для обновления
     var updatedUser = new Dictionary<string, object>
@@ -55,7 +52,6 @@ public partial class EditProfile : ContentPage
         { "surname", surnameLabel.Text },
         { "name", nameLabel.Text },
         { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
-        { "password", passwordLabel.Text }
     };
 
     // Добавляем поле "login", только если оно изменилось
@@ -63,6 +59,12 @@ public partial class EditProfile : ContentPage
     {
         updatedUser.Add("login", loginLabel.Text);
     }
+
+    // Добавляем поле "password", только если галочка снята
+        if (!checkPassword.IsChecked)
+        {
+            updatedUser.Add("password", passwordLabel.Text);
+        }
 
     // Настраиваем сериализацию для преобразования ключей в нижний регистр
     var options = new JsonSerializerOptions
@@ -90,7 +92,6 @@ public partial class EditProfile : ContentPage
             _user.Surname = surnameLabel.Text;
             _user.Name = nameLabel.Text;
             _user.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
-            _user.Password = passwordLabel.Text;
 
             if (loginLabel.Text != _user.Login)
             {
@@ -101,14 +102,12 @@ public partial class EditProfile : ContentPage
             Preferences.Set("UserName", _user.Name);
             Preferences.Set("UserPatronymic", _user.Patronymic ?? "");
             Preferences.Set("UserLogin", _user.Login);
-            Preferences.Set("UserPassword", _user.Password);
 
             // Обновляем UI
             surnameLabel.Text = _user.Surname;
             nameLabel.Text = _user.Name;
             patronymicLabel.Text = _user.Patronymic ?? "";
             loginLabel.Text = _user.Login;
-            passwordLabel.Text = _user.Password;
 
             await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
 
@@ -138,5 +137,13 @@ public partial class EditProfile : ContentPage
         LoadingIndicator.IsVisible = false;
     }
 }
+    private void OnCheckPasswordChanged(object sender, CheckedChangedEventArgs e)
+    {
+        bool isChecked = e.Value;
+
+        // Если галочка снята, показываем поля для ввода пароля
+        password.IsVisible = !isChecked;
+        confirmPassword.IsVisible = !isChecked;
+    }
 
 }

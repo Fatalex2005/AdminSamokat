@@ -45,14 +45,19 @@
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                    <CheckBox x:Name="checkPassword" IsChecked="True" CheckedChanged="OnCheckPasswordChanged" VerticalOptions="Center" />
+                    <Label Text="Не изменять пароль" VerticalOptions="Center" />
+                </StackLayout>
+
+                <Frame x:Name="password" IsVisible="False" Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Пароль" FontAttributes="Bold" />
                         <Entry x:Name="passwordLabel" Placeholder="Введите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                <Frame IsVisible="False" x:Name="confirmPassword" Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray">
                     <StackLayout>
                         <Label Text="Подтвердите пароль" FontAttributes="Bold" />
                         <Entry x:Name="confirmPasswordLabel" Placeholder="Подтвердите пароль" IsPassword="True" BackgroundColor="#F5F5F5"/>

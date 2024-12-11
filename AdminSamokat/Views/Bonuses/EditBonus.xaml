@@ -33,7 +33,7 @@
 
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                     <StackLayout>
-                        <Label Text="Награда" FontAttributes="Bold" />
+                        <Label Text="Награда (с копейками через .)" FontAttributes="Bold" />
                         <Entry x:Name="priceLabel" Keyboard="Numeric" Placeholder="Введите награду" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>

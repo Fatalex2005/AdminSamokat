@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.Accesses.AllAccesses"
+             xmlns:converters="clr-namespace:AdminSamokat.Views.Accesses.Converters">
+
+    <!-- Ресурсы страницы -->
+    <ContentPage.Resources>
+        <converters:ConfirmToTextConverter x:Key="ConfirmConverter" />
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="#FFFFFF">
+
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsRunning="False" 
+                           IsVisible="False" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" 
+                           Color="Gray" />
+
+        <!-- Сообщение об отсутствии данных -->
+        <Label x:Name="EmptyMessageLabel"
+               Text="Доступности отсутствуют"
+               FontSize="18"
+               TextColor="Gray"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               IsVisible="False" />
+
+        <!-- CollectionView для отображения доступностей -->
+        <CollectionView x:Name="AccessesCollectionView" 
+                        IsGrouped="True"
+                        SelectionMode="Single"
+                        SelectionChanged="OnAccessSelected"
+                        Margin="10"
+                        ItemsLayout="VerticalList">
+            <!-- Заголовок группы -->
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="#F5F5F5" Padding="12" CornerRadius="5" Margin="0,5,0,0">
+                        <Label Text="{Binding Key}" 
+                               FontAttributes="Bold"
+                               FontSize="16" 
+                               TextColor="#333333" />
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+            <!-- Шаблон элемента доступности -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- Используем VerticalStackLayout для управления отступами -->
+                    <VerticalStackLayout Spacing="10">
+                        <Frame Padding="15" 
+                               Margin="0,5,0,5"
+                            CornerRadius="10" 
+                               HasShadow="True" 
+                               BackgroundColor="#FFFFFF">
+                            <Grid RowDefinitions="Auto,Auto,Auto" 
+                                  ColumnDefinitions="Auto,*" 
+                                  ColumnSpacing="10">
+                                <!-- Иконка -->
+                                <Image Source="access_icon.png" 
+                                       HeightRequest="40" 
+                                       WidthRequest="40" 
+                                       Grid.RowSpan="3" />
+
+                                <!-- Время начала -->
+                                <Label Text="{Binding StartChange, StringFormat='Начало: {0}'}" 
+                                       FontSize="14" 
+                                       Grid.Column="1"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#333333" />
+
+                                <!-- Время конца -->
+                                <Label Text="{Binding EndChange, StringFormat='Конец: {0}'}" 
+                                       FontSize="14" 
+                                       Grid.Row="1"
+                                       Grid.Column="1"
+                                       VerticalTextAlignment="Center"
+                                       TextColor="#333333" />
+
+                                <!-- Подтверждено -->
+                                <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
+       FontSize="14" 
+       Grid.Row="2" 
+       Grid.Column="1" 
+       VerticalTextAlignment="Center">
+                                    <Label.Triggers>
+                                        <!-- Если Confirm равен true (или вашему значению), цвет становится зелёным -->
+                                        <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="1">
+                                            <Setter Property="TextColor" Value="Green" />
+                                        </DataTrigger>
+
+                                        <!-- Если Confirm равен false, цвет становится красным -->
+                                        <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="0">
+                                            <Setter Property="TextColor" Value="Red" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
+                        </Frame>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

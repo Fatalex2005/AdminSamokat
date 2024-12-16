@@ -93,7 +93,7 @@ public partial class Home : ContentPage
 
     private async void OnAccessesClicked(object sender, EventArgs e)
     {
-        
+        await Navigation.PushAsync(new Accesses.AllAccesses(_user, _token));
     }
 
     private async void OnCouriersClicked(object sender, EventArgs e)

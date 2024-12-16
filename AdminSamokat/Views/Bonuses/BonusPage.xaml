@@ -21,14 +21,14 @@
                        FontSize="16"
                        TextColor="Gray"
                        HorizontalOptions="Center" />
-                <Button Text="Изменить" Margin="5"
+                <Button Text="Изменить"
         FontAttributes="Bold" 
         TextColor="White" 
         BackgroundColor="#6200EE"
         CornerRadius="25" 
         Padding="15" 
         Clicked="OnEditButtonClicked" />
-                <Button Margin="5" Text="Удалить" 
+                <Button Text="Удалить" 
         FontAttributes="Bold" 
         TextColor="White" 
         BackgroundColor="#6200EE"
@@ -39,12 +39,11 @@
         </Grid>
 
         <!-- Индикатор загрузки -->
-        <ActivityIndicator x:Name="LoadingIndicator"
+            <ActivityIndicator x:Name="LoadingIndicator"
                            IsRunning="False"
                            IsVisible="False"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
-            
-    </Grid>
+        </Grid>
     </ScrollView>
 </ContentPage>

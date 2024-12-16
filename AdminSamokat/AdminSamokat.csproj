@@ -55,6 +55,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Views\Orders\**" />
+	  <Compile Remove="Views\Orders\**" />
+	  <EmbeddedResource Remove="Views\Orders\**" />
+	  <MauiCss Remove="Views\Orders\**" />
+	  <MauiXaml Remove="Views\Orders\**" />
+	  <None Remove="Views\Orders\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Remove="Views\Fines\NewPage1.xaml.cs" />
 	</ItemGroup>
 
@@ -75,6 +84,7 @@
 	  <None Remove="Resources\Images\penalties.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\register.png" />
+	  <None Remove="Resources\Images\time.png" />
 	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>
 
@@ -141,10 +151,6 @@
 	  <MauiXaml Update="Views\UserProfile\Profile.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Views\Orders\" />
 	</ItemGroup>
 
 </Project>

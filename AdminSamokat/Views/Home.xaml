@@ -27,10 +27,18 @@
                 <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
                     <HorizontalStackLayout>
                         <Image Source="profile.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <Label Text="Профиль" 
+                        <VerticalStackLayout>
+                            <Label Text="Профиль" 
                                FontSize="16" 
                                VerticalOptions="Center" 
                                TextColor="#333333" />
+                        <Label Text="Ваши данные" 
+                               FontSize="12" 
+                               VerticalOptions="Center" 
+                               TextColor="#666666"
+                               FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                        
                     </HorizontalStackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnProfileButtonClicked" />
@@ -46,17 +54,24 @@
                    HorizontalOptions="Start" />
 
             <VerticalStackLayout Spacing="10">
-                <!-- Заказы -->
+                <!-- Доступности -->
                 <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
                     <HorizontalStackLayout>
-                        <Image Source="orders.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <Label Text="Заказы" 
+                        <Image Source="time.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <VerticalStackLayout>
+                            <Label Text="Доступности" 
                                FontSize="16" 
                                VerticalOptions="Center" 
                                TextColor="#333333" />
+                            <Label Text="Подтверждение смен" 
+FontSize="12" 
+VerticalOptions="Center" 
+TextColor="#666666"
+FontAttributes="Bold"/>
+                        </VerticalStackLayout>
                     </HorizontalStackLayout>
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnOrdersClicked" />
+                        <TapGestureRecognizer Tapped="OnAccessesClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
 
@@ -64,10 +79,17 @@
                 <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
                     <HorizontalStackLayout>
                         <Image Source="couriers.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <Label Text="Курьеры" 
+                        <VerticalStackLayout>
+                            <Label Text="Курьеры" 
                                FontSize="16" 
                                VerticalOptions="Center" 
                                TextColor="#333333" />
+                            <Label Text="Изменить данные" 
+       FontSize="12" 
+       VerticalOptions="Center" 
+       TextColor="#666666"
+       FontAttributes="Bold"/>
+                        </VerticalStackLayout>
                     </HorizontalStackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnCouriersClicked" />
@@ -78,10 +100,17 @@
                 <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
                     <HorizontalStackLayout>
                         <Image Source="register.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <Label Text="Зарегистрировать" 
+                        <VerticalStackLayout>
+                            <Label Text="Зарегистрировать" 
                                FontSize="16" 
                                VerticalOptions="Center" 
                                TextColor="#333333" />
+                            <Label Text="Добавить курьера" 
+FontSize="12" 
+VerticalOptions="Center" 
+TextColor="#666666"
+FontAttributes="Bold"/>
+                        </VerticalStackLayout>
                     </HorizontalStackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnRegisterCourierClicked" />
@@ -106,16 +135,30 @@
                 <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
                     <HorizontalStackLayout>
                         <Image Source="penalties.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <Label Text="Штрафы" 
+                        <VerticalStackLayout>
+                            <Label Text="Штрафы" 
                                FontSize="16" 
                                VerticalOptions="Center" 
                                TextColor="#333333" />
+                            <Label Text="Назначить" 
+FontSize="12" 
+VerticalOptions="Center" 
+TextColor="#666666"
+FontAttributes="Bold"/>
+                        </VerticalStackLayout>
                     </HorizontalStackLayout>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnPenaltiesClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
             </VerticalStackLayout>
+
+            <!-- Раздел: Выход из системы -->
+            <Label Text="ВЫХОД ИЗ СИСТЕМЫ" 
+       FontSize="14" 
+       FontAttributes="Bold" 
+       TextColor="#666666" 
+       HorizontalOptions="Start" />
 
             <!-- Раздел: Выход -->
             <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">

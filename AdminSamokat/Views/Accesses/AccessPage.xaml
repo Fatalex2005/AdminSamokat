@@ -1,12 +1,81 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AdminSamokat.Views.Accesses.Converters"
              x:Class="AdminSamokat.Views.Accesses.AccessPage"
-             Title="AccessPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+             Padding="20">
+
+    <!-- Ресурсы страницы -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ConfirmToVisibilityConverter x:Key="ConfirmToVisibilityConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="15">
+
+        <!-- Заголовок страницы -->
+        <Label Text="Детали доступности"
+               FontSize="24"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Start" />
+
+        <!-- Информация о пользователе -->
+        <Frame CornerRadius="10" Padding="15" BorderColor="LightGray">
+            <VerticalStackLayout Spacing="5">
+                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
+                        <Image Source="user_icon.png" 
+HeightRequest="22" 
+WidthRequest="22" 
+VerticalOptions="Center" />
+                    <Label x:Name="UserFullNameLabel"
+                       Text="Полное имя пользователя"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="Black" />
+                    </StackLayout>
+                    
+                <Label x:Name="StartTimeLabel"
+                       Text="Начало: "
+                       FontSize="16"
+                       TextColor="Gray" />
+                <Label x:Name="EndTimeLabel"
+                       Text="Конец: "
+                       FontSize="16"
+                       TextColor="Gray" />
+                <Label x:Name="ConfirmStatusLabel"
+                       Text="Статус: "
+                       FontSize="16"
+                       FontAttributes="Italic"
+                       TextColor="Gray" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Кнопки действий -->
+        <VerticalStackLayout Spacing="10">
+
+            <!-- Кнопка просмотра пользователя -->
+            <Button x:Name="ViewUserButton"
+                    Text="Просмотреть курьера"
+                    Clicked="OnViewUserButtonClicked"
+                    TextColor="White"
+                    CornerRadius="20"
+                    HorizontalOptions="Fill" />
+
+            <!-- Кнопка подтверждения -->
+            <Button x:Name="ConfirmButton"
+                    Text="Подтвердить"
+                    IsVisible="{Binding Confirm, Converter={StaticResource ConfirmToVisibilityConverter}}"
+                    Clicked="OnConfirmButtonClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="20"
+                    HorizontalOptions="Fill" />
+
+        </VerticalStackLayout>
     </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>

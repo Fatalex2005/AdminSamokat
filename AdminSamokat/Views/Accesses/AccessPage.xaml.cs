@@ -1,4 +1,7 @@
 using AdminSamokat.Models;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace AdminSamokat.Views.Accesses;
 
@@ -8,11 +11,85 @@ public partial class AccessPage : ContentPage
     private string _token;
     private Access _access;
     private readonly HttpClient _httpClient = new HttpClient();
+
     public AccessPage(Access access, User user, string token)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _access = access;
         _user = user;
         _token = token;
+
+        // Устанавливаем BindingContext
+        BindingContext = _access;
+
+        FillAccessDetails();
+    }
+
+
+    // Метод для заполнения информации о доступности
+    private void FillAccessDetails()
+    {
+        // Отображаем имя пользователя
+        UserFullNameLabel.Text = _access.UserFullName;
+
+        // Отображаем время начала и конца
+        StartTimeLabel.Text = $"Начало: {_access.StartChange}";
+        EndTimeLabel.Text = $"Конец: {_access.EndChange}";
+
+        // Отображаем статус подтверждения
+        ConfirmStatusLabel.Text = _access.Confirm == 1 ? "Подтверждено" : "Не подтверждено";
+    }
+
+    // Обработчик нажатия на кнопку для просмотра пользователя
+    private async void OnViewUserButtonClicked(object sender, EventArgs e)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+        var userResponse = await _httpClient.GetAsync($"http://courseproject4/api/profile/{_access.UserId}");
+        if (userResponse.IsSuccessStatusCode)
+        {
+            var userContent = await userResponse.Content.ReadAsStringAsync();
+            var user = JsonSerializer.Deserialize<User>(userContent);
+
+            // Переход на страницу курьера
+            await Navigation.PushAsync(new Couries.Courier(user, _user, _token));
+        }
+        else
+        {
+            await DisplayAlert("Ошибка", "Не удалось загрузить информацию о пользователе.", "ОК");
+        }
+    }
+
+    // Обработчик нажатия на кнопку для подтверждения доступности
+    private async void OnConfirmButtonClicked(object sender, EventArgs e)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var content = new FormUrlEncodedContent(new[]
+        {
+        new KeyValuePair<string, string>("confirm", "1")
+    });
+
+        var response = await _httpClient.PatchAsync(
+            $"http://courseproject4/api/accesses-confirm/{_access.Id}", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            await DisplayAlert("Успех", "Доступность подтверждена.", "ОК");
+
+            // Обновляем свойство Confirm
+            _access.Confirm = 1;
+
+            // Сообщаем об изменении свойств для привязки
+            OnPropertyChanged(nameof(_access.Confirm));
+
+            await Navigation.PushAsync(new Home(_user, _token));
+        }
+        else
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            await DisplayAlert("Ошибка", $"Не удалось подтвердить доступность. Ответ: {errorContent}", "ОК");
+        }
     }
 }

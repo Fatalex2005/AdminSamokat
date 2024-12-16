@@ -48,7 +48,7 @@ public partial class AllAccesses : ContentPage
                     {
                         var userContent = await userResponse.Content.ReadAsStringAsync();
                         var user = JsonSerializer.Deserialize<User>(userContent);
-                        access.UserFullName = $"{user.Surname} {user.Name} {user.Patronymic}";
+                        access.UserFullName = $"{user.Surname} {user.Name}";
                     }
                 }
 

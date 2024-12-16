@@ -5,7 +5,8 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
 
-    <!-- Основной контейнер -->
+    <ScrollView>
+        <!-- Основной контейнер -->
     <Grid>
         <!-- Индикатор загрузки -->
         <ActivityIndicator x:Name="LoadingIndicator" 
@@ -72,4 +73,6 @@
                     Clicked="OnLoginButtonClicked" />
         </VerticalStackLayout>
     </Grid>
+    </ScrollView>
+    
 </ContentPage>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Accesses.AllAccesses"
@@ -50,55 +49,64 @@
             <!-- Шаблон элемента доступности -->
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <!-- Используем VerticalStackLayout для управления отступами -->
-                    <VerticalStackLayout Spacing="10">
-                        <Frame Padding="15" 
-                               Margin="0,5,0,5"
-                            CornerRadius="10" 
+                    <VerticalStackLayout Spacing="15">
+                        <!-- Обернули Frame для скругленных углов и тени -->
+                        <Frame Padding="20" 
+                               Margin="0,10"
+                               CornerRadius="15" 
                                HasShadow="True" 
                                BackgroundColor="#FFFFFF">
-                            <Grid RowDefinitions="Auto,Auto,Auto" 
-                                  ColumnDefinitions="Auto,*" 
-                                  ColumnSpacing="10">
-                                <!-- Иконка -->
+                            <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+                                  ColumnDefinitions="Auto, *" 
+                                  ColumnSpacing="15">
+
+                                <!-- Иконка слева -->
                                 <Image Source="access_icon.png" 
                                        HeightRequest="40" 
                                        WidthRequest="40" 
-                                       Grid.RowSpan="3" />
+                                       Grid.RowSpan="4" 
+                                       VerticalOptions="Center" />
 
-                                <!-- Время начала -->
-                                <Label Text="{Binding StartChange, StringFormat='Начало: {0}'}" 
-                                       FontSize="14" 
-                                       Grid.Column="1"
-                                       VerticalTextAlignment="Center"
-                                       TextColor="#333333" />
+                                <!-- Данные о доступности справа -->
+                                <StackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
+                                        <Image Source="user_icon.png" 
+               HeightRequest="22" 
+               WidthRequest="22" 
+               VerticalOptions="Center" />
+                                        <Label Text="{Binding UserFullName}"
+               FontSize="14"
+               VerticalTextAlignment="Center"
+               TextColor="#333333" />
+                                    </StackLayout>
+                                    <!-- Время начала -->
+                                    <Label Text="{Binding StartChange, StringFormat='Начало: {0}'}" 
+                                           FontSize="14" 
+                                           VerticalTextAlignment="Center"
+                                           TextColor="#333333" />
+                                    <!-- Время конца -->
+                                    <Label Text="{Binding EndChange, StringFormat='Конец: {0}'}" 
+                                           FontSize="14" 
+                                           VerticalTextAlignment="Center"
+                                           TextColor="#333333" />
+                                    <!-- Подтверждено -->
+                                    <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
+                                           FontSize="14" 
+                                           VerticalTextAlignment="Center">
+                                        <Label.Triggers>
+                                            <!-- Если Confirm равен true (или вашему значению), цвет становится зелёным -->
+                                            <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="1">
+                                                <Setter Property="TextColor" Value="Green" />
+                                            </DataTrigger>
 
-                                <!-- Время конца -->
-                                <Label Text="{Binding EndChange, StringFormat='Конец: {0}'}" 
-                                       FontSize="14" 
-                                       Grid.Row="1"
-                                       Grid.Column="1"
-                                       VerticalTextAlignment="Center"
-                                       TextColor="#333333" />
+                                            <!-- Если Confirm равен false, цвет становится красным -->
+                                            <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="0">
+                                                <Setter Property="TextColor" Value="Red" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </StackLayout>
 
-                                <!-- Подтверждено -->
-                                <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
-       FontSize="14" 
-       Grid.Row="2" 
-       Grid.Column="1" 
-       VerticalTextAlignment="Center">
-                                    <Label.Triggers>
-                                        <!-- Если Confirm равен true (или вашему значению), цвет становится зелёным -->
-                                        <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="1">
-                                            <Setter Property="TextColor" Value="Green" />
-                                        </DataTrigger>
-
-                                        <!-- Если Confirm равен false, цвет становится красным -->
-                                        <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="0">
-                                            <Setter Property="TextColor" Value="Red" />
-                                        </DataTrigger>
-                                    </Label.Triggers>
-                                </Label>
                             </Grid>
                         </Frame>
                     </VerticalStackLayout>

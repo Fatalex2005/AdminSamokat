@@ -23,5 +23,7 @@ namespace AdminSamokat.Models
 
         [JsonPropertyName("user_id")]
         public ulong UserId { get; set; } // ID пользователя, связанного с доступностью
+
+        public string UserFullName { get; set; }
     }
 }

@@ -13,12 +13,13 @@ public partial class AllAccesses : ContentPage
     public ObservableCollection<Access> Accesses { get; set; } = new ObservableCollection<Access>();
 
     public AllAccesses(User user, string token)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _user = user;
         _token = token;
         AccessesCollectionView.ItemsSource = Accesses;
         LoadAccesses();
+
     }
 
     private async void LoadAccesses()
@@ -38,6 +39,18 @@ public partial class AllAccesses : ContentPage
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var accesses = JsonSerializer.Deserialize<List<Access>>(content);
+
+                // Загружаем пользователей для каждой доступности
+                foreach (var access in accesses)
+                {
+                    var userResponse = await _httpClient.GetAsync($"http://courseproject4/api/profile/{access.UserId}");
+                    if (userResponse.IsSuccessStatusCode)
+                    {
+                        var userContent = await userResponse.Content.ReadAsStringAsync();
+                        var user = JsonSerializer.Deserialize<User>(userContent);
+                        access.UserFullName = $"{user.Surname} {user.Name} {user.Patronymic}";
+                    }
+                }
 
                 var groupedAccesses = accesses
                     .GroupBy(a => a.Date.ToShortDateString())
@@ -66,6 +79,7 @@ public partial class AllAccesses : ContentPage
         }
     }
 
+
     public class Grouping<K, T> : ObservableCollection<T>
     {
         public K Key { get; }
@@ -75,17 +89,16 @@ public partial class AllAccesses : ContentPage
             Key = key;
         }
     }
-
     private async void OnAccessSelected(object sender, SelectionChangedEventArgs e)
     {
-        // Получаем выбранного пользователя
+        // Логика, которая будет срабатывать при выборе другого элемента доступности
         if (e.CurrentSelection.FirstOrDefault() is Access selectedAccess)
         {
-            // Переход на страницу информации о бонусе
+            // Здесь можно добавить логику для перехода на страницу доступа (или оставить как есть)
             await Navigation.PushAsync(new AccessPage(selectedAccess, _user, _token));
         }
 
-        // Сбрасываем выбор
-        ((CollectionView)sender).SelectedItem = null;
+    // Сбрасываем выбор
+    ((CollectionView)sender).SelectedItem = null;
     }
 }

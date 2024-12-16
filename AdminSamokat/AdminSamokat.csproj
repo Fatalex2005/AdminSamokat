@@ -86,6 +86,7 @@
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\register.png" />
 	  <None Remove="Resources\Images\time.png" />
+	  <None Remove="Resources\Images\user_icon.png" />
 	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>
 

@@ -20,7 +20,7 @@
 
         <!-- Сообщение об отсутствии данных -->
         <Label x:Name="EmptyMessageLabel"
-               Text="Доступности отсутствуют"
+               Text="Доступности отсутствуют на ближайшие две недели"
                FontSize="18"
                TextColor="Gray"
                HorizontalOptions="Center"

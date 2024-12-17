@@ -5,174 +5,189 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="20">
-            <!-- Приветствие -->
-            <Label x:Name="nameLabel"
-                   FontSize="24" 
-                   FontAttributes="Bold" 
-                   Text="Добро пожаловать!"
-                   TextColor="#333333" 
-                   HorizontalOptions="Center" />
+    <!-- Контейнер для всего содержимого страницы -->
+    <Grid x:Name="MainContent" RowDefinitions="*,Auto">
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <!-- Приветствие -->
+                <Label x:Name="nameLabel"
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       Text="Добро пожаловать!"
+                       TextColor="#333333" 
+                       HorizontalOptions="Center" />
 
-            <!-- Раздел: Пользователь -->
-            <Label Text="ПОЛЬЗОВАТЕЛЬ" 
-                   FontSize="14" 
-                   FontAttributes="Bold" 
-                   TextColor="#666666" 
-                   HorizontalOptions="Start" />
+                <!-- Раздел: Пользователь -->
+                <Label Text="ПОЛЬЗОВАТЕЛЬ" 
+                       FontSize="14" 
+                       FontAttributes="Bold" 
+                       TextColor="#666666" 
+                       HorizontalOptions="Start" />
 
-            <VerticalStackLayout Spacing="10">
-                <!-- Профиль -->
+                <VerticalStackLayout Spacing="10">
+                    <!-- Профиль -->
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                        <HorizontalStackLayout>
+                            <Image Source="profile.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                            <VerticalStackLayout>
+                                <Label Text="Профиль" 
+                                       FontSize="16" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#333333" />
+                                <Label Text="Ваши данные" 
+                                       FontSize="12" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#666666"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnProfileButtonClicked" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- Раздел: Функционал администратора -->
+                <Label Text="ФУНКЦИОНАЛ АДМИНИСТРАТОРА" 
+                       FontSize="14" 
+                       FontAttributes="Bold" 
+                       TextColor="#666666" 
+                       HorizontalOptions="Start" />
+
+                <VerticalStackLayout Spacing="10">
+                    <!-- Доступности -->
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                        <HorizontalStackLayout>
+                            <Image Source="time.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                            <VerticalStackLayout>
+                                <Label Text="Доступности" 
+                                       FontSize="16" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#333333" />
+                                <Label Text="Подтверждение смен" 
+                                       FontSize="12" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#666666"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnAccessesClicked" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Курьеры -->
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                        <HorizontalStackLayout>
+                            <Image Source="couriers.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                            <VerticalStackLayout>
+                                <Label Text="Курьеры" 
+                                       FontSize="16" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#333333" />
+                                <Label Text="Изменить данные" 
+                                       FontSize="12" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#666666"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCouriersClicked" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Зарегистрировать -->
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                        <HorizontalStackLayout>
+                            <Image Source="register.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                            <VerticalStackLayout>
+                                <Label Text="Зарегистрировать" 
+                                       FontSize="16" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#333333" />
+                                <Label Text="Добавить курьера" 
+                                       FontSize="12" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#666666"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnRegisterCourierClicked" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Бонусы -->
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                        <HorizontalStackLayout>
+                            <Image Source="bonuses.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                            <Label Text="Бонусы" 
+                                   FontSize="16" 
+                                   VerticalOptions="Center" 
+                                   TextColor="#333333" />
+                        </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBonusesClicked" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+
+                    <!-- Штрафы -->
+                    <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
+                        <HorizontalStackLayout>
+                            <Image Source="penalties.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                            <VerticalStackLayout>
+                                <Label Text="Штрафы" 
+                                       FontSize="16" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#333333" />
+                                <Label Text="Назначить" 
+                                       FontSize="12" 
+                                       VerticalOptions="Center" 
+                                       TextColor="#666666"
+                                       FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnPenaltiesClicked" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- Раздел: Выход из системы -->
+                <Label Text="ВЫХОД ИЗ СИСТЕМЫ" 
+                       FontSize="14" 
+                       FontAttributes="Bold" 
+                       TextColor="#666666" 
+                       HorizontalOptions="Start" />
+
+                <!-- Раздел: Выход -->
                 <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
                     <HorizontalStackLayout>
-                        <Image Source="profile.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <VerticalStackLayout>
-                            <Label Text="Профиль" 
+                        <Image Source="logout.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
+                        <Label Text="Выйти" 
                                FontSize="16" 
                                VerticalOptions="Center" 
-                               TextColor="#333333" />
-                        <Label Text="Ваши данные" 
-                               FontSize="12" 
-                               VerticalOptions="Center" 
-                               TextColor="#666666"
-                               FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                        
+                               TextColor="#FF0000" />
                     </HorizontalStackLayout>
                     <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnProfileButtonClicked" />
+                        <TapGestureRecognizer Tapped="OnLogoutButtonClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
             </VerticalStackLayout>
+        </ScrollView>
 
-            <!-- Раздел: Функционал администратора -->
-            <Label Text="ФУНКЦИОНАЛ АДМИНИСТРАТОРА" 
-                   FontSize="14" 
-                   FontAttributes="Bold" 
-                   TextColor="#666666" 
-                   HorizontalOptions="Start" />
-
-            <VerticalStackLayout Spacing="10">
-                <!-- Доступности -->
-                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
-                    <HorizontalStackLayout>
-                        <Image Source="time.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <VerticalStackLayout>
-                            <Label Text="Доступности" 
-                               FontSize="16" 
-                               VerticalOptions="Center" 
-                               TextColor="#333333" />
-                            <Label Text="Подтверждение смен" 
-FontSize="12" 
-VerticalOptions="Center" 
-TextColor="#666666"
-FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnAccessesClicked" />
-                    </Frame.GestureRecognizers>
-                </Frame>
-
-                <!-- Курьеры -->
-                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
-                    <HorizontalStackLayout>
-                        <Image Source="couriers.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <VerticalStackLayout>
-                            <Label Text="Курьеры" 
-                               FontSize="16" 
-                               VerticalOptions="Center" 
-                               TextColor="#333333" />
-                            <Label Text="Изменить данные" 
-       FontSize="12" 
-       VerticalOptions="Center" 
-       TextColor="#666666"
-       FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnCouriersClicked" />
-                    </Frame.GestureRecognizers>
-                </Frame>
-
-                <!-- Зарегистрировать -->
-                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
-                    <HorizontalStackLayout>
-                        <Image Source="register.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <VerticalStackLayout>
-                            <Label Text="Зарегистрировать" 
-                               FontSize="16" 
-                               VerticalOptions="Center" 
-                               TextColor="#333333" />
-                            <Label Text="Добавить курьера" 
-FontSize="12" 
-VerticalOptions="Center" 
-TextColor="#666666"
-FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnRegisterCourierClicked" />
-                    </Frame.GestureRecognizers>
-                </Frame>
-
-                <!-- Бонусы -->
-                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
-                    <HorizontalStackLayout>
-                        <Image Source="bonuses.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <Label Text="Бонусы" 
-                               FontSize="16" 
-                               VerticalOptions="Center" 
-                               TextColor="#333333" />
-                    </HorizontalStackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnBonusesClicked" />
-                    </Frame.GestureRecognizers>
-                </Frame>
-
-                <!-- Штрафы -->
-                <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
-                    <HorizontalStackLayout>
-                        <Image Source="penalties.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                        <VerticalStackLayout>
-                            <Label Text="Штрафы" 
-                               FontSize="16" 
-                               VerticalOptions="Center" 
-                               TextColor="#333333" />
-                            <Label Text="Назначить" 
-FontSize="12" 
-VerticalOptions="Center" 
-TextColor="#666666"
-FontAttributes="Bold"/>
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnPenaltiesClicked" />
-                    </Frame.GestureRecognizers>
-                </Frame>
-            </VerticalStackLayout>
-
-            <!-- Раздел: Выход из системы -->
-            <Label Text="ВЫХОД ИЗ СИСТЕМЫ" 
-       FontSize="14" 
-       FontAttributes="Bold" 
-       TextColor="#666666" 
-       HorizontalOptions="Start" />
-
-            <!-- Раздел: Выход -->
-            <Frame CornerRadius="10" Padding="10" BackgroundColor="#FFFFFF" HasShadow="False">
-                <HorizontalStackLayout>
-                    <Image Source="logout.png" WidthRequest="24" HeightRequest="24" Margin="0,0,10,0" />
-                    <Label Text="Выйти" 
-                           FontSize="16" 
+        <!-- Индикатор загрузки -->
+        <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsRunning="False" 
+                           IsVisible="False" 
+                           Color="#333333" 
                            VerticalOptions="Center" 
-                           TextColor="#FF0000" />
-                </HorizontalStackLayout>
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnLogoutButtonClicked" />
-                </Frame.GestureRecognizers>
-            </Frame>
-        </VerticalStackLayout>
-    </ScrollView>
+                           HorizontalOptions="Center" 
+                           Grid.RowSpan="2"
+                           WidthRequest="50"
+                           HeightRequest="50"
+                           BackgroundColor="#000000"
+                           Opacity="0.5" />
+    </Grid>
 </ContentPage>

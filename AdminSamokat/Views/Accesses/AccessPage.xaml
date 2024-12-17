@@ -62,17 +62,26 @@
                         Clicked="OnViewUserButtonClicked"
                         TextColor="White"
                         CornerRadius="20"
-                        HorizontalOptions="Fill" />
+                        BackgroundColor="#007BFF"
+                        HorizontalOptions="Fill"
+                        HeightRequest="50" />
+                <!-- Фиксированная высота кнопки -->
 
                 <!-- Кнопка подтверждения доступности -->
-                <Frame CornerRadius="20"
-       Padding="0"
-       HasShadow="False"
-       HorizontalOptions="Fill"
-       VerticalOptions="Center"
-       BackgroundColor="#4CAF50" IsVisible="{Binding Confirm, Converter={StaticResource ConfirmToVisibilityConverter}}">
+                <Frame x:Name="ConfirmButtonFrame"
+                       CornerRadius="20"
+                       Padding="0"
+                       HasShadow="False"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Center"
+                       BackgroundColor="#4CAF50" 
+                       IsVisible="{Binding Confirm, Converter={StaticResource ConfirmToVisibilityConverter}}"
+                       HeightRequest="50">
+                    <!-- Фиксированная высота кнопки -->
                     <!-- Используем Grid для выравнивания -->
-                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10"
+                          HeightRequest="50">
+                        <!-- Фиксированная высота Grid -->
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
@@ -83,21 +92,34 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Текст кнопки -->
-                        <Label Text="Подтвердить"
-               TextColor="White"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Grid.Row="0"
-               Grid.Column="0"
-               VerticalTextAlignment="Center" Padding="0,0,5,0"/>
+                        <Label x:Name="ConfirmButtonText"
+                               Text="Подтвердить"
+                               TextColor="White"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               VerticalTextAlignment="Center" 
+                               Padding="0,0,5,0"/>
 
                         <!-- Иконка подтверждения -->
-                        <Image Source="confirm_icon.png"
-               HeightRequest="24"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               Grid.Row="0"
-               Grid.Column="1"/>
+                        <Image x:Name="ConfirmButtonIcon"
+                               Source="confirm_icon.png"
+                               HeightRequest="24"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               Grid.Row="0"
+                               Grid.Column="1"/>
+
+                        <!-- Индикатор загрузки -->
+                        <ActivityIndicator x:Name="LoadingIndicator"
+                                           IsRunning="False"
+                                           IsVisible="False"
+                                           Color="White"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           Grid.RowSpan="1"
+                                           Grid.ColumnSpan="2"/>
                     </Grid>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnConfirmButtonClicked" />
@@ -107,4 +129,3 @@
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-

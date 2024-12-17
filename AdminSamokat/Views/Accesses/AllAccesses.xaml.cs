@@ -19,7 +19,6 @@ public partial class AllAccesses : ContentPage
         _token = token;
         AccessesCollectionView.ItemsSource = Accesses;
         LoadAccesses();
-
     }
 
     private async void LoadAccesses()
@@ -53,13 +52,12 @@ public partial class AllAccesses : ContentPage
                 }
 
                 var groupedAccesses = accesses
-    .GroupBy(a => a.Date.ToShortDateString())
-    .OrderBy(group => DateTime.Parse(group.Key)) // Сортируем группы по дате
-    .Select(group => new Grouping<string, Access>(group.Key, group.OrderBy(a => a.StartChange))) // Сортируем элементы внутри группы
-    .ToList();
+                    .GroupBy(a => a.Date.ToShortDateString())
+                    .OrderBy(group => DateTime.Parse(group.Key)) // Сортируем группы по дате
+                    .Select(group => new Grouping<string, Access>(group.Key, group.OrderBy(a => a.StartChange))) // Сортируем элементы внутри группы
+                    .ToList();
 
                 AccessesCollectionView.ItemsSource = groupedAccesses;
-
 
                 AccessesCollectionView.IsVisible = groupedAccesses.Any();
                 EmptyMessageLabel.IsVisible = !groupedAccesses.Any();
@@ -69,6 +67,11 @@ public partial class AllAccesses : ContentPage
                 // Ошибка авторизации
                 await DisplayAlert("Ошибка", "Ваш токен не актуален. Авторизуйтесь заново!", "ОК");
                 await Navigation.PushAsync(new Views.Auth.Login());
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                AccessesCollectionView.IsVisible = false;
+                EmptyMessageLabel.IsVisible = true;
             }
             else
             {
@@ -87,7 +90,6 @@ public partial class AllAccesses : ContentPage
         }
     }
 
-
     public class Grouping<K, T> : ObservableCollection<T>
     {
         public K Key { get; }
@@ -97,6 +99,7 @@ public partial class AllAccesses : ContentPage
             Key = key;
         }
     }
+
     private async void OnAccessSelected(object sender, SelectionChangedEventArgs e)
     {
         // Логика, которая будет срабатывать при выборе другого элемента доступности
@@ -106,7 +109,7 @@ public partial class AllAccesses : ContentPage
             await Navigation.PushAsync(new AccessPage(selectedAccess, _user, _token));
         }
 
-    // Сбрасываем выбор
-    ((CollectionView)sender).SelectedItem = null;
+        // Сбрасываем выбор
+        ((CollectionView)sender).SelectedItem = null;
     }
 }

@@ -25,7 +25,6 @@ public partial class AccessPage : ContentPage
         FillAccessDetails();
     }
 
-
     // Метод для заполнения информации о доступности
     private void FillAccessDetails()
     {
@@ -63,33 +62,79 @@ public partial class AccessPage : ContentPage
     // Обработчик нажатия на кнопку для подтверждения доступности
     private async void OnConfirmButtonClicked(object sender, EventArgs e)
     {
+        // Подтверждение перед подтверждением
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите подтвердить доступность?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", создание отменяется
+            return;
+        }
+        // Показываем индикатор загрузки и скрываем текст и иконку
+        LoadingIndicator.IsRunning = true;
+        LoadingIndicator.IsVisible = true;
+        ConfirmButtonText.IsVisible = false;
+        ConfirmButtonIcon.IsVisible = false;
+
         _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
         var content = new FormUrlEncodedContent(new[]
         {
-        new KeyValuePair<string, string>("confirm", "1")
-    });
+            new KeyValuePair<string, string>("confirm", "1")
+        });
 
-        var response = await _httpClient.PatchAsync(
-            $"http://courseproject4/api/accesses-confirm/{_access.Id}", content);
-
-        if (response.IsSuccessStatusCode)
+        try
         {
-            await DisplayAlert("Успех", "Доступность подтверждена.", "ОК");
+            var response = await _httpClient.PatchAsync(
+                $"http://courseproject4/api/accesses-confirm/{_access.Id}", content);
 
-            // Обновляем свойство Confirm
-            _access.Confirm = 1;
+            if (response.IsSuccessStatusCode)
+            {
+                // Останавливаем индикатор загрузки перед вызовом DisplayAlert
+                LoadingIndicator.IsRunning = false;
+                LoadingIndicator.IsVisible = false;
+                ConfirmButtonText.IsVisible = true;
+                ConfirmButtonIcon.IsVisible = true;
+                // Скрываем кнопку подтверждения после успешного подтверждения
+                ConfirmButtonFrame.IsVisible = false;
 
-            // Сообщаем об изменении свойств для привязки
-            OnPropertyChanged(nameof(_access.Confirm));
+                await DisplayAlert("Успех", "Доступность подтверждена.", "ОК");
 
-            await Navigation.PushAsync(new Home(_user, _token));
+                // Обновляем свойство Confirm
+                _access.Confirm = 1;
+
+                // Сообщаем об изменении свойств для привязки
+                OnPropertyChanged(nameof(_access.Confirm));
+
+                await Navigation.PushAsync(new Home(_user, _token));
+            }
+            else
+            {
+                // Останавливаем индикатор загрузки перед вызовом DisplayAlert
+                LoadingIndicator.IsRunning = false;
+                LoadingIndicator.IsVisible = false;
+                ConfirmButtonText.IsVisible = true;
+                ConfirmButtonIcon.IsVisible = true;
+
+                var errorContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Ошибка", $"Не удалось подтвердить доступность. Ответ: {errorContent}", "ОК");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            var errorContent = await response.Content.ReadAsStringAsync();
-            await DisplayAlert("Ошибка", $"Не удалось подтвердить доступность. Ответ: {errorContent}", "ОК");
+            // Останавливаем индикатор загрузки перед вызовом DisplayAlert
+            LoadingIndicator.IsRunning = false;
+            LoadingIndicator.IsVisible = false;
+            ConfirmButtonText.IsVisible = true;
+            ConfirmButtonIcon.IsVisible = true;
+
+            await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
         }
     }
 }

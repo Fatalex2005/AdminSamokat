@@ -13,8 +13,8 @@ public partial class Home : ContentPage
     private User _user;
     private string _token;
     public Home(User user, string token)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _user = user;
         _token = token;
         int hour = DateTime.Now.Hour;
@@ -38,6 +38,24 @@ public partial class Home : ContentPage
 
     private async void OnLogoutButtonClicked(object sender, EventArgs e)
     {
+        // Подтверждение перед выходом
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите выйти из аккаунта?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            // Если пользователь выбрал "Нет", выход отменяется
+            return;
+        }
+        // Показываем индикатор загрузки и скрываем содержимое страницы
+        LoadingIndicator.IsRunning = true;
+        LoadingIndicator.IsVisible = true;
+        MainContent.IsVisible = false;
+
         // Получаем токен из настроек
         string userToken = Preferences.Get("UserToken", string.Empty);
 
@@ -54,7 +72,7 @@ public partial class Home : ContentPage
                 if (response.IsSuccessStatusCode)
                 {
                     // Успешный выход
-                    await DisplayAlert("Успех", "Вы успешно вышли из системы", "ОК");
+                    await DisplayAlert("Успех", "Вы успешно вышли из системы.", "ОК");
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 {
@@ -85,11 +103,11 @@ public partial class Home : ContentPage
         Preferences.Remove("UserLogin");
         Preferences.Remove("UserPassword");
 
-
         // Возвращаемся на страницу входа
         await Navigation.PushAsync(new Views.Auth.Login());
         Navigation.RemovePage(this); // Убираем текущую страницу из стека
     }
+
     protected override void OnAppearing()
     {
         base.OnAppearing();

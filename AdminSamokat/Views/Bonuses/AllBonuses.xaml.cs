@@ -49,6 +49,12 @@ public partial class AllBonuses : ContentPage
                 BonusesCollectionView.IsVisible = Bonuses.Count > 0;
                 EmptyMessageLabel.IsVisible = Bonuses.Count == 0;
             }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                // Ошибка авторизации
+                await DisplayAlert("Ошибка", "Ваш токен не актуален. Авторизуйтесь заново!", "ОК");
+                await Navigation.PushAsync(new Views.Auth.Login());
+            }
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();

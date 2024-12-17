@@ -53,14 +53,22 @@ public partial class AllAccesses : ContentPage
                 }
 
                 var groupedAccesses = accesses
-                    .GroupBy(a => a.Date.ToShortDateString())
-                    .Select(group => new Grouping<string, Access>(group.Key, group))
-                    .ToList();
+    .GroupBy(a => a.Date.ToShortDateString())
+    .OrderBy(group => DateTime.Parse(group.Key)) // Сортируем группы по дате
+    .Select(group => new Grouping<string, Access>(group.Key, group.OrderBy(a => a.StartChange))) // Сортируем элементы внутри группы
+    .ToList();
 
                 AccessesCollectionView.ItemsSource = groupedAccesses;
 
+
                 AccessesCollectionView.IsVisible = groupedAccesses.Any();
                 EmptyMessageLabel.IsVisible = !groupedAccesses.Any();
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            {
+                // Ошибка авторизации
+                await DisplayAlert("Ошибка", "Ваш токен не актуален. Авторизуйтесь заново!", "ОК");
+                await Navigation.PushAsync(new Views.Auth.Login());
             }
             else
             {

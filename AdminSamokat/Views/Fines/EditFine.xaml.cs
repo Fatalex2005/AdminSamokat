@@ -83,10 +83,43 @@ public partial class EditFine : ContentPage
 
                 await Navigation.PushAsync(new Views.Home(_user, token));
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
-                await DisplayAlert("Ошибка", "Сессия истекла. Авторизуйтесь снова.", "OK");
-                await Navigation.PushAsync(new Views.Auth.Login());
+                var errorContent = await response.Content.ReadAsStringAsync();
+
+                try
+                {
+                    // Парсим JSON как JsonDocument
+                    using var document = JsonDocument.Parse(errorContent);
+                    var root = document.RootElement;
+
+                    var message = root.GetProperty("message").GetString();
+
+                    if (root.TryGetProperty("errors", out var errors))
+                    {
+                        var errorMessages = new List<string>();
+
+                        // Проходим по всем ошибкам
+                        foreach (var error in errors.EnumerateObject())
+                        {
+                            foreach (var msg in error.Value.EnumerateArray())
+                            {
+                                errorMessages.Add(System.Text.RegularExpressions.Regex.Unescape(msg.GetString()));
+                            }
+                        }
+
+                        var combinedErrors = string.Join("\n", errorMessages);
+                        await DisplayAlert("Ошибка валидации", combinedErrors, "ОК");
+                    }
+                    else
+                    {
+                        await DisplayAlert("Ошибка", message ?? "Произошла ошибка валидации.", "ОК");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Ошибка", $"Не удалось обработать ответ: {ex.Message}\n\nОтвет: {errorContent}", "ОК");
+                }
             }
             else
             {

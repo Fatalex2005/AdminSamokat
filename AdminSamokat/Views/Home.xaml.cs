@@ -56,10 +56,17 @@ public partial class Home : ContentPage
                     // Успешный выход
                     await DisplayAlert("Успех", "Вы успешно вышли из системы", "ОК");
                 }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    // Ошибка авторизации
+                    await DisplayAlert("Ошибка", "Вы не авторизованы.", "ОК");
+                    await Navigation.PushAsync(new Views.Auth.Login());
+                }
                 else
                 {
-                    // Обработка ошибок
-                    await DisplayAlert("Ошибка", "Не удалось завершить сессию. Попробуйте ещё раз.", "ОК");
+                    // Обработка других ошибок
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    await DisplayAlert("Ошибка", $"Не удалось завершить сессию. Попробуйте ещё раз. Ответ сервера: {errorContent}", "ОК");
                 }
             }
             catch (Exception ex)

@@ -10,11 +10,15 @@ namespace AdminSamokat.Views.Accesses.Converters
         {
             if (value is int confirm)
             {
-                // Кнопка видима, если Confirm == 0
+                // Если параметр "Cancel", показываем кнопку отмены при Confirm = 1
+                if (parameter?.ToString() == "Cancel")
+                {
+                    return confirm == 1;
+                }
+                // Показываем кнопку подтверждения при Confirm = 0
                 return confirm == 0;
             }
-
-            return false; // Скрываем кнопку по умолчанию
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -22,4 +26,5 @@ namespace AdminSamokat.Views.Accesses.Converters
             throw new NotImplementedException();
         }
     }
+
 }

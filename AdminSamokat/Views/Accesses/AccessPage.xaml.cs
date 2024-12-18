@@ -36,7 +36,7 @@ public partial class AccessPage : ContentPage
         EndTimeLabel.Text = $"Конец: {_access.EndChange}";
 
         // Отображаем статус подтверждения
-        ConfirmStatusLabel.Text = _access.Confirm == 1 ? "Подтверждено" : "Не подтверждено";
+        ConfirmStatusLabel.Text = _access.Confirm == 1 ? "Статус: Подтверждено" : "Статус: Не подтверждено";
     }
 
     // Обработчик нажатия на кнопку для просмотра пользователя
@@ -76,8 +76,8 @@ public partial class AccessPage : ContentPage
             return;
         }
         // Показываем индикатор загрузки и скрываем текст и иконку
-        LoadingIndicator.IsRunning = true;
-        LoadingIndicator.IsVisible = true;
+        LoadingConfirmIndicator.IsRunning = true;
+        LoadingConfirmIndicator.IsVisible = true;
         ConfirmButtonText.IsVisible = false;
         ConfirmButtonIcon.IsVisible = false;
 
@@ -97,13 +97,17 @@ public partial class AccessPage : ContentPage
             if (response.IsSuccessStatusCode)
             {
                 // Останавливаем индикатор загрузки перед вызовом DisplayAlert
-                LoadingIndicator.IsRunning = false;
-                LoadingIndicator.IsVisible = false;
+                LoadingConfirmIndicator.IsRunning = false;
+                LoadingConfirmIndicator.IsVisible = false;
                 ConfirmButtonText.IsVisible = true;
                 ConfirmButtonIcon.IsVisible = true;
-                // Скрываем кнопку подтверждения после успешного подтверждения
+
+                // Не показываем кнопку подтверждения
                 ConfirmButtonFrame.IsVisible = false;
-                ConfirmStatusLabel.Text = "Подтверждено";
+                // Показываем кнопку отмены
+                CancelButtonFrame.IsVisible = true;
+
+                ConfirmStatusLabel.Text = "Статус: Подтверждено";
 
                 await DisplayAlert("Успех", "Доступность подтверждена.", "ОК");
 
@@ -118,8 +122,8 @@ public partial class AccessPage : ContentPage
             else
             {
                 // Останавливаем индикатор загрузки перед вызовом DisplayAlert
-                LoadingIndicator.IsRunning = false;
-                LoadingIndicator.IsVisible = false;
+                LoadingConfirmIndicator.IsRunning = false;
+                LoadingConfirmIndicator.IsVisible = false;
                 ConfirmButtonText.IsVisible = true;
                 ConfirmButtonIcon.IsVisible = true;
 
@@ -130,12 +134,96 @@ public partial class AccessPage : ContentPage
         catch (Exception ex)
         {
             // Останавливаем индикатор загрузки перед вызовом DisplayAlert
-            LoadingIndicator.IsRunning = false;
-            LoadingIndicator.IsVisible = false;
+            LoadingConfirmIndicator.IsRunning = false;
+            LoadingConfirmIndicator.IsVisible = false;
             ConfirmButtonText.IsVisible = true;
             ConfirmButtonIcon.IsVisible = true;
 
             await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
         }
     }
+    private async void OnCancelButtonClicked(object sender, EventArgs e)
+    {
+        // Подтверждение перед отменой
+        bool isConfirmed = await DisplayAlert(
+            "Подтверждение",
+            "Вы уверены, что хотите отменить доступность?",
+            "Да",
+            "Нет"
+        );
+
+        if (!isConfirmed)
+        {
+            return;
+        }
+
+        // Показываем индикатор загрузки и скрываем текст и иконку
+        LoadingCancelIndicator.IsRunning = true;
+        LoadingCancelIndicator.IsVisible = true;
+        CancelButtonText.IsVisible = false;
+        CancelButtonIcon.IsVisible = false;
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var content = new FormUrlEncodedContent(new[]
+        {
+        new KeyValuePair<string, string>("confirm", "0")
+    });
+
+        try
+        {
+            var response = await _httpClient.PatchAsync(
+                $"http://courseproject4/api/accesses-cancel/{_access.Id}", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                // Останавливаем индикатор загрузки
+                LoadingCancelIndicator.IsRunning = false;
+                LoadingCancelIndicator.IsVisible = false;
+                CancelButtonText.IsVisible = true;
+                CancelButtonIcon.IsVisible = true;
+
+                // Показываем кнопку подтверждения
+                ConfirmButtonFrame.IsVisible = true;
+                // Не показываем кнопку отмены
+                CancelButtonFrame.IsVisible = false;
+
+                // Обновляем статус
+                ConfirmStatusLabel.Text = "Статус: Не подтверждено";
+
+                await DisplayAlert("Успех", "Доступность отменена.", "ОК");
+
+                // Обновляем свойство Confirm
+                _access.Confirm = 0;
+
+                // Сообщаем об изменении свойств для привязки
+                OnPropertyChanged(nameof(_access.Confirm));
+
+                await Navigation.PushAsync(new Home(_user, _token));
+            }
+            else
+            {
+                // Останавливаем индикатор загрузки
+                LoadingCancelIndicator.IsRunning = false;
+                LoadingCancelIndicator.IsVisible = false;
+                CancelButtonText.IsVisible = true;
+                CancelButtonIcon.IsVisible = true;
+
+                var errorContent = await response.Content.ReadAsStringAsync();
+                await DisplayAlert("Ошибка", $"Не удалось отменить доступность. Ответ: {errorContent}", "ОК");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Останавливаем индикатор загрузки
+            LoadingCancelIndicator.IsRunning = false;
+            LoadingCancelIndicator.IsVisible = false;
+            CancelButtonText.IsVisible = true;
+            CancelButtonIcon.IsVisible = true;
+
+            await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
+        }
+    }
+
 }

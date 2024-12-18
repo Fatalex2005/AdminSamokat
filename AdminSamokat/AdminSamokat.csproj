@@ -76,6 +76,7 @@
 	  <None Remove="Resources\Images\access_icon.png" />
 	  <None Remove="Resources\Images\bonuses.png" />
 	  <None Remove="Resources\Images\bonus_icon.png" />
+	  <None Remove="Resources\Images\cancel_icon.png" />
 	  <None Remove="Resources\Images\confirm_icon.png" />
 	  <None Remove="Resources\Images\couriers.png" />
 	  <None Remove="Resources\Images\courier_icon.png" />

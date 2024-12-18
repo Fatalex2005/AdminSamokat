@@ -112,7 +112,7 @@
                                Grid.Column="1"/>
 
                         <!-- Индикатор загрузки -->
-                        <ActivityIndicator x:Name="LoadingIndicator"
+                        <ActivityIndicator x:Name="LoadingConfirmIndicator"
                                            IsRunning="False"
                                            IsVisible="False"
                                            Color="White"
@@ -125,6 +125,61 @@
                         <TapGestureRecognizer Tapped="OnConfirmButtonClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
+                <!-- Кнопка отмены подтверждения -->
+                <Frame x:Name="CancelButtonFrame"
+       CornerRadius="20"
+       Padding="0"
+       HasShadow="False"
+       HorizontalOptions="Fill"
+       VerticalOptions="Center"
+       BackgroundColor="#F44336" 
+       IsVisible="{Binding Confirm, Converter={StaticResource ConfirmToVisibilityConverter}, ConverterParameter=Cancel}"
+       HeightRequest="50">
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Текст кнопки -->
+                        <Label x:Name="CancelButtonText"
+               Text="Отменить"
+               TextColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0"
+               VerticalTextAlignment="Center" 
+               Padding="0,0,5,0"/>
+
+                        <!-- Иконка отмены -->
+                        <Image x:Name="CancelButtonIcon"
+               Source="cancel_icon.png"
+               HeightRequest="24"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"/>
+
+                        <!-- Индикатор загрузки -->
+                        <ActivityIndicator x:Name="LoadingCancelIndicator"
+                   IsRunning="False"
+                   IsVisible="False"
+                   Color="White"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Grid.RowSpan="1"
+                   Grid.ColumnSpan="2"/>
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnCancelButtonClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

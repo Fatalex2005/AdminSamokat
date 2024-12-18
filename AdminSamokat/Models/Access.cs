@@ -23,7 +23,8 @@ namespace AdminSamokat.Models
 
         [JsonPropertyName("user_id")]
         public ulong UserId { get; set; } // ID пользователя, связанного с доступностью
-
+        
+        public Tuple<int, DateTime> ConfirmAndDate => new Tuple<int, DateTime>(Confirm, Date); // Новое свойство для комбинирования Confirm и Date
         public string UserFullName { get; set; }
     }
 }

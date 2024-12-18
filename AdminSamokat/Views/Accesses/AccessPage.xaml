@@ -69,14 +69,14 @@
 
                 <!-- Кнопка подтверждения доступности -->
                 <Frame x:Name="ConfirmButtonFrame"
-                       CornerRadius="20"
-                       Padding="0"
-                       HasShadow="False"
-                       HorizontalOptions="Fill"
-                       VerticalOptions="Center"
-                       BackgroundColor="#4CAF50" 
-                       IsVisible="{Binding Confirm, Converter={StaticResource ConfirmToVisibilityConverter}}"
-                       HeightRequest="50">
+       CornerRadius="20"
+       Padding="0"
+       HasShadow="False"
+       HorizontalOptions="Fill"
+       VerticalOptions="Center"
+       BackgroundColor="#4CAF50" 
+       IsVisible="{Binding ConfirmAndDate, Converter={StaticResource ConfirmToVisibilityConverter}}"
+       HeightRequest="50">
                     <!-- Фиксированная высота кнопки -->
                     <!-- Используем Grid для выравнивания -->
                     <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10"
@@ -133,7 +133,7 @@
        HorizontalOptions="Fill"
        VerticalOptions="Center"
        BackgroundColor="#F44336" 
-       IsVisible="{Binding Confirm, Converter={StaticResource ConfirmToVisibilityConverter}, ConverterParameter=Cancel}"
+       IsVisible="{Binding ConfirmAndDate, Converter={StaticResource ConfirmToVisibilityConverter}, ConverterParameter=Cancel}"
        HeightRequest="50">
                     <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
                         <Grid.RowDefinitions>

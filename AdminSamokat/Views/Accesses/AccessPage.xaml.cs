@@ -103,6 +103,7 @@ public partial class AccessPage : ContentPage
                 ConfirmButtonIcon.IsVisible = true;
                 // Скрываем кнопку подтверждения после успешного подтверждения
                 ConfirmButtonFrame.IsVisible = false;
+                ConfirmStatusLabel.Text = "Подтверждено";
 
                 await DisplayAlert("Успех", "Доступность подтверждена.", "ОК");
 

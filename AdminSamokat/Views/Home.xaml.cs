@@ -38,7 +38,6 @@ public partial class Home : ContentPage
 
     private async void OnLogoutButtonClicked(object sender, EventArgs e)
     {
-        // Подтверждение перед выходом
         bool isConfirmed = await DisplayAlert(
             "Подтверждение",
             "Вы уверены, что хотите выйти из аккаунта?",
@@ -48,64 +47,55 @@ public partial class Home : ContentPage
 
         if (!isConfirmed)
         {
-            // Если пользователь выбрал "Нет", выход отменяется
             return;
         }
-        // Показываем индикатор загрузки и скрываем содержимое страницы
-        LoadingIndicator.IsRunning = true;
-        LoadingIndicator.IsVisible = true;
-        MainContent.IsVisible = false;
 
-        // Получаем токен из настроек
+        // Показываем индикатор загрузки
+        Overlay.IsVisible = true;
+
         string userToken = Preferences.Get("UserToken", string.Empty);
 
         if (!string.IsNullOrEmpty(userToken))
         {
-            // Настраиваем HTTP клиент
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userToken);
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", userToken);
 
             try
             {
-                // Отправляем запрос на выход
                 HttpResponseMessage response = await _httpClient.PostAsync("http://courseproject4/api/logout", null);
+
+                // Скрываем индикатор загрузки ПЕРЕД уведомлением
+                Overlay.IsVisible = false;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Успешный выход
                     await DisplayAlert("Успех", "Вы успешно вышли из системы.", "ОК");
-                }
-                else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
-                {
-                    // Ошибка авторизации
-                    await DisplayAlert("Ошибка", "Вы не авторизованы.", "ОК");
-                    await Navigation.PushAsync(new Views.Auth.Login());
                 }
                 else
                 {
-                    // Обработка других ошибок
                     var errorContent = await response.Content.ReadAsStringAsync();
-                    await DisplayAlert("Ошибка", $"Не удалось завершить сессию. Попробуйте ещё раз. Ответ сервера: {errorContent}", "ОК");
+                    await DisplayAlert("Ошибка", $"Не удалось завершить сессию. Ответ сервера: {errorContent}", "ОК");
                 }
             }
             catch (Exception ex)
             {
-                // Сетевые ошибки
+                // Скрываем индикатор загрузки при исключении
+                Overlay.IsVisible = false;
+
                 await DisplayAlert("Ошибка", $"Не удалось выполнить запрос: {ex.Message}", "ОК");
             }
         }
+        else
+        {
+            // Скрываем индикатор загрузки, если токен отсутствует
+            Overlay.IsVisible = false;
+        }
 
-        // Очищаем сохранённые данные
-        Preferences.Remove("UserToken");
-        Preferences.Remove("UserId");
-        Preferences.Remove("UserSurname");
-        Preferences.Remove("UserName");
-        Preferences.Remove("UserPatronymic");
-        Preferences.Remove("UserLogin");
-        Preferences.Remove("UserPassword");
+        Preferences.Clear();
 
         // Возвращаемся на страницу входа
         await Navigation.PushAsync(new Views.Auth.Login());
-        Navigation.RemovePage(this); // Убираем текущую страницу из стека
+        Navigation.RemovePage(this);
     }
 
     protected override void OnAppearing()

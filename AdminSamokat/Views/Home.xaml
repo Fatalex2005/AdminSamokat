@@ -5,7 +5,8 @@
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
 
-    <!-- Контейнер для всего содержимого страницы -->
+    <Grid>
+        <!-- Контейнер для всего содержимого страницы -->
     <Grid x:Name="MainContent" RowDefinitions="*,Auto">
         <ScrollView>
             <VerticalStackLayout Padding="20" Spacing="20">
@@ -176,18 +177,18 @@
                 </Frame>
             </VerticalStackLayout>
         </ScrollView>
-
-        <!-- Индикатор загрузки -->
-        <ActivityIndicator x:Name="LoadingIndicator" 
-                           IsRunning="False" 
-                           IsVisible="False" 
+    </Grid>
+        <!-- Слой с индикатором загрузки -->
+        <Grid x:Name="Overlay" BackgroundColor="#FFFFFF" Opacity="0.8" IsVisible="False">
+            <ActivityIndicator x:Name="LoadingIndicator" 
+                           IsRunning="True" 
                            Color="#333333" 
                            VerticalOptions="Center" 
-                           HorizontalOptions="Center" 
-                           Grid.RowSpan="2"
+                           HorizontalOptions="Center"
                            WidthRequest="50"
-                           HeightRequest="50"
-                           BackgroundColor="#000000"
-                           Opacity="0.5" />
+                           HeightRequest="50" />
+        </Grid>
     </Grid>
+    
+    
 </ContentPage>

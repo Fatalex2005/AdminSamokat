@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace AdminSamokat.Models
@@ -13,10 +14,10 @@ namespace AdminSamokat.Models
         public DateTime Date { get; set; } // Дата доступности
 
         [JsonPropertyName("startChange")]
-        public TimeSpan StartChange { get; set; } // Время начала смены
+        public TimeSpan StartChange { get; set; }
 
         [JsonPropertyName("endChange")]
-        public TimeSpan EndChange { get; set; } // Время окончания смены
+        public TimeSpan EndChange { get; set; }
 
         [JsonPropertyName("confirm")]
         public int Confirm { get; set; } // Подтверждение доступности
@@ -24,7 +25,9 @@ namespace AdminSamokat.Models
         [JsonPropertyName("user_id")]
         public ulong UserId { get; set; } // ID пользователя, связанного с доступностью
         
-        public Tuple<int, DateTime> ConfirmAndDate => new Tuple<int, DateTime>(Confirm, Date); // Новое свойство для комбинирования Confirm и Date
+        public Tuple<int, DateTime> ConfirmAndDate => new Tuple<int, DateTime>(Confirm, Date); // Свойство для комбинирования Confirm и Date
         public string UserFullName { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
     }
 }

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AdminSamokat.Views.Accesses.PartialAccessPage"
+             Padding="20">
+    <Grid>
+        <!-- Определяем строки для Grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Контент (информация, выбор времени) -->
+            <RowDefinition Height="Auto" />
+            <!-- Кнопки -->
+        </Grid.RowDefinitions>
+
+        <!-- Контент -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Заголовок страницы -->
+                <Label x:Name="Access"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Start" />
+
+                <!-- Информация о пользователе и дате -->
+                <Frame CornerRadius="10" Padding="15" BorderColor="LightGray">
+                    <VerticalStackLayout Spacing="5">
+                        <!-- Добавляем Label для отображения даты -->
+                        <Label x:Name="DateLabel"
+                               Text="Доступность на: "
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="Black" />
+
+                        <!-- Добавляем Label для отображения имени пользователя -->
+                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
+                            <Image Source="user_icon.png" 
+                                   HeightRequest="22" 
+                                   WidthRequest="22" 
+                                   VerticalOptions="Center" />
+                            <Label x:Name="UserFullNameLabel"
+                                   Text="Полное имя пользователя"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="Black" />
+                        </StackLayout>
+
+                        <!-- Информация о доступности -->
+                        <Label x:Name="StartTimeLabel" Text="Начало: " FontSize="16" TextColor="Gray" />
+                        <Label x:Name="EndTimeLabel" Text="Конец: " FontSize="16" TextColor="Gray" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Выбор времени начала и конца по горизонтали -->
+                <HorizontalStackLayout Spacing="20" HorizontalOptions="Center">
+                    <!-- Выбор времени начала -->
+                    <HorizontalStackLayout Spacing="5">
+                        <Label Text="С" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Picker x:Name="StartTimePicker"
+                                HorizontalOptions="Center"
+                                WidthRequest="100" />
+                    </HorizontalStackLayout>
+
+                    <!-- Выбор времени окончания -->
+                    <HorizontalStackLayout Spacing="5">
+                        <Label Text="до" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Picker x:Name="EndTimePicker"
+                                HorizontalOptions="Center"
+                                WidthRequest="100" />
+                    </HorizontalStackLayout>
+                </HorizontalStackLayout>
+
+                <!-- Индикатор загрузки -->
+                <ActivityIndicator x:Name="LoadingIndicator"
+                                   IsRunning="False"
+                                   IsVisible="False"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Color="Gray" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Кнопки внизу экрана -->
+        <StackLayout Grid.Row="1" Spacing="10" HorizontalOptions="FillAndExpand" Padding="10">
+            <Button x:Name="PartialConfirmButton"
+                    Text="Подтвердить выделенные часы"
+                    Clicked="OnPartialConfirmButtonClicked"
+                    BackgroundColor="#4CAF50"
+                    TextColor="White"
+                    CornerRadius="20"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="False" />
+
+            <Button x:Name="PartialCancelButton"
+                    Text="Отменить выделенные часы"
+                    Clicked="OnPartialCancelButtonClicked"
+                    BackgroundColor="#F44336"
+                    TextColor="White"
+                    CornerRadius="20"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand"
+                    IsVisible="False" />
+        </StackLayout>
+    </Grid>
+</ContentPage>

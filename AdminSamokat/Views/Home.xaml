@@ -65,7 +65,7 @@
                                        FontSize="16" 
                                        VerticalOptions="Center" 
                                        TextColor="#333333" />
-                                <Label Text="Подтверждение смен" 
+                                <Label Text="Подтверждение доступностей" 
                                        FontSize="12" 
                                        VerticalOptions="Center" 
                                        TextColor="#666666"

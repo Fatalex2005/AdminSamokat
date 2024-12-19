@@ -25,6 +25,12 @@
             <!-- Информация о пользователе -->
             <Frame CornerRadius="10" Padding="15" BorderColor="LightGray">
                 <VerticalStackLayout Spacing="5">
+                    <!-- Добавляем Label для отображения даты -->
+                    <Label x:Name="DateLabel"
+               Text="Доступность на: "
+               FontSize="20"
+FontAttributes="Bold"
+TextColor="Black" />
                     <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
                         <Image Source="user_icon.png" 
                                HeightRequest="22" 
@@ -77,49 +83,39 @@
        BackgroundColor="#4CAF50" 
        IsVisible="{Binding ConfirmAndDate, Converter={StaticResource ConfirmToVisibilityConverter}}"
        HeightRequest="50">
-                    <!-- Фиксированная высота кнопки -->
-                    <!-- Используем Grid для выравнивания -->
-                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10"
-                          HeightRequest="50">
-                        <!-- Фиксированная высота Grid -->
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- Текст кнопки -->
                         <Label x:Name="ConfirmButtonText"
-                               Text="Подтвердить"
-                               TextColor="White"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               Grid.Row="0"
-                               Grid.Column="0"
-                               VerticalTextAlignment="Center" 
-                               Padding="0,0,5,0"/>
-
-                        <!-- Иконка подтверждения -->
+               Text="Подтвердить"
+               TextColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0"
+               VerticalTextAlignment="Center" 
+               Padding="0,0,5,0"/>
                         <Image x:Name="ConfirmButtonIcon"
-                               Source="confirm_icon.png"
-                               HeightRequest="24"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               Grid.Row="0"
-                               Grid.Column="1"/>
-
+               Source="confirm_icon.png"
+               HeightRequest="24"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"/>
                         <!-- Индикатор загрузки -->
                         <ActivityIndicator x:Name="LoadingConfirmIndicator"
-                                           IsRunning="False"
-                                           IsVisible="False"
-                                           Color="White"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Center"
-                                           Grid.RowSpan="1"
-                                           Grid.ColumnSpan="2"/>
+IsRunning="False"
+IsVisible="False"
+Color="White"
+VerticalOptions="Center"
+HorizontalOptions="Center"
+Grid.RowSpan="1"
+Grid.ColumnSpan="2"/>
                     </Grid>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnConfirmButtonClicked" />
@@ -177,6 +173,83 @@
                     </Grid>
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnCancelButtonClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Frame x:Name="PartialConfirmButtonFrame"
+       CornerRadius="20"
+       Padding="0"
+       HasShadow="False"
+       HorizontalOptions="Fill"
+       VerticalOptions="Center"
+       BackgroundColor="#4CAF50" 
+       IsVisible="{Binding ConfirmAndDate, Converter={StaticResource ConfirmToVisibilityConverter}, ConverterParameter=PartialConfirm}"
+       HeightRequest="50">
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="PartialConfirmButtonText"
+               Text="Подтвердить часть"
+               TextColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0"
+               VerticalTextAlignment="Center" 
+               Padding="0,0,5,0"/>
+                        <Image x:Name="PartialConfirmButtonIcon"
+               Source="partial_icon.png"
+               HeightRequest="24"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"/>
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPartialConfirmButtonClicked" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <Frame x:Name="PartialCancelButtonFrame"
+       CornerRadius="20"
+       Padding="0"
+       HasShadow="False"
+       HorizontalOptions="Fill"
+       VerticalOptions="Center"
+       BackgroundColor="#F44336" 
+       IsVisible="{Binding ConfirmAndDate, Converter={StaticResource ConfirmToVisibilityConverter}, ConverterParameter=PartialCancel}"
+       HeightRequest="50">
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center" Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="PartialCancelButtonText"
+               Text="Отменить часть"
+               TextColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="0"
+               VerticalTextAlignment="Center" 
+               Padding="0,0,5,0"/>
+                        <Image x:Name="PartialCancelButtonIcon"
+               Source="partial_icon.png"
+               HeightRequest="24"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Grid.Row="0"
+               Grid.Column="1"/>
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPartialCancelButtonClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
 

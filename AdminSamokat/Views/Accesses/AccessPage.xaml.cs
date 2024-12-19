@@ -32,8 +32,11 @@ public partial class AccessPage : ContentPage
         UserFullNameLabel.Text = _access.UserFullName;
 
         // Отображаем время начала и конца
-        StartTimeLabel.Text = $"Начало: {_access.StartChange}";
-        EndTimeLabel.Text = $"Конец: {_access.EndChange}";
+        StartTimeLabel.Text = $"Начало: {_access.StartChange.ToString(@"hh\:mm")}";
+        EndTimeLabel.Text = $"Конец: {_access.EndChange.ToString(@"hh\:mm")}";
+
+        // Отображаем дату доступности
+        DateLabel.Text = $"Доступность на: {_access.Date.ToString("dd.MM.yyyy")}";
 
         // Отображаем статус подтверждения
         ConfirmStatusLabel.Text = _access.Confirm == 1 ? "Статус: Подтверждено" : "Статус: Не подтверждено";
@@ -106,6 +109,10 @@ public partial class AccessPage : ContentPage
                 ConfirmButtonFrame.IsVisible = false;
                 // Показываем кнопку отмены
                 CancelButtonFrame.IsVisible = true;
+
+                PartialConfirmButtonFrame.IsVisible = false;
+
+                PartialCancelButtonFrame.IsVisible = true;
 
                 ConfirmStatusLabel.Text = "Статус: Подтверждено";
 
@@ -189,6 +196,10 @@ public partial class AccessPage : ContentPage
                 // Не показываем кнопку отмены
                 CancelButtonFrame.IsVisible = false;
 
+                PartialConfirmButtonFrame.IsVisible = true;
+
+                PartialCancelButtonFrame.IsVisible = false;
+
                 // Обновляем статус
                 ConfirmStatusLabel.Text = "Статус: Не подтверждено";
 
@@ -224,6 +235,15 @@ public partial class AccessPage : ContentPage
 
             await DisplayAlert("Ошибка", $"Произошла ошибка: {ex.Message}", "ОК");
         }
+    }
+    private async void OnPartialConfirmButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PartialAccessPage(_access, _user, _token));
+    }
+
+    private async void OnPartialCancelButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new PartialAccessPage(_access, _user, _token));
     }
 
 }

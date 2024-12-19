@@ -4,7 +4,7 @@
              x:Class="AdminSamokat.Views.Fines.AllFines">
     <Grid RowDefinitions="*,Auto">
         <!-- Верхняя часть для содержимого -->
-        <Grid>
+        <Grid Grid.Row="0">
             <!-- Индикатор загрузки по центру экрана -->
             <ActivityIndicator x:Name="LoadingIndicator" 
                                IsRunning="False" 
@@ -57,7 +57,8 @@
         </Grid>
 
         <!-- Нижняя часть для кнопки -->
-        <Button Text="Создать штраф"
+        <Button Grid.Row="1"
+                Text="Создать штраф"
                 FontAttributes="Bold"
                 BackgroundColor="#6200EE"
                 TextColor="White"
@@ -65,7 +66,6 @@
                 Padding="15"
                 HorizontalOptions="FillAndExpand"
                 Margin="10"
-                Clicked="OnCreateFineClicked"
-                Grid.Row="1" />
+                Clicked="OnCreateFineClicked" />
     </Grid>
 </ContentPage>

@@ -19,14 +19,33 @@ namespace AdminSamokat.Views.Accesses.Converters
                     return false;
                 }
 
-                // Если параметр "Cancel", показываем кнопку отмены при Confirm = 1
-                if (parameter?.ToString() == "Cancel")
+                // Обрабатываем параметры
+                if (parameter is string action)
                 {
-                    return confirm == 1;
-                }
+                    switch (action)
+                    {
+                        case "Cancel":
+                            // Показываем кнопку отмены, если Confirm == 1
+                            return confirm == 1;
 
-                // Показываем кнопку подтверждения при Confirm = 0
-                return confirm == 0;
+                        case "PartialConfirm":
+                            // Показываем кнопку частичного подтверждения, если Confirm == 0
+                            return confirm == 0;
+
+                        case "PartialCancel":
+                            // Показываем кнопку частичной отмены, если Confirm == 1
+                            return confirm == 1;
+
+                        default:
+                            // Показываем кнопку подтверждения, если Confirm == 0
+                            return confirm == 0;
+                    }
+                }
+                else
+                {
+                    // Если параметр отсутствует, показываем кнопку подтверждения, если Confirm == 0
+                    return confirm == 0;
+                }
             }
 
             return false;

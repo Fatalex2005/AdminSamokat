@@ -3,13 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Bonuses.AllBonuses">
     <Grid>
+        <!-- Определяем строки для Grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <!-- Контент (бонусы, индикатор загрузки, сообщение) -->
+            <RowDefinition Height="Auto" />
+            <!-- Кнопка -->
+        </Grid.RowDefinitions>
+
         <!-- Индикатор загрузки по центру экрана -->
         <ActivityIndicator x:Name="LoadingIndicator" 
                            IsRunning="False" 
                            IsVisible="False" 
                            HorizontalOptions="Center" 
                            VerticalOptions="Center" 
-                           Color="Gray" />
+                           Color="Gray" 
+                           Grid.Row="0" />
 
         <!-- Сообщение об отсутствии бонусов -->
         <Label x:Name="EmptyMessageLabel"
@@ -18,10 +27,11 @@
                TextColor="Gray"
                HorizontalOptions="Center"
                VerticalOptions="Center"
-               IsVisible="False" />
+               IsVisible="False" 
+               Grid.Row="0" />
 
         <!-- ScrollView для прокрутки содержимого -->
-        <ScrollView>
+        <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="10" Padding="10">
                 <!-- CollectionView для отображения бонусов -->
                 <CollectionView x:Name="BonusesCollectionView" 
@@ -59,7 +69,8 @@
         </ScrollView>
 
         <!-- Кнопка для создания бонуса -->
-        <Button Text="Создать бонус"
+        <Button Grid.Row="1"
+                Text="Создать бонус"
                 FontAttributes="Bold"
                 BackgroundColor="#6200EE"
                 TextColor="White"

@@ -7,6 +7,7 @@
     <ContentPage.Resources>
         <converters:ConfirmToTextConverter x:Key="ConfirmConverter" />
     </ContentPage.Resources>
+    
 
     <Grid BackgroundColor="#FFFFFF">
 
@@ -52,7 +53,7 @@
                     <VerticalStackLayout Spacing="15">
                         <!-- Обернули Frame для скругленных углов и тени -->
                         <Frame Padding="20" 
-                               Margin="0,10"
+                               Margin="0,2"
                                CornerRadius="15" 
                                HasShadow="True" 
                                BackgroundColor="#FFFFFF">
@@ -71,24 +72,22 @@
                                 <StackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
                                     <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
                                         <Image Source="user_icon.png" 
-               HeightRequest="22" 
-               WidthRequest="22" 
-               VerticalOptions="Center" />
+                                               HeightRequest="22" 
+                                               WidthRequest="22" 
+                                               VerticalOptions="Center" />
                                         <Label Text="{Binding UserFullName}"
-               FontSize="14"
-               VerticalTextAlignment="Center"
-               TextColor="#333333" />
+                                               FontSize="14"
+                                               VerticalTextAlignment="Center"
+                                               TextColor="#333333" />
                                     </StackLayout>
-                                    <!-- Время начала -->
-                                    <Label Text="{Binding StartChange, StringFormat='Начало: {0}'}" 
-                                           FontSize="14" 
-                                           VerticalTextAlignment="Center"
-                                           TextColor="#333333" />
-                                    <!-- Время конца -->
-                                    <Label Text="{Binding EndChange, StringFormat='Конец: {0}'}" 
-                                           FontSize="14" 
-                                           VerticalTextAlignment="Center"
-                                           TextColor="#333333" />
+                                    <Label Text="{Binding StartTime}" 
+       FontSize="14" 
+       VerticalTextAlignment="Center"
+       TextColor="#333333" />
+                                    <Label  Text="{Binding EndTime}" 
+       FontSize="14" 
+       VerticalTextAlignment="Center"
+       TextColor="#333333" />
                                     <!-- Подтверждено -->
                                     <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
                                            FontSize="14" 

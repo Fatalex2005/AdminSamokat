@@ -18,7 +18,7 @@ public partial class Courier : ContentPage
         _courier = courier;
 
         // Отобразить данные курьера
-        CourierFullNameLabel.Text = $"{_courier.Name} {_courier.Surname} {_courier.Patronymic}";
+        CourierFullNameLabel.Text = $"{_courier.Surname} {_courier.Name} {_courier.Patronymic}";
         CourierLoginLabel.Text = _courier.Login;
 
         // Загружаем штраф

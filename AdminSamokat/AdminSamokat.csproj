@@ -83,6 +83,7 @@
 	  <None Remove="Resources\Images\fine_icon.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\logout.png" />
+	  <None Remove="Resources\Images\partial_icon.png" />
 	  <None Remove="Resources\Images\penalties.png" />
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\register.png" />
@@ -110,6 +111,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Accesses\AllAccesses.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Accesses\PartialAccess.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Auth\Login.xaml">

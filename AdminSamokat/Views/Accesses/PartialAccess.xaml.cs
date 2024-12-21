@@ -71,31 +71,15 @@ public partial class PartialAccessPage : ContentPage
         EndTimePicker.SelectedIndex = EndTimePicker.Items.Count - 1; // Конец интервала
     }
 
-    // Ограничение на выбор времени начала
-    private void OnStartTimeChanged(object sender, EventArgs e)
-    {
-        // Если выбранное время начала больше или равно времени окончания, возвращаемся к предыдущему значению
-        if (StartTimePicker.SelectedIndex >= EndTimePicker.SelectedIndex)
-        {
-            StartTimePicker.SelectedIndex = EndTimePicker.SelectedIndex - 1;
-        }
-    }
-
-    // Ограничение на выбор времени конца
-    private void OnEndTimeChanged(object sender, EventArgs e)
-    {
-        // Если выбранное время окончания меньше или равно времени начала, возвращаемся к предыдущему значению
-        if (EndTimePicker.SelectedIndex <= StartTimePicker.SelectedIndex)
-        {
-            EndTimePicker.SelectedIndex = StartTimePicker.SelectedIndex + 1;
-        }
-    }
-
     // Обработчик для кнопки частичного подтверждения
     private async void OnPartialConfirmButtonClicked(object sender, EventArgs e)
     {
+        // Получаем выбранные значения времени
+        var startTime = StartTimePicker.Items[StartTimePicker.SelectedIndex];
+        var endTime = EndTimePicker.Items[EndTimePicker.SelectedIndex];
+
         // Проверка, что выбраны корректные временные интервалы
-        if (StartTimePicker.SelectedIndex >= EndTimePicker.SelectedIndex)
+        if (int.Parse(startTime) >= int.Parse(endTime))
         {
             await DisplayAlert("Ошибка", "Время начала должно быть меньше времени окончания.", "ОК");
             return;
@@ -129,8 +113,8 @@ public partial class PartialAccessPage : ContentPage
                 $"http://courseproject4/api/accesses-partial-confirm/{_access.Id}",
                 new StringContent(JsonSerializer.Serialize(new
                 {
-                    startChange = StartTimePicker.Items[StartTimePicker.SelectedIndex], // Отправляем значение
-                    endChange = EndTimePicker.Items[EndTimePicker.SelectedIndex],     // Отправляем значение
+                    startChange = startTime, // Отправляем значение
+                    endChange = endTime,     // Отправляем значение
                     Confirm = 1
                 }), Encoding.UTF8, "application/json")
             );
@@ -171,10 +155,15 @@ public partial class PartialAccessPage : ContentPage
     }
 
     // Обработчик для кнопки частичной отмены
+    // Обработчик для кнопки частичной отмены
     private async void OnPartialCancelButtonClicked(object sender, EventArgs e)
     {
+        // Получаем выбранные значения времени
+        var startTime = StartTimePicker.Items[StartTimePicker.SelectedIndex];
+        var endTime = EndTimePicker.Items[EndTimePicker.SelectedIndex];
+
         // Проверка, что выбраны корректные временные интервалы
-        if (StartTimePicker.SelectedIndex >= EndTimePicker.SelectedIndex)
+        if (int.Parse(startTime) >= int.Parse(endTime))
         {
             await DisplayAlert("Ошибка", "Время начала должно быть меньше времени окончания.", "ОК");
             return;
@@ -208,8 +197,8 @@ public partial class PartialAccessPage : ContentPage
                 $"http://courseproject4/api/accesses-partial-cancel/{_access.Id}",
                 new StringContent(JsonSerializer.Serialize(new
                 {
-                    startChange = StartTimePicker.Items[StartTimePicker.SelectedIndex], // Отправляем значение
-                    endChange = EndTimePicker.Items[EndTimePicker.SelectedIndex],     // Отправляем значение
+                    startChange = startTime, // Отправляем значение
+                    endChange = endTime,     // Отправляем значение
                     Confirm = 0
                 }), Encoding.UTF8, "application/json")
             );

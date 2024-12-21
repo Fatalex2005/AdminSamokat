@@ -10,14 +10,13 @@ public partial class AllAccesses : ContentPage
     private User _user;
     private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
-    public ObservableCollection<Access> Accesses { get; set; } = new ObservableCollection<Access>();
+    private List<Grouping<string, Access>> _groupedAccesses;
 
     public AllAccesses(User user, string token)
     {
         InitializeComponent();
         _user = user;
         _token = token;
-        AccessesCollectionView.ItemsSource = Accesses;
         LoadAccesses();
     }
 
@@ -53,16 +52,25 @@ public partial class AllAccesses : ContentPage
                     }
                 }
 
-                var groupedAccesses = accesses
+                _groupedAccesses = accesses
                     .GroupBy(a => a.Date.ToShortDateString())
                     .OrderBy(group => DateTime.Parse(group.Key)) // Сортируем группы по дате
                     .Select(group => new Grouping<string, Access>(group.Key, group.OrderBy(a => a.StartChange))) // Сортируем элементы внутри группы
                     .ToList();
 
-                AccessesCollectionView.ItemsSource = groupedAccesses;
+                // Устанавливаем начальные значения для иконок
+                foreach (var group in _groupedAccesses)
+                {
+                    group.IsExpanded = false; // По умолчанию группы скрыты
+                    foreach (var access in group)
+                    {
+                        access.IsVisible = false; // Скрываем доступности по умолчанию
+                    }
+                }
 
-                AccessesCollectionView.IsVisible = groupedAccesses.Any();
-                EmptyMessageLabel.IsVisible = !groupedAccesses.Any();
+                AccessesCollectionView.ItemsSource = _groupedAccesses;
+
+                EmptyMessageLabel.IsVisible = !_groupedAccesses.Any();
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
             {
@@ -72,7 +80,6 @@ public partial class AllAccesses : ContentPage
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                AccessesCollectionView.IsVisible = false;
                 EmptyMessageLabel.IsVisible = true;
             }
             else
@@ -95,23 +102,45 @@ public partial class AllAccesses : ContentPage
     public class Grouping<K, T> : ObservableCollection<T>
     {
         public K Key { get; }
+        public bool IsExpanded { get; set; } // Состояние раскрытия группы
+        public string IconSource => IsExpanded ? "up_icon.png" : "down_icon.png"; // Источник иконки
 
         public Grouping(K key, IEnumerable<T> items) : base(items)
         {
             Key = key;
         }
-    }
 
-    private async void OnAccessSelected(object sender, SelectionChangedEventArgs e)
-    {
-        // Логика, которая будет срабатывать при выборе другого элемента доступности
-        if (e.CurrentSelection.FirstOrDefault() is Access selectedAccess)
+        public void Toggle()
         {
-            // Здесь можно добавить логику для перехода на страницу доступа (или оставить как есть)
-            await Navigation.PushAsync(new AccessPage(selectedAccess, _user, _token));
+            IsExpanded = !IsExpanded;
+            OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(IconSource))); // Уведомление об изменении
         }
-
-        // Сбрасываем выбор
-        ((CollectionView)sender).SelectedItem = null;
     }
+
+    private void OnDateFrameTapped(object sender, EventArgs e)
+    {
+        var frame = ((sender as Element)?.Parent as Frame) ?? (sender as Frame);
+
+        if (frame != null)
+        {
+            var selectedDate = frame.BindingContext as Grouping<string, Access>;
+
+            if (selectedDate != null)
+            {
+                // Переключаем состояние группы и уведомляем об изменении
+                selectedDate.Toggle();
+
+                // Переключаем видимость доступностей
+                foreach (var access in selectedDate)
+                {
+                    access.IsVisible = selectedDate.IsExpanded;
+                }
+
+                // Обновляем CollectionView
+                AccessesCollectionView.ItemsSource = null;
+                AccessesCollectionView.ItemsSource = _groupedAccesses;
+            }
+        }
+    }
+
 }

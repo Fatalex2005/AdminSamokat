@@ -7,7 +7,6 @@
     <ContentPage.Resources>
         <converters:ConfirmToTextConverter x:Key="ConfirmConverter" />
     </ContentPage.Resources>
-    
 
     <Grid BackgroundColor="#FFFFFF">
 
@@ -31,18 +30,35 @@
         <!-- CollectionView для отображения доступностей -->
         <CollectionView x:Name="AccessesCollectionView" 
                         IsGrouped="True"
-                        SelectionMode="Single"
-                        SelectionChanged="OnAccessSelected"
+                        SelectionMode="None"
                         Margin="10"
                         ItemsLayout="VerticalList">
-            <!-- Заголовок группы -->
+            <!-- Шаблон группы (даты) -->
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="#F5F5F5" Padding="12" CornerRadius="5" Margin="0,5,0,0">
-                        <Label Text="{Binding Key}" 
-                               FontAttributes="Bold"
-                               FontSize="16" 
-                               TextColor="#333333" />
+                        <Grid RowDefinitions="Auto" ColumnDefinitions="*, Auto">
+                            <!-- Дата -->
+                            <Label Text="{Binding Key}" 
+                                   FontAttributes="Bold"
+                                   FontSize="16" 
+                                   TextColor="#333333"
+                                   VerticalOptions="Center"
+                                   Grid.Column="0" />
+
+                            <!-- Иконка для раскрытия/скрытия доступностей -->
+                            <Image x:Name="ToggleIcon"
+                                   Source="{Binding IconSource}"
+                                   HeightRequest="24"
+                                   WidthRequest="24"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="End"
+                                   Grid.Column="1" />
+                        </Grid>
+                        <!-- Обработчик нажатия на Frame -->
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnDateFrameTapped" CommandParameter="{Binding Key}" />
+                        </Frame.GestureRecognizers>
                     </Frame>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
@@ -56,7 +72,9 @@
                                Margin="0,2"
                                CornerRadius="15" 
                                HasShadow="True" 
-                               BackgroundColor="#FFFFFF">
+                               BackgroundColor="#FFFFFF"
+                               IsVisible="{Binding IsVisible}">
+                            <!-- Используем IsVisible -->
                             <Grid RowDefinitions="Auto, Auto, Auto, Auto"
                                   ColumnDefinitions="Auto, *" 
                                   ColumnSpacing="15">
@@ -81,13 +99,13 @@
                                                TextColor="#333333" />
                                     </StackLayout>
                                     <Label Text="{Binding StartTime}" 
-       FontSize="14" 
-       VerticalTextAlignment="Center"
-       TextColor="#333333" />
-                                    <Label  Text="{Binding EndTime}" 
-       FontSize="14" 
-       VerticalTextAlignment="Center"
-       TextColor="#333333" />
+                                           FontSize="14" 
+                                           VerticalTextAlignment="Center"
+                                           TextColor="#333333" />
+                                    <Label Text="{Binding EndTime}" 
+                                           FontSize="14" 
+                                           VerticalTextAlignment="Center"
+                                           TextColor="#333333" />
                                     <!-- Подтверждено -->
                                     <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
                                            FontSize="14" 
@@ -105,7 +123,6 @@
                                         </Label.Triggers>
                                     </Label>
                                 </StackLayout>
-
                             </Grid>
                         </Frame>
                     </VerticalStackLayout>

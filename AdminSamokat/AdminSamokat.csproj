@@ -80,6 +80,7 @@
 	  <None Remove="Resources\Images\confirm_icon.png" />
 	  <None Remove="Resources\Images\couriers.png" />
 	  <None Remove="Resources\Images\courier_icon.png" />
+	  <None Remove="Resources\Images\down_icon.png" />
 	  <None Remove="Resources\Images\fine_icon.png" />
 	  <None Remove="Resources\Images\logo.png" />
 	  <None Remove="Resources\Images\logout.png" />
@@ -88,6 +89,7 @@
 	  <None Remove="Resources\Images\profile.png" />
 	  <None Remove="Resources\Images\register.png" />
 	  <None Remove="Resources\Images\time.png" />
+	  <None Remove="Resources\Images\up_icon.png" />
 	  <None Remove="Resources\Images\user_icon.png" />
 	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>

@@ -19,7 +19,7 @@ public partial class BonusPage : ContentPage
         // Отобразить данные бонуса
         BonusNameLabel.Text = _bonus.Title;
         BonusDescriptionLabel.Text = _bonus.Description;
-        BonusPriceLabel.Text = _bonus.Price + " \u20BD";
+        BonusPriceLabel.Text = _bonus.FormattedPrice;
 
         // Отобразить роль
         if (_bonus.Role != null)

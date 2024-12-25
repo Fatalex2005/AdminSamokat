@@ -38,6 +38,16 @@
                     </StackLayout>
                 </Frame>
 
+                <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
+                    <StackLayout>
+                        <Label Text="Роль" FontAttributes="Bold" />
+                        <Picker x:Name="rolePicker" 
+                Title="Выберите роль" 
+                ItemDisplayBinding="{Binding Name}" 
+                BackgroundColor="#F5F5F5" />
+                    </StackLayout>
+                </Frame>
+
                 <!-- Кнопка сохранения -->
                 <Button Text="Сохранить" 
                         Clicked="OnSaveButtonClicked" 

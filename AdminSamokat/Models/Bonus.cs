@@ -18,9 +18,14 @@ namespace AdminSamokat.Models
         public string? Description { get; set; }
         [JsonPropertyName("price")]
         public string Price { get; set; }
+        [JsonPropertyName("role_id")]
+        public ulong RoleId { get; set; }
         [JsonPropertyName("created_at")]
         public DateTime CreatedAt { get; set; }
         [JsonPropertyName("updated_at")]
         public DateTime UpdatedAt { get; set; }
+        // Свойство для связанной роли
+        [JsonPropertyName("role")]
+        public Role Role { get; set; }
     }
 }

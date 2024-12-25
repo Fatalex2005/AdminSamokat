@@ -10,9 +10,9 @@ public partial class BonusPage : ContentPage
     private Bonus _bonus;
     private readonly HttpClient _httpClient = new HttpClient();
     public BonusPage(Bonus bonus, User user, string token)
-	{
-		InitializeComponent();
-		_bonus = bonus;
+    {
+        InitializeComponent();
+        _bonus = bonus;
         _user = user;
         _token = token;
 
@@ -20,6 +20,16 @@ public partial class BonusPage : ContentPage
         BonusNameLabel.Text = _bonus.Title;
         BonusDescriptionLabel.Text = _bonus.Description;
         BonusPriceLabel.Text = _bonus.Price + " \u20BD";
+
+        // Отобразить роль
+        if (_bonus.Role != null)
+        {
+            BonusRoleLabel.Text = $"Для роли: {_bonus.Role.Name}";
+        }
+        else
+        {
+            BonusRoleLabel.Text = "Роль не указана";
+        }
     }
 
     private async void OnEditButtonClicked(object sender, EventArgs e)

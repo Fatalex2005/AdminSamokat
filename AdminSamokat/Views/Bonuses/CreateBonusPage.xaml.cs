@@ -12,18 +12,33 @@ public partial class CreateBonusPage : ContentPage
     private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
     public CreateBonusPage(User user, string token)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _user = user;
         _token = token;
+
+        // Устанавливаем список ролей в Picker
+        rolePicker.ItemsSource = Roles;
+
+        // Устанавливаем выбранную роль по умолчанию
+        if (Roles.Count > 0)
+        {
+            rolePicker.SelectedItem = Roles[0];
+        }
     }
 
+    private static readonly List<Role> Roles = new List<Role>
+{
+    new Role { Id = 1, Name = "Администратор", Code = "admin" },
+    new Role { Id = 2, Name = "Курьер", Code = "courier" }
+};
     private async void OnCreateButtonClicked(object sender, EventArgs e)
     {
         // Проверка на пустые поля
         if (string.IsNullOrWhiteSpace(titleEntry.Text) ||
             string.IsNullOrWhiteSpace(descriptionEntry.Text) ||
-            string.IsNullOrWhiteSpace(priceEntry.Text))
+            string.IsNullOrWhiteSpace(priceEntry.Text) ||
+            rolePicker.SelectedItem == null)
         {
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
@@ -47,13 +62,15 @@ public partial class CreateBonusPage : ContentPage
         string title = titleEntry.Text;
         string description = descriptionEntry.Text;
         string price = priceEntry.Text;
+        var selectedRole = (Role)rolePicker.SelectedItem;
 
         var createData = new MultipartFormDataContent
-        {
-            { new StringContent(title), "title" },
-            { new StringContent(description), "description" },
-            { new StringContent(price), "price" },
-        };
+    {
+        { new StringContent(title), "title" },
+        { new StringContent(description), "description" },
+        { new StringContent(price), "price" },
+        { new StringContent(selectedRole.Id.ToString()), "role_id" } // Добавляем role_id
+    };
 
         try
         {

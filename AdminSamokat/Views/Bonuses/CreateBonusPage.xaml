@@ -46,6 +46,13 @@
                                    Placeholder="Введите награду" 
                                    Margin="5"/>
                         </Frame>
+                        <Frame BackgroundColor="#F0F0F0" CornerRadius="10">
+                            <Picker x:Name="rolePicker" 
+            Title="Выберите роль" 
+            ItemDisplayBinding="{Binding Name}" 
+            BackgroundColor="Transparent" 
+            Margin="5"/>
+                        </Frame>
                     </StackLayout>
                 </Frame>
 

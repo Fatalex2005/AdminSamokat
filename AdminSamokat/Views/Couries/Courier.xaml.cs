@@ -50,7 +50,7 @@ public partial class Courier : ContentPage
             }
             else
             {
-                FineLabel.Text = "Не удалось загрузить штрафы";
+                FineLabel.Text = "Не удалось загрузить штраф";
                 await DisplayAlert("Ошибка", $"Код: {responseFine.StatusCode}, Ответ: {contentFine}", "OK");
             }
         }

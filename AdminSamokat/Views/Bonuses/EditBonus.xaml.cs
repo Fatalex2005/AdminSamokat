@@ -23,7 +23,25 @@ public partial class EditBonus : ContentPage
         titleLabel.Text = bonus.Title;
         descriptionLabel.Text = bonus.Description;
         priceLabel.Text = bonus.Price;
+
+        // Устанавливаем список ролей в Picker
+        rolePicker.ItemsSource = Roles;
+
+        // Устанавливаем выбранную роль
+        if (_bonus.RoleId > 0)
+        {
+            var selectedRole = Roles.FirstOrDefault(r => r.Id == _bonus.RoleId);
+            if (selectedRole != null)
+            {
+                rolePicker.SelectedItem = selectedRole;
+            }
+        }
     }
+    private static readonly List<Role> Roles = new List<Role>
+{
+    new Role { Id = 1, Name = "Администратор", Code = "admin" },
+    new Role { Id = 2, Name = "Курьер", Code = "courier" }
+};
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
@@ -33,6 +51,13 @@ public partial class EditBonus : ContentPage
             string.IsNullOrWhiteSpace(priceLabel.Text))
         {
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
+            return;
+        }
+
+        // Проверка, что роль выбрана
+        if (rolePicker.SelectedItem == null)
+        {
+            await DisplayAlert("Ошибка", "Выберите роль", "ОК");
             return;
         }
 
@@ -50,20 +75,22 @@ public partial class EditBonus : ContentPage
             return;
         }
 
-        // Формируем данные для обновления
-        var updatedBonus = new
+        // Получаем выбранную роль
+        var selectedRole = (Role)rolePicker.SelectedItem;
+
+        var updatedBonus = new Bonus
         {
             Title = titleLabel.Text,
             Description = descriptionLabel.Text,
-            Price = priceLabel.Text
+            Price = priceLabel.Text,
+            RoleId = selectedRole.Id
         };
-        // Настраиваем сериализацию для преобразования ключей в нижний регистр
+
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
         };
         var jsonContent = new StringContent(JsonSerializer.Serialize(updatedBonus, options), Encoding.UTF8, "application/json");
-
 
         // Запрос серверу
         try
@@ -72,10 +99,11 @@ public partial class EditBonus : ContentPage
             MainContent.IsVisible = false;
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
+
             // Отправляем запрос и записываем ответ в response
             var token = Preferences.Get("UserToken", string.Empty);
             _httpClient.DefaultRequestHeaders.Authorization =
-            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/bonus/{_bonus.Id}", jsonContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -83,6 +111,7 @@ public partial class EditBonus : ContentPage
                 _bonus.Title = updatedBonus.Title;
                 _bonus.Description = updatedBonus.Description;
                 _bonus.Price = updatedBonus.Price;
+                _bonus.RoleId = updatedBonus.RoleId; // Обновляем RoleId
 
                 // Обновляем UI
                 titleLabel.Text = updatedBonus.Title;

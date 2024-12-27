@@ -25,6 +25,14 @@
             <!-- ScrollView для прокрутки содержимого -->
             <ScrollView>
                 <VerticalStackLayout Spacing="10" Padding="10">
+                    <!-- Заголовок страницы -->
+                    <Label Text="Список штрафов:" 
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#333333"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+
                     <!-- CollectionView для отображения штрафов -->
                     <CollectionView x:Name="FinesCollectionView" 
                                     SelectionMode="Single" 

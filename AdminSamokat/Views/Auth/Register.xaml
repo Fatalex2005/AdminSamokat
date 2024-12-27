@@ -22,7 +22,7 @@
                 <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
 
                 <!-- Текстовое описание -->
-                <Label Text="На этой странице вы можете добавить курьера в нашу команду!" 
+                <Label Text="Регистрация курьера" 
                        FontSize="24" 
                        HorizontalTextAlignment="Center" 
                        VerticalOptions="Center" 

@@ -142,5 +142,11 @@ public partial class AllAccesses : ContentPage
             }
         }
     }
-
+    private async void OnAccessTapped(object sender, EventArgs e)
+    {
+        if (sender is Element element && element.BindingContext is Access selectedAccess)
+        {
+            await Navigation.PushAsync(new Accesses.AccessPage(selectedAccess, _user, _token));
+        }
+    }
 }

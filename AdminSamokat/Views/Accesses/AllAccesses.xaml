@@ -8,18 +8,28 @@
         <converters:ConfirmToTextConverter x:Key="ConfirmConverter" />
     </ContentPage.Resources>
 
-    <Grid BackgroundColor="#FFFFFF">
+    <Grid BackgroundColor="#FFFFFF"
+          RowDefinitions="Auto, *">
 
-        <!-- Индикатор загрузки -->
-        <ActivityIndicator x:Name="LoadingIndicator" 
+        <Label Text="Список доступностей:"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="#333333"
+               Margin="2"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               Grid.Row="0" />
+        <Grid Grid.Row="1">
+            <!-- Индикатор загрузки -->
+            <ActivityIndicator x:Name="LoadingIndicator" 
                            IsRunning="False" 
                            IsVisible="False" 
                            HorizontalOptions="Center" 
                            VerticalOptions="Center" 
                            Color="Gray" />
 
-        <!-- Сообщение об отсутствии данных -->
-        <Label x:Name="EmptyMessageLabel"
+            <!-- Сообщение об отсутствии данных -->
+            <Label x:Name="EmptyMessageLabel"
                Text="Доступности отсутствуют на ближайшие две недели"
                FontSize="18"
                TextColor="Gray"
@@ -27,107 +37,111 @@
                VerticalOptions="Center"
                IsVisible="False" />
 
-        <!-- CollectionView для отображения доступностей -->
-        <CollectionView x:Name="AccessesCollectionView" 
+            <!-- CollectionView для отображения доступностей -->
+            <CollectionView x:Name="AccessesCollectionView" 
                         IsGrouped="True"
                         SelectionMode="None"
                         Margin="10"
                         ItemsLayout="VerticalList">
-            <!-- Шаблон группы (даты) -->
-            <CollectionView.GroupHeaderTemplate>
-                <DataTemplate>
-                    <Frame BackgroundColor="#F5F5F5" Padding="12" CornerRadius="5" Margin="0,5,0,0">
-                        <Grid RowDefinitions="Auto" ColumnDefinitions="*, Auto">
-                            <!-- Дата -->
-                            <Label Text="{Binding Key}" 
+                <!-- Шаблон группы (даты) -->
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Frame BackgroundColor="#F5F5F5" Padding="12" CornerRadius="5" Margin="0,5,0,0">
+                            <Grid RowDefinitions="Auto" ColumnDefinitions="*, Auto">
+                                <!-- Дата -->
+                                <Label Text="{Binding Key}" 
                                    FontAttributes="Bold"
                                    FontSize="16" 
                                    TextColor="#333333"
                                    VerticalOptions="Center"
                                    Grid.Column="0" />
 
-                            <!-- Иконка для раскрытия/скрытия доступностей -->
-                            <Image x:Name="ToggleIcon"
+                                <!-- Иконка для раскрытия/скрытия доступностей -->
+                                <Image x:Name="ToggleIcon"
                                    Source="{Binding IconSource}"
                                    HeightRequest="24"
                                    WidthRequest="24"
                                    VerticalOptions="Center"
                                    HorizontalOptions="End"
                                    Grid.Column="1" />
-                        </Grid>
-                        <!-- Обработчик нажатия на Frame -->
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnDateFrameTapped" CommandParameter="{Binding Key}" />
-                        </Frame.GestureRecognizers>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.GroupHeaderTemplate>
+                            </Grid>
+                            <!-- Обработчик нажатия на Frame -->
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnDateFrameTapped" CommandParameter="{Binding Key}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
 
-            <!-- Шаблон элемента доступности -->
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <VerticalStackLayout Spacing="15">
-                        <!-- Обернули Frame для скругленных углов и тени -->
-                        <Frame Padding="20" 
+                <!-- Шаблон элемента доступности -->
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="15">
+                            <!-- Обернули Frame для скругленных углов и тени -->
+                            <Frame Padding="20" 
                                Margin="0,2"
                                CornerRadius="15" 
                                HasShadow="True" 
                                BackgroundColor="#FFFFFF"
                                IsVisible="{Binding IsVisible}">
-                            <!-- Используем IsVisible -->
-                            <Grid RowDefinitions="Auto, Auto, Auto, Auto"
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnAccessTapped" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <!-- Используем IsVisible -->
+                                <Grid RowDefinitions="Auto, Auto, Auto, Auto"
                                   ColumnDefinitions="Auto, *" 
                                   ColumnSpacing="15">
 
-                                <!-- Иконка слева -->
-                                <Image Source="access_icon.png" 
+                                    <!-- Иконка слева -->
+                                    <Image Source="access_icon.png" 
                                        HeightRequest="40" 
                                        WidthRequest="40" 
                                        Grid.RowSpan="4" 
                                        VerticalOptions="Center" />
 
-                                <!-- Данные о доступности справа -->
-                                <StackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
-                                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
-                                        <Image Source="user_icon.png" 
+                                    <!-- Данные о доступности справа -->
+                                    <StackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
+                                        <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
+                                            <Image Source="user_icon.png" 
                                                HeightRequest="22" 
                                                WidthRequest="22" 
                                                VerticalOptions="Center" />
-                                        <Label Text="{Binding UserFullName}"
+                                            <Label Text="{Binding UserFullName}"
                                                FontSize="14"
                                                VerticalTextAlignment="Center"
                                                TextColor="#333333" />
-                                    </StackLayout>
-                                    <Label Text="{Binding StartTime}" 
+                                        </StackLayout>
+                                        <Label Text="{Binding StartTime}" 
                                            FontSize="14" 
                                            VerticalTextAlignment="Center"
                                            TextColor="#333333" />
-                                    <Label Text="{Binding EndTime}" 
+                                        <Label Text="{Binding EndTime}" 
                                            FontSize="14" 
                                            VerticalTextAlignment="Center"
                                            TextColor="#333333" />
-                                    <!-- Подтверждено -->
-                                    <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
+                                        <!-- Подтверждено -->
+                                        <Label Text="{Binding Confirm, Converter={StaticResource ConfirmConverter}}" 
                                            FontSize="14" 
                                            VerticalTextAlignment="Center">
-                                        <Label.Triggers>
-                                            <!-- Если Confirm равен true (или вашему значению), цвет становится зелёным -->
-                                            <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="1">
-                                                <Setter Property="TextColor" Value="Green" />
-                                            </DataTrigger>
+                                            <Label.Triggers>
+                                                <!-- Если Confirm равен true (или вашему значению), цвет становится зелёным -->
+                                                <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="1">
+                                                    <Setter Property="TextColor" Value="Green" />
+                                                </DataTrigger>
 
-                                            <!-- Если Confirm равен false, цвет становится красным -->
-                                            <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="0">
-                                                <Setter Property="TextColor" Value="Red" />
-                                            </DataTrigger>
-                                        </Label.Triggers>
-                                    </Label>
-                                </StackLayout>
-                            </Grid>
-                        </Frame>
-                    </VerticalStackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                                                <!-- Если Confirm равен false, цвет становится красным -->
+                                                <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="0">
+                                                    <Setter Property="TextColor" Value="Red" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </Grid>
 </ContentPage>

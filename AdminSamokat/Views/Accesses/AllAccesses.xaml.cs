@@ -46,7 +46,7 @@ public partial class AllAccesses : ContentPage
                     {
                         var userContent = await userResponse.Content.ReadAsStringAsync();
                         var user = JsonSerializer.Deserialize<User>(userContent);
-                        access.UserFullName = $"{user.Surname} {user.Name}";
+                        access.UserFullName = $"{user.Surname} {user.Name[0]}.";
                         access.StartTime = $"Начало: {access.StartChange.ToString(@"hh\:mm")}";
                         access.EndTime = $"Конец: {access.EndChange.ToString(@"hh\:mm")}";
                     }

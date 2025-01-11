@@ -20,7 +20,7 @@ public partial class FinePage : ContentPage
         _user = user;
         UsersCollectionView.ItemsSource = Users;
         // Отобразить данные штрафа
-        FineDescriptionLabel.Text = _fine.Description;
+        FineDescriptionLabel.Text = "Кому вы хотите назначить \"" + _fine.Description + "\"?";
 
         LoadUsers();
     }

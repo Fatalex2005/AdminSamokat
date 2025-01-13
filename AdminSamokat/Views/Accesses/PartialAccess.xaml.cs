@@ -155,7 +155,6 @@ public partial class PartialAccessPage : ContentPage
     }
 
     // Обработчик для кнопки частичной отмены
-    // Обработчик для кнопки частичной отмены
     private async void OnPartialCancelButtonClicked(object sender, EventArgs e)
     {
         // Получаем выбранные значения времени

@@ -15,7 +15,6 @@
                        HorizontalOptions="Center" 
                        VerticalOptions="Center" 
                        Margin="0,20,0,20"/>
-
                 <!-- Поля для ввода -->
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                     <StackLayout>
@@ -23,21 +22,18 @@
                         <Entry x:Name="titleLabel" Placeholder="Введите название" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
-
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                     <StackLayout>
                         <Label Text="Описание" FontAttributes="Bold" />
                         <Entry x:Name="descriptionLabel" Placeholder="Введите описание" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
-
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                     <StackLayout>
                         <Label Text="Награда (с копейками через .)" FontAttributes="Bold" />
                         <Entry x:Name="priceLabel" Keyboard="Numeric" Placeholder="Введите награду" BackgroundColor="#F5F5F5"/>
                     </StackLayout>
                 </Frame>
-
                 <Frame Padding="10" CornerRadius="10" BackgroundColor="White" BorderColor="Gray" Margin="0,5">
                     <StackLayout>
                         <Label Text="Роль" FontAttributes="Bold" />
@@ -47,7 +43,6 @@
                 BackgroundColor="#F5F5F5" />
                     </StackLayout>
                 </Frame>
-
                 <!-- Кнопка сохранения -->
                 <Button Text="Сохранить" 
                         Clicked="OnSaveButtonClicked" 
@@ -59,7 +54,6 @@
                         Margin="0,20,0,0"/>
             </StackLayout>
         </ScrollView>
-
         <!-- Индикатор загрузки -->
         <ActivityIndicator x:Name="LoadingIndicator" 
                            IsVisible="False" 

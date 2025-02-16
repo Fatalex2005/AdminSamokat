@@ -6,7 +6,6 @@
         <Grid>
             <!-- Основное содержимое страницы -->
             <Grid x:Name="MainContent" RowDefinitions="*,Auto" Padding="20">
-
                 <!-- Основная информация о бонусе -->
                 <VerticalStackLayout Grid.Row="0" Spacing="10">
                     <Label x:Name="BonusNameLabel"
@@ -42,7 +41,6 @@
                             Clicked="OnDeleteButtonClicked" />
                 </VerticalStackLayout>
             </Grid>
-
             <!-- Индикатор загрузки -->
             <ActivityIndicator x:Name="LoadingIndicator"
                                IsRunning="False"

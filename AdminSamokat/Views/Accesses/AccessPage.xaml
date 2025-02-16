@@ -4,24 +4,20 @@
              xmlns:local="clr-namespace:AdminSamokat.Views.Accesses.Converters"
              x:Class="AdminSamokat.Views.Accesses.AccessPage"
              Padding="20">
-
     <!-- Ресурсы страницы -->
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ConfirmToVisibilityConverter x:Key="ConfirmToVisibilityConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-
     <ScrollView>
         <VerticalStackLayout Spacing="15">
-
             <!-- Заголовок страницы -->
             <Label Text="Детали доступности"
                    FontSize="24"
                    FontAttributes="Bold"
                    HorizontalOptions="Center"
                    VerticalOptions="Start" />
-
             <!-- Информация о пользователе -->
             <Frame CornerRadius="10" Padding="15" BorderColor="LightGray">
                 <VerticalStackLayout Spacing="5">
@@ -42,7 +38,6 @@ TextColor="Black" />
                                FontAttributes="Bold"
                                TextColor="Black" />
                     </StackLayout>
-
                     <Label x:Name="StartTimeLabel"
                            Text="Начало: "
                            FontSize="16"
@@ -58,10 +53,8 @@ TextColor="Black" />
                            TextColor="Gray" />
                 </VerticalStackLayout>
             </Frame>
-
             <!-- Кнопки действий -->
             <VerticalStackLayout Spacing="10">
-
                 <!-- Кнопка просмотра пользователя -->
                 <Button x:Name="ViewUserButton"
                         Text="Просмотреть курьера"
@@ -72,7 +65,6 @@ TextColor="Black" />
                         HorizontalOptions="Fill"
                         HeightRequest="50" />
                 <!-- Фиксированная высота кнопки -->
-
                 <!-- Кнопка подтверждения доступности -->
                 <Frame x:Name="ConfirmButtonFrame"
        CornerRadius="20"
@@ -135,12 +127,10 @@ Grid.ColumnSpan="2"/>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-
                         <!-- Текст кнопки -->
                         <Label x:Name="CancelButtonText"
                Text="Отменить"
@@ -151,7 +141,6 @@ Grid.ColumnSpan="2"/>
                Grid.Column="0"
                VerticalTextAlignment="Center" 
                Padding="0,0,5,0"/>
-
                         <!-- Иконка отмены -->
                         <Image x:Name="CancelButtonIcon"
                Source="cancel_icon.png"
@@ -160,7 +149,6 @@ Grid.ColumnSpan="2"/>
                HorizontalOptions="Center"
                Grid.Row="0"
                Grid.Column="1"/>
-
                         <!-- Индикатор загрузки -->
                         <ActivityIndicator x:Name="LoadingCancelIndicator"
                    IsRunning="False"
@@ -213,7 +201,6 @@ Grid.ColumnSpan="2"/>
                         <TapGestureRecognizer Tapped="OnPartialConfirmButtonClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
-
                 <Frame x:Name="PartialCancelButtonFrame"
        CornerRadius="20"
        Padding="0"
@@ -252,7 +239,6 @@ Grid.ColumnSpan="2"/>
                         <TapGestureRecognizer Tapped="OnPartialCancelButtonClicked" />
                     </Frame.GestureRecognizers>
                 </Frame>
-
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

@@ -4,14 +4,12 @@
              x:Class="AdminSamokat.Views.Profile"
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
-
     <ScrollView>
         <Grid Padding="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
             <!-- Заголовок -->
             <Label Grid.Row="0" Text="Ваш профиль" 
                    FontSize="24" 
@@ -19,7 +17,6 @@
                    TextColor="#333333"
                    HorizontalOptions="Start" 
                    Margin="0,10,0,10" />
-
             <!-- Информация о пользователе -->
             <Frame Grid.Row="1" Padding="10" CornerRadius="15" BackgroundColor="White" Margin="0,10">
                 <Frame.Shadow>
@@ -43,10 +40,8 @@
                         <Label Text="Логин:" FontAttributes="Bold" TextColor="#555555" WidthRequest="90" />
                         <Label x:Name="loginLabel" FontSize="16" TextColor="#333333" VerticalOptions="Center" />
                     </StackLayout>
-
                     <!-- Разделитель -->
                     <BoxView HeightRequest="1" BackgroundColor="#E0E0E0" Margin="0,10" />
-
                     <!-- Кнопка редактирования -->
                     <Button Text="Редактировать профиль" 
                             Clicked="OnEditProfileButtonClicked" 

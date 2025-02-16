@@ -18,7 +18,6 @@ public partial class AllBonuses : ContentPage
         BonusesCollectionView.ItemsSource = Bonuses;
         LoadBonuses();
     }
-
     private async void LoadBonuses()
     {
         try
@@ -26,25 +25,19 @@ public partial class AllBonuses : ContentPage
             // Показываем индикатор загрузки
             LoadingIndicator.IsVisible = true;
             LoadingIndicator.IsRunning = true;
-
             var token = Preferences.Get("UserToken", string.Empty);
-
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
             var response = await _httpClient.GetAsync("http://courseproject4/api/bonus");
-
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var bonuses = JsonSerializer.Deserialize<List<Bonus>>(content);
-
                 Bonuses.Clear();
                 foreach (var bonus in bonuses)
                 {
                     Bonuses.Add(bonus);
                 }
-
                 // Управляем видимостью элементов в зависимости от количества бонусов
                 BonusesCollectionView.IsVisible = Bonuses.Count > 0;
                 EmptyMessageLabel.IsVisible = Bonuses.Count == 0;
@@ -72,9 +65,6 @@ public partial class AllBonuses : ContentPage
             LoadingIndicator.IsRunning = false;
         }
     }
-
-
-
     private async void OnBonusSelected(object sender, SelectionChangedEventArgs e)
     {
         // Получаем выбранного пользователя
@@ -83,11 +73,9 @@ public partial class AllBonuses : ContentPage
             // Переход на страницу информации о бонусе
             await Navigation.PushAsync(new BonusPage(selectedBonus, _user, _token));
         }
-
         // Сбрасываем выбор
         ((CollectionView)sender).SelectedItem = null;
     }
-
     private async void OnCreateBonusClicked(object sender, EventArgs e)
     {
         // Переход на страницу создания бонуса

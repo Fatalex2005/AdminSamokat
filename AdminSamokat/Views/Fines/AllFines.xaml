@@ -12,7 +12,6 @@
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" 
                                Color="Gray" />
-
             <!-- Сообщение об отсутствии штрафов -->
             <Label x:Name="EmptyMessageLabel"
                    Text="Штрафы отсутствуют"
@@ -21,7 +20,6 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    IsVisible="False" />
-
             <!-- ScrollView для прокрутки содержимого -->
             <ScrollView>
                 <VerticalStackLayout Spacing="10" Padding="10">
@@ -32,7 +30,6 @@
                            TextColor="#333333"
                            HorizontalOptions="Center"
                            VerticalOptions="Center" />
-
                     <!-- CollectionView для отображения штрафов -->
                     <CollectionView x:Name="FinesCollectionView" 
                                     SelectionMode="Single" 
@@ -63,7 +60,6 @@
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
-
         <!-- Нижняя часть для кнопки -->
         <Button Grid.Row="1"
                 Text="Создать штраф"

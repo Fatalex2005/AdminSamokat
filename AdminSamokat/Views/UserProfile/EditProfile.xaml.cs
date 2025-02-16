@@ -29,7 +29,6 @@ public partial class EditProfile : ContentPage
         }
         loginLabel.Text = user.Login;
     }
-
     private async void OnSaveButtonClicked(object sender, EventArgs e)
 {
     // Проверка на пустые поля
@@ -39,13 +38,11 @@ public partial class EditProfile : ContentPage
         await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
         return;
     }
-
     if (!checkPassword.IsChecked && passwordLabel.Text != confirmPasswordLabel.Text)
         {
             await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
             return;
         }
-
         // Подтверждение перед сохранением изменений
         bool isConfirmed = await DisplayAlert(
             "Подтверждение",
@@ -53,13 +50,11 @@ public partial class EditProfile : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", сохранение отменяется
             return;
         }
-
         // Формируем данные для обновления
         var updatedUser = new Dictionary<string, object>
     {
@@ -67,26 +62,22 @@ public partial class EditProfile : ContentPage
         { "name", nameLabel.Text },
         { "patronymic", string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text },
     };
-
     // Добавляем поле "login", только если оно изменилось
     if (loginLabel.Text != _user.Login)
     {
         updatedUser.Add("login", loginLabel.Text);
     }
-
     // Добавляем поле "password", только если галочка снята
         if (!checkPassword.IsChecked)
         {
             updatedUser.Add("password", passwordLabel.Text);
         }
-
     // Настраиваем сериализацию для преобразования ключей в нижний регистр
     var options = new JsonSerializerOptions
     {
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
     };
     var jsonContent = new StringContent(JsonSerializer.Serialize(updatedUser, options), Encoding.UTF8, "application/json");
-
     // Запрос серверу
     try
     {
@@ -94,37 +85,30 @@ public partial class EditProfile : ContentPage
         MainContent.IsVisible = false;
         LoadingIndicator.IsRunning = true;
         LoadingIndicator.IsVisible = true;
-
         // Отправляем запрос и записываем ответ в response
         _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
         HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_user.Id}", jsonContent);
-
         if (response.StatusCode == System.Net.HttpStatusCode.OK)
         {
             // Обновляем локальную копию данных пользователя
             _user.Surname = surnameLabel.Text;
             _user.Name = nameLabel.Text;
             _user.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
-
             if (loginLabel.Text != _user.Login)
             {
                 _user.Login = loginLabel.Text;
             }
-
             Preferences.Set("UserSurname", _user.Surname);
             Preferences.Set("UserName", _user.Name);
             Preferences.Set("UserPatronymic", _user.Patronymic ?? "");
             Preferences.Set("UserLogin", _user.Login);
-
             // Обновляем UI
             surnameLabel.Text = _user.Surname;
             nameLabel.Text = _user.Name;
             patronymicLabel.Text = _user.Patronymic ?? "";
             loginLabel.Text = _user.Login;
-
             await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
-
             await Navigation.PushAsync(new Views.Home(_user, _token));
             Navigation.RemovePage(this); // Убираем текущую страницу из стека
         }
@@ -137,19 +121,15 @@ public partial class EditProfile : ContentPage
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-
                 try
                 {
                     // Парсим JSON как JsonDocument
                     using var document = JsonDocument.Parse(errorContent);
                     var root = document.RootElement;
-
                     var message = root.GetProperty("message").GetString();
-
                     if (root.TryGetProperty("errors", out var errors))
                     {
                         var errorMessages = new List<string>();
-
                         // Проходим по всем ошибкам
                         foreach (var error in errors.EnumerateObject())
                         {
@@ -158,7 +138,6 @@ public partial class EditProfile : ContentPage
                                 errorMessages.Add(System.Text.RegularExpressions.Regex.Unescape(msg.GetString()));
                             }
                         }
-
                         var combinedErrors = string.Join("\n", errorMessages);
                         await DisplayAlert("Ошибка валидации", combinedErrors, "ОК");
                     }
@@ -193,10 +172,8 @@ public partial class EditProfile : ContentPage
     private void OnCheckPasswordChanged(object sender, CheckedChangedEventArgs e)
     {
         bool isChecked = e.Value;
-
         // Если галочка снята, показываем поля для ввода пароля
         password.IsVisible = !isChecked;
         confirmPassword.IsVisible = !isChecked;
     }
-
 }

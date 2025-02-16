@@ -19,10 +19,8 @@ public partial class EditFine : ContentPage
         _fine = fine;
         _user = user;
         _token = token;
-
         descriptionLabel.Text = fine.Description;
     }
-
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
         // Проверка на пустые поля
@@ -31,7 +29,6 @@ public partial class EditFine : ContentPage
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
         }
-
         // Подтверждение перед сохранением изменений
         bool isConfirmed = await DisplayAlert(
             "Подтверждение",
@@ -39,13 +36,11 @@ public partial class EditFine : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", сохранение отменяется
             return;
         }
-
         // Формируем данные для обновления
         var updatedFine = new
         {
@@ -57,8 +52,6 @@ public partial class EditFine : ContentPage
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
         };
         var jsonContent = new StringContent(JsonSerializer.Serialize(updatedFine, options), Encoding.UTF8, "application/json");
-
-
         // Запрос серверу
         try
         {
@@ -71,34 +64,26 @@ public partial class EditFine : ContentPage
             _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/fine/{_fine.Id}", jsonContent);
-
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 _fine.Description = updatedFine.Description;
-
                 // Обновляем UI
                 descriptionLabel.Text = updatedFine.Description;
-
                 await DisplayAlert("Успех", "Штраф успешно обновлён!", "Вернуться на главную");
-
                 await Navigation.PushAsync(new Views.Home(_user, token));
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-
                 try
                 {
                     // Парсим JSON как JsonDocument
                     using var document = JsonDocument.Parse(errorContent);
                     var root = document.RootElement;
-
                     var message = root.GetProperty("message").GetString();
-
                     if (root.TryGetProperty("errors", out var errors))
                     {
                         var errorMessages = new List<string>();
-
                         // Проходим по всем ошибкам
                         foreach (var error in errors.EnumerateObject())
                         {
@@ -107,7 +92,6 @@ public partial class EditFine : ContentPage
                                 errorMessages.Add(System.Text.RegularExpressions.Regex.Unescape(msg.GetString()));
                             }
                         }
-
                         var combinedErrors = string.Join("\n", errorMessages);
                         await DisplayAlert("Ошибка валидации", combinedErrors, "ОК");
                     }

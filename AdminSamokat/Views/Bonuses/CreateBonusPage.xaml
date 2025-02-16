@@ -4,7 +4,6 @@
              x:Class="AdminSamokat.Views.Bonuses.CreateBonusPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="#F9F9F9">
-
     <!-- Основной контейнер -->
     <Grid>
         <!-- Индикатор загрузки -->
@@ -14,20 +13,17 @@
                            HorizontalOptions="Center" 
                            VerticalOptions="Center" 
                            Color="Gray" />
-
         <!-- Основная форма -->
         <ScrollView x:Name="CreateForm" IsVisible="True">
             <StackLayout Padding="20" Spacing="20">
                 <!-- Логотип -->
                 <Image Source="logo.png" HorizontalOptions="Center" WidthRequest="200" HeightRequest="200"/>
-
                 <!-- Текстовое описание -->
                 <Label Text="На этой странице вы можете создать бонус!" 
                        FontSize="24" 
                        HorizontalTextAlignment="Center" 
                        VerticalOptions="Center" 
                        Margin="0,20,0,20"/>
-
                 <!-- Форма создания -->
                 <Frame Padding="15" CornerRadius="15" BackgroundColor="White" Margin="0,20">
                     <StackLayout Spacing="15">
@@ -55,7 +51,6 @@
                         </Frame>
                     </StackLayout>
                 </Frame>
-
                 <!-- Кнопка создания -->
                 <Button Text="Создать" 
                         Clicked="OnCreateButtonClicked" 

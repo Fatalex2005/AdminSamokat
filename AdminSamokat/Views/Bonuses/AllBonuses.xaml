@@ -10,7 +10,6 @@
             <RowDefinition Height="Auto" />
             <!-- Кнопка -->
         </Grid.RowDefinitions>
-
         <!-- Индикатор загрузки по центру экрана -->
         <ActivityIndicator x:Name="LoadingIndicator" 
                            IsRunning="False" 
@@ -19,7 +18,6 @@
                            VerticalOptions="Center" 
                            Color="Gray" 
                            Grid.Row="0" />
-
         <!-- Сообщение об отсутствии бонусов -->
         <Label x:Name="EmptyMessageLabel"
                Text="Бонусы отсутствуют"
@@ -29,7 +27,6 @@
                VerticalOptions="Center"
                IsVisible="False" 
                Grid.Row="0" />
-
         <!-- ScrollView для прокрутки содержимого -->
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="10" Padding="10">
@@ -40,7 +37,6 @@
                        TextColor="#333333"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
-
                 <!-- CollectionView для отображения бонусов -->
                 <CollectionView x:Name="BonusesCollectionView" 
                                 SelectionMode="Single" 
@@ -84,7 +80,6 @@
                 </CollectionView>
             </VerticalStackLayout>
         </ScrollView>
-
         <!-- Кнопка для создания бонуса -->
         <Button Grid.Row="1"
                 Text="Создать бонус"

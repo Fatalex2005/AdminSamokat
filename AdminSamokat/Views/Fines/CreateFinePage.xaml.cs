@@ -24,7 +24,6 @@ public partial class CreateFinePage : ContentPage
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
         }
-
         // Подтверждение перед созданием
         bool isConfirmed = await DisplayAlert(
             "Подтверждение",
@@ -32,21 +31,17 @@ public partial class CreateFinePage : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", создание отменяется
             return;
         }
-
         // Сбор данных из формы
         string description = descriptionEntry.Text;
-
         var createData = new MultipartFormDataContent
         {
             { new StringContent(description), "description" },
         };
-
         try
         {
             // Отображаем индикатор загрузки и скрываем форму
@@ -54,9 +49,7 @@ public partial class CreateFinePage : ContentPage
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
             HttpResponseMessage response = await _httpClient.PostAsync("http://courseproject4/api/fine", createData);
-
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Успех", "Штраф успешно добавлен", "ОК");
@@ -65,19 +58,15 @@ public partial class CreateFinePage : ContentPage
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-
                 try
                 {
                     // Парсим JSON как JsonDocument
                     using var document = JsonDocument.Parse(errorContent);
                     var root = document.RootElement;
-
                     var message = root.GetProperty("message").GetString();
-
                     if (root.TryGetProperty("errors", out var errors))
                     {
                         var errorMessages = new List<string>();
-
                         // Проходим по всем ошибкам
                         foreach (var error in errors.EnumerateObject())
                         {
@@ -86,7 +75,6 @@ public partial class CreateFinePage : ContentPage
                                 errorMessages.Add(System.Text.RegularExpressions.Regex.Unescape(msg.GetString()));
                             }
                         }
-
                         var combinedErrors = string.Join("\n", errorMessages);
                         await DisplayAlert("Ошибка валидации", combinedErrors, "ОК");
                     }

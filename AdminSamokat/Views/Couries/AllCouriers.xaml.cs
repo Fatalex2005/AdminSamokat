@@ -10,7 +10,6 @@ public partial class AllCouriers : ContentPage
     private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
     public ObservableCollection<User> Users { get; set; } = new ObservableCollection<User>();
-
     public AllCouriers(User user, string token)
     {
         InitializeComponent();
@@ -19,7 +18,6 @@ public partial class AllCouriers : ContentPage
         UsersCollectionView.ItemsSource = Users;
         LoadUsers();
     }
-
     private async void LoadUsers()
     {
         try
@@ -27,21 +25,15 @@ public partial class AllCouriers : ContentPage
             // Показываем индикатор загрузки
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
-
             var token = Preferences.Get("UserToken", string.Empty);
-
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
             var response = await _httpClient.GetAsync("http://courseproject4/api/profile");
-
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var users = JsonSerializer.Deserialize<List<User>>(content);
-
                 Users.Clear();
-
                 // Фильтруем пользователей с ролью 2
                 var couriers =
                     users.Where(user => user.RoleId == 2); // Предполагается, что RoleId указывает роль пользователя
@@ -50,7 +42,6 @@ public partial class AllCouriers : ContentPage
                 {
                     Users.Add(courier);
                 }
-
                 // Управляем видимостью элементов
                 UsersCollectionView.IsVisible = Users.Count > 0;
                 EmptyMessageLabel.IsVisible = Users.Count == 0;
@@ -78,9 +69,6 @@ public partial class AllCouriers : ContentPage
             LoadingIndicator.IsVisible = false;
         }
     }
-
-
-
     private async void OnCourierSelected(object sender, SelectionChangedEventArgs e)
     {
         // Получаем выбранного курьера
@@ -89,7 +77,6 @@ public partial class AllCouriers : ContentPage
             // Переход на страницу информации о курьере
             await Navigation.PushAsync(new Courier(selectedCourier, _user, _token));
         }
-
         // Сбрасываем выбор
         ((CollectionView)sender).SelectedItem = null;
     }

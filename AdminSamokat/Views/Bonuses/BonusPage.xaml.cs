@@ -15,12 +15,10 @@ public partial class BonusPage : ContentPage
         _bonus = bonus;
         _user = user;
         _token = token;
-
         // Отобразить данные бонуса
         BonusNameLabel.Text = _bonus.Title;
         BonusDescriptionLabel.Text = _bonus.Description;
         BonusPriceLabel.Text = _bonus.FormattedPrice;
-
         // Отобразить роль
         if (_bonus.Role != null)
         {
@@ -31,12 +29,10 @@ public partial class BonusPage : ContentPage
             BonusRoleLabel.Text = "Роль не указана";
         }
     }
-
     private async void OnEditButtonClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new EditBonus(_bonus, _user, _token));
     }
-
     private async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
         // Подтверждение перед удалением
@@ -46,27 +42,22 @@ public partial class BonusPage : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", удаление отменяется
             return;
         }
-
         try
         {
             // Скрываем основное содержимое и показываем индикатор
             MainContent.IsVisible = false;
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
-
             // Настраиваем заголовки и токен
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-
             // Отправляем DELETE-запрос на сервер
             var response = await _httpClient.DeleteAsync($"http://courseproject4/api/bonus/{_bonus.Id}");
-
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Успех", "Бонус успешно удалён.", "ОК");

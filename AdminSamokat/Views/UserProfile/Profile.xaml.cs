@@ -23,7 +23,6 @@ public partial class Profile : ContentPage
         }
         loginLabel.Text = user.Login;
     }
-
     private async void OnEditProfileButtonClicked(object sender, EventArgs e)
     {
 		await Navigation.PushAsync(new EditProfile(_user, _token));

@@ -9,7 +9,6 @@
                    FontSize="20"
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
-
             <!-- Сообщение об отсутствии курьеров -->
             <Label x:Name="EmptyMessageLabel"
                    Text="Курьеры отсутствуют"
@@ -18,7 +17,6 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    IsVisible="False" />
-
             <!-- CollectionView для отображения курьеров -->
             <CollectionView x:Name="UsersCollectionView" 
                             SelectionMode="Single" 
@@ -49,7 +47,6 @@
                                            TextColor="Gray" 
                                            Grid.Row="2" 
                                            Grid.Column="1" />
-
                                     <!-- Кнопка "Назначить" -->
                                     <Button Text="Назначить" 
                                             FontAttributes="Bold" 
@@ -72,7 +69,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
             <!-- Кнопки после коллекции -->
             <VerticalStackLayout Spacing="10">
                 <Button Text="Изменить" 
@@ -90,7 +86,6 @@
                         Padding="15" 
                         Clicked="OnDeleteButtonClicked" />
             </VerticalStackLayout>
-
             <!-- Индикатор загрузки -->
             <ActivityIndicator x:Name="LoadingIndicator"
                                IsRunning="False"

@@ -22,7 +22,6 @@
                                    TextColor="Gray" />
                         </VerticalStackLayout>
                     </Frame>
-
                     <!-- Карточка: Штрафы -->
                     <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
                         <VerticalStackLayout Spacing="10">
@@ -41,7 +40,6 @@
                                    HorizontalTextAlignment="Center" />
                         </VerticalStackLayout>
                     </Frame>
-
                     <!-- Карточка: Статус -->
                     <Frame CornerRadius="10" Padding="15" HasShadow="True" BackgroundColor="White">
                         <VerticalStackLayout Spacing="10">
@@ -80,7 +78,6 @@
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
-
         <!-- Индикатор загрузки удаления -->
         <ActivityIndicator x:Name="DeleteLoadingIndicator"
                            IsRunning="False"

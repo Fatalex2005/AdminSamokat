@@ -18,7 +18,6 @@ namespace AdminSamokat.Views.Accesses.Converters
                 {
                     return false;
                 }
-
                 // Обрабатываем параметры
                 if (parameter is string action)
                 {
@@ -47,7 +46,6 @@ namespace AdminSamokat.Views.Accesses.Converters
                     return confirm == 0;
                 }
             }
-
             return false;
         }
 

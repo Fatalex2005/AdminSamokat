@@ -25,25 +25,19 @@ public partial class AllFines : ContentPage
             // Показываем индикатор загрузки
             LoadingIndicator.IsVisible = true;
             LoadingIndicator.IsRunning = true;
-
             var token = Preferences.Get("UserToken", string.Empty);
-
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
             var response = await _httpClient.GetAsync("http://courseproject4/api/fine");
-
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var fines = JsonSerializer.Deserialize<List<Fine>>(content);
-
                 Fines.Clear();
                 foreach (var fine in fines)
                 {
                     Fines.Add(fine);
                 }
-
                 // Управляем видимостью элементов в зависимости от количества бонусов
                 FinesCollectionView.IsVisible = Fines.Count > 0;
                 EmptyMessageLabel.IsVisible = Fines.Count == 0;
@@ -71,7 +65,6 @@ public partial class AllFines : ContentPage
             LoadingIndicator.IsRunning = false;
         }
     }
-    
     private async void OnFineSelected(object sender, SelectionChangedEventArgs e)
     {
         // Получаем выбранного пользователя
@@ -80,12 +73,9 @@ public partial class AllFines : ContentPage
             // Переход на страницу информации о бонусе
             await Navigation.PushAsync(new FinePage(selectedFine, _user, _token));
         }
-
         // Сбрасываем выбор
         ((CollectionView)sender).SelectedItem = null;
     }
-    
-
     private async void OnCreateFineClicked(object sender, EventArgs e)
     {
         // Переход на страницу создания штрафа

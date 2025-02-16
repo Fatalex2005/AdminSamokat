@@ -2,15 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdminSamokat.Views.Accesses.AllAccesses"
              xmlns:converters="clr-namespace:AdminSamokat.Views.Accesses.Converters">
-
     <!-- Ресурсы страницы -->
     <ContentPage.Resources>
         <converters:ConfirmToTextConverter x:Key="ConfirmConverter" />
     </ContentPage.Resources>
-
     <Grid BackgroundColor="#FFFFFF"
           RowDefinitions="Auto, *">
-
         <Label Text="Список доступностей:"
                FontSize="20"
                FontAttributes="Bold"
@@ -27,7 +24,6 @@
                            HorizontalOptions="Center" 
                            VerticalOptions="Center" 
                            Color="Gray" />
-
             <!-- Сообщение об отсутствии данных -->
             <Label x:Name="EmptyMessageLabel"
                Text="Доступности отсутствуют на ближайшие две недели"
@@ -36,7 +32,6 @@
                HorizontalOptions="Center"
                VerticalOptions="Center"
                IsVisible="False" />
-
             <!-- CollectionView для отображения доступностей -->
             <CollectionView x:Name="AccessesCollectionView" 
                         IsGrouped="True"
@@ -55,7 +50,6 @@
                                    TextColor="#333333"
                                    VerticalOptions="Center"
                                    Grid.Column="0" />
-
                                 <!-- Иконка для раскрытия/скрытия доступностей -->
                                 <Image x:Name="ToggleIcon"
                                    Source="{Binding IconSource}"
@@ -72,7 +66,6 @@
                         </Frame>
                     </DataTemplate>
                 </CollectionView.GroupHeaderTemplate>
-
                 <!-- Шаблон элемента доступности -->
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -91,14 +84,12 @@
                                 <Grid RowDefinitions="Auto, Auto, Auto, Auto"
                                   ColumnDefinitions="Auto, *" 
                                   ColumnSpacing="15">
-
                                     <!-- Иконка слева -->
                                     <Image Source="access_icon.png" 
                                        HeightRequest="40" 
                                        WidthRequest="40" 
                                        Grid.RowSpan="4" 
                                        VerticalOptions="Center" />
-
                                     <!-- Данные о доступности справа -->
                                     <StackLayout Grid.Column="1" Spacing="5" VerticalOptions="Center">
                                         <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal" Spacing="10">
@@ -128,7 +119,6 @@
                                                 <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="1">
                                                     <Setter Property="TextColor" Value="Green" />
                                                 </DataTrigger>
-
                                                 <!-- Если Confirm равен false, цвет становится красным -->
                                                 <DataTrigger TargetType="Label" Binding="{Binding Confirm}" Value="0">
                                                     <Setter Property="TextColor" Value="Red" />

@@ -11,7 +11,6 @@ public partial class AllAccesses : ContentPage
     private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
     private List<Grouping<string, Access>> _groupedAccesses;
-
     public AllAccesses(User user, string token)
     {
         InitializeComponent();
@@ -19,25 +18,20 @@ public partial class AllAccesses : ContentPage
         _token = token;
         LoadAccesses();
     }
-
     private async void LoadAccesses()
     {
         try
         {
             LoadingIndicator.IsVisible = true;
             LoadingIndicator.IsRunning = true;
-
             var token = Preferences.Get("UserToken", string.Empty);
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
             var response = await _httpClient.GetAsync("http://courseproject4/api/accesses");
-
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var accesses = JsonSerializer.Deserialize<List<Access>>(content);
-
                 // Загружаем пользователей для каждой доступности
                 foreach (var access in accesses)
                 {
@@ -51,13 +45,11 @@ public partial class AllAccesses : ContentPage
                         access.EndTime = $"Конец: {access.EndChange.ToString(@"hh\:mm")}";
                     }
                 }
-
                 _groupedAccesses = accesses
                     .GroupBy(a => a.Date.ToShortDateString())
                     .OrderBy(group => DateTime.Parse(group.Key)) // Сортируем группы по дате
                     .Select(group => new Grouping<string, Access>(group.Key, group.OrderBy(a => a.StartChange))) // Сортируем элементы внутри группы
                     .ToList();
-
                 // Устанавливаем начальные значения для иконок
                 foreach (var group in _groupedAccesses)
                 {
@@ -67,9 +59,7 @@ public partial class AllAccesses : ContentPage
                         access.IsVisible = false; // Скрываем доступности по умолчанию
                     }
                 }
-
                 AccessesCollectionView.ItemsSource = _groupedAccesses;
-
                 EmptyMessageLabel.IsVisible = !_groupedAccesses.Any();
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
@@ -109,33 +99,27 @@ public partial class AllAccesses : ContentPage
         {
             Key = key;
         }
-
         public void Toggle()
         {
             IsExpanded = !IsExpanded;
             OnPropertyChanged(new System.ComponentModel.PropertyChangedEventArgs(nameof(IconSource))); // Уведомление об изменении
         }
     }
-
     private void OnDateFrameTapped(object sender, EventArgs e)
     {
         var frame = ((sender as Element)?.Parent as Frame) ?? (sender as Frame);
-
         if (frame != null)
         {
             var selectedDate = frame.BindingContext as Grouping<string, Access>;
-
             if (selectedDate != null)
             {
                 // Переключаем состояние группы и уведомляем об изменении
                 selectedDate.Toggle();
-
                 // Переключаем видимость доступностей
                 foreach (var access in selectedDate)
                 {
                     access.IsVisible = selectedDate.IsExpanded;
                 }
-
                 // Обновляем CollectionView
                 AccessesCollectionView.ItemsSource = null;
                 AccessesCollectionView.ItemsSource = _groupedAccesses;

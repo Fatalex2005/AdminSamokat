@@ -9,21 +9,17 @@ public partial class Courier : ContentPage
     private User _user;
     private string _token;
     private readonly HttpClient _httpClient = new HttpClient();
-
     public Courier(User courier, User user, string token)
     {
         InitializeComponent();
         _user = user;
         _token = token;
         _courier = courier;
-
         // Отобразить данные курьера
         CourierFullNameLabel.Text = $"{_courier.Surname} {_courier.Name} {_courier.Patronymic}";
         CourierLoginLabel.Text = _courier.Login;
-
         // Загружаем штраф
         LoadFineDetails();
-
         // Загружаем статус
         LoadStatusDetails();
     }
@@ -31,18 +27,14 @@ public partial class Courier : ContentPage
     {
         var token = Preferences.Get("UserToken", string.Empty);
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
         try
         {
             // Включаем индикатор загрузки у штрафа
             LoadingFineIndicator.IsRunning = true;
             LoadingFineIndicator.IsVisible = true;
-
             // Загружаем информацию о штрафах
             var responseFine = await _httpClient.GetAsync($"http://courseproject4/api/fine/{_courier.FineId}");
             var contentFine = await responseFine.Content.ReadAsStringAsync();
-
-
             if (responseFine.IsSuccessStatusCode)
             {
                 var fine = JsonSerializer.Deserialize<Fine>(contentFine);
@@ -66,22 +58,18 @@ public partial class Courier : ContentPage
             LoadingFineIndicator.IsVisible = false;
         }
     }
-
     private async void LoadStatusDetails()
     {
         var token = Preferences.Get("UserToken", string.Empty);
         _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
         try
         {
             // Включаем индикатор загрузки у статуса
             LoadingStatusIndicator.IsRunning = true;
             LoadingStatusIndicator.IsVisible = true;
-
             // Загружаем информацию о статусе
             var responseStatus = await _httpClient.GetAsync($"http://courseproject4/api/status/{_courier.StatusId}");
             var contentStatus = await responseStatus.Content.ReadAsStringAsync();
-
             if (responseStatus.IsSuccessStatusCode)
             {
                 var status = JsonSerializer.Deserialize<Status>(contentStatus);
@@ -105,12 +93,10 @@ public partial class Courier : ContentPage
             LoadingStatusIndicator.IsVisible = false;
         }
     }
-
     private async void OnEditButtonClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new EditProfileCourier(_courier, _user, _token));
     }
-
     private async void OnDeleteButtonClicked(object sender, EventArgs e)
     {
         // Подтверждение перед удалением
@@ -120,27 +106,22 @@ public partial class Courier : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", удаление отменяется
             return;
         }
-
         try
         {
             // Скрываем основное содержимое и показываем индикатор
             MainContent.IsVisible = false;
             DeleteLoadingIndicator.IsRunning = true;
             DeleteLoadingIndicator.IsVisible = true;
-
             // Настраиваем заголовки и токен
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-
             // Отправляем DELETE-запрос на сервер
             var response = await _httpClient.DeleteAsync($"http://courseproject4/api/profile/{_courier.Id}");
-
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Успех", "Курьер успешно удалён.", "ОК");

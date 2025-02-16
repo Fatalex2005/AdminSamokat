@@ -16,17 +16,14 @@ public partial class CreateBonusPage : ContentPage
         InitializeComponent();
         _user = user;
         _token = token;
-
         // Устанавливаем список ролей в Picker
         rolePicker.ItemsSource = Roles;
-
         // Устанавливаем выбранную роль по умолчанию
         if (Roles.Count > 0)
         {
             rolePicker.SelectedItem = Roles[0];
         }
     }
-
     private static readonly List<Role> Roles = new List<Role>
 {
     new Role { Id = 1, Name = "Администратор", Code = "admin" },
@@ -43,7 +40,6 @@ public partial class CreateBonusPage : ContentPage
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
         }
-
         // Подтверждение перед созданием
         bool isConfirmed = await DisplayAlert(
             "Подтверждение",
@@ -51,19 +47,16 @@ public partial class CreateBonusPage : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", создание отменяется
             return;
         }
-
         // Сбор данных из формы
         string title = titleEntry.Text;
         string description = descriptionEntry.Text;
         string price = priceEntry.Text;
         var selectedRole = (Role)rolePicker.SelectedItem;
-
         var createData = new MultipartFormDataContent
     {
         { new StringContent(title), "title" },
@@ -71,7 +64,6 @@ public partial class CreateBonusPage : ContentPage
         { new StringContent(price), "price" },
         { new StringContent(selectedRole.Id.ToString()), "role_id" } // Добавляем role_id
     };
-
         try
         {
             // Отображаем индикатор загрузки и скрываем форму
@@ -79,9 +71,7 @@ public partial class CreateBonusPage : ContentPage
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-
             HttpResponseMessage response = await _httpClient.PostAsync("http://courseproject4/api/bonus", createData);
-
             if (response.IsSuccessStatusCode)
             {
                 await DisplayAlert("Успех", "Бонус успешно добавлен", "ОК");
@@ -90,19 +80,15 @@ public partial class CreateBonusPage : ContentPage
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-
                 try
                 {
                     // Парсим JSON как JsonDocument
                     using var document = JsonDocument.Parse(errorContent);
                     var root = document.RootElement;
-
                     var message = root.GetProperty("message").GetString();
-
                     if (root.TryGetProperty("errors", out var errors))
                     {
                         var errorMessages = new List<string>();
-
                         // Проходим по всем ошибкам
                         foreach (var error in errors.EnumerateObject())
                         {
@@ -111,7 +97,6 @@ public partial class CreateBonusPage : ContentPage
                                 errorMessages.Add(System.Text.RegularExpressions.Regex.Unescape(msg.GetString()));
                             }
                         }
-
                         var combinedErrors = string.Join("\n", errorMessages);
                         await DisplayAlert("Ошибка валидации", combinedErrors, "ОК");
                     }

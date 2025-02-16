@@ -11,7 +11,6 @@
                                HorizontalOptions="Center" 
                                VerticalOptions="Center" 
                                Color="Gray" />
-
             <!-- Сообщение об отсутствии курьеров -->
             <Label x:Name="EmptyMessageLabel"
                    Text="Курьеры отсутствуют"
@@ -20,7 +19,6 @@
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    IsVisible="False" />
-
             <!-- Вертикальный стек с заголовком и списком -->
             <VerticalStackLayout Spacing="10" Padding="10">
                 <!-- Заголовок страницы -->
@@ -30,7 +28,6 @@
                        TextColor="#333333"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
-
                 <!-- CollectionView для отображения курьеров -->
                 <CollectionView x:Name="UsersCollectionView" 
                                 SelectionMode="Single" 

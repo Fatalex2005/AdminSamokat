@@ -30,10 +30,8 @@ public partial class EditProfileCourier : ContentPage
             patronymicLabel.Text = courier.Patronymic;
         }
         loginLabel.Text = courier.Login;
-
         LoadStatuses();
     }
-
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
         // Проверка на пустые поля
@@ -44,13 +42,11 @@ public partial class EditProfileCourier : ContentPage
             await DisplayAlert("Ошибка", "Все обязательные поля должны быть заполнены", "ОК");
             return;
         }
-
         if (!checkPassword.IsChecked && passwordLabel.Text != confirmPasswordLabel.Text)
         {
             await DisplayAlert("Ошибка", "Пароли не совпадают", "ОК");
             return;
         }
-
         // Подтверждение перед сохранением изменений
         bool isConfirmed = await DisplayAlert(
             "Подтверждение",
@@ -58,15 +54,12 @@ public partial class EditProfileCourier : ContentPage
             "Да",
             "Нет"
         );
-
         if (!isConfirmed)
         {
             // Если пользователь выбрал "Нет", сохранение отменяется
             return;
         }
-
         var selectedStatus = StatusPicker.SelectedItem as Status;
-
         // Формируем данные для обновления
         var updatedUser = new Dictionary<string, object>
         {
@@ -76,26 +69,22 @@ public partial class EditProfileCourier : ContentPage
             // Добавляем выбранные ID статуса
             { "status_id", selectedStatus.Id }
         };
-
         // Добавляем поле "login", только если оно изменилось
         if (loginLabel.Text != _courier.Login)
         {
             updatedUser.Add("login", loginLabel.Text);
         }
-
         // Добавляем поле "password", только если галочка снята
         if (!checkPassword.IsChecked)
         {
             updatedUser.Add("password", passwordLabel.Text);
         }
-
         // Настраиваем сериализацию для преобразования ключей в нижний регистр
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase // Преобразует ключи в camelCase
         };
         var jsonContent = new StringContent(JsonSerializer.Serialize(updatedUser, options), Encoding.UTF8, "application/json");
-
         // Запрос серверу
         try
         {
@@ -103,12 +92,10 @@ public partial class EditProfileCourier : ContentPage
             MainContent.IsVisible = false;
             LoadingIndicator.IsRunning = true;
             LoadingIndicator.IsVisible = true;
-
             // Отправляем запрос и записываем ответ в response
             _httpClient.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
             HttpResponseMessage response = await _httpClient.PutAsync($"http://courseproject4/api/profile/{_courier.Id}", jsonContent);
-
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 // Обновляем локальную копию данных пользователя
@@ -116,39 +103,31 @@ public partial class EditProfileCourier : ContentPage
                 _courier.Name = nameLabel.Text;
                 _courier.Patronymic = string.IsNullOrEmpty(patronymicLabel.Text) ? null : patronymicLabel.Text;
                 _courier.StatusId = selectedStatus.Id; // Сохраняем выбранный статус
-
                 if (loginLabel.Text != _courier.Login)
                 {
                     _courier.Login = loginLabel.Text;
                 }
-
                 // Обновляем UI
                 surnameLabel.Text = _courier.Surname;
                 nameLabel.Text = _courier.Name;
                 patronymicLabel.Text = _courier.Patronymic ?? "";
                 loginLabel.Text = _courier.Login;
-
                 await DisplayAlert("Успех", "Профиль успешно обновлён!", "Вернуться на главную");
-
                 await Navigation.PushAsync(new Views.Home(_user, _token));
                 Navigation.RemovePage(this); // Убираем текущую страницу из стека
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.UnprocessableEntity)
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-
                 try
                 {
                     // Парсим JSON как JsonDocument
                     using var document = JsonDocument.Parse(errorContent);
                     var root = document.RootElement;
-
                     var message = root.GetProperty("message").GetString();
-
                     if (root.TryGetProperty("errors", out var errors))
                     {
                         var errorMessages = new List<string>();
-
                         // Проходим по всем ошибкам
                         foreach (var error in errors.EnumerateObject())
                         {
@@ -157,7 +136,6 @@ public partial class EditProfileCourier : ContentPage
                                 errorMessages.Add(System.Text.RegularExpressions.Regex.Unescape(msg.GetString()));
                             }
                         }
-
                         var combinedErrors = string.Join("\n", errorMessages);
                         await DisplayAlert("Ошибка валидации", combinedErrors, "ОК");
                     }
@@ -189,27 +167,22 @@ public partial class EditProfileCourier : ContentPage
             LoadingIndicator.IsVisible = false;
         }
     }
-
     private async void LoadStatuses()
     {
         try
         {
             LoadingIndicator.IsVisible = true;
             LoadingIndicator.IsRunning = true;
-
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
-
             // Загружаем список статусов
             var statusesResponse = await _httpClient.GetAsync("http://courseproject4/api/status");
             if (statusesResponse.IsSuccessStatusCode)
             {
                 var statusesContent = await statusesResponse.Content.ReadAsStringAsync();
                 var statuses = JsonSerializer.Deserialize<List<Status>>(statusesContent);
-
                 // Привязываем список статусов к Picker
                 StatusPicker.ItemsSource = statuses;
-
                 // Устанавливаем выбранное значение, соответствующее текущему статусу пользователя
                 StatusPicker.SelectedItem = statuses.FirstOrDefault(s => s.Id == _courier.StatusId);
             }
@@ -224,11 +197,9 @@ public partial class EditProfileCourier : ContentPage
             LoadingIndicator.IsRunning = false;
         }
     }
-
     private void OnCheckPasswordChanged(object sender, CheckedChangedEventArgs e)
     {
         bool isChecked = e.Value;
-
         // Если галочка снята, показываем поля для ввода пароля
         password.IsVisible = !isChecked;
         confirmPassword.IsVisible = !isChecked;
